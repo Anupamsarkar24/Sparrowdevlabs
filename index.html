@@ -1,0 +1,673 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SparrowDevLabs - Web Design & Development Agency</title>
+  <meta name="description" content="SparrowDevLabs is a premium AI-powered web design and development agency crafting cinematic digital experiences that connect, inspire, and convert." />
+  <meta name="keywords" content="AI web design, web development agency, digital experiences, creative agency, UI/UX design" />
+  <link rel="icon" href="assets/images/logo.png" type="image/png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body class="loading">
+
+  <!-- ===================== PRELOADER ===================== -->
+  <div id="site-preloader" class="site-preloader">
+    <div class="spinner"></div>
+  </div>
+
+  <!-- NOISE OVERLAY -->
+  <div class="noise-overlay" aria-hidden="true"></div>
+  <div class="vignette-overlay" aria-hidden="true"></div>
+
+  <!-- ===================== NAVBAR ===================== -->
+  <nav class="navbar" id="navbar" role="navigation" aria-label="Main navigation">
+    <div class="nav-inner">
+      <a href="#" class="nav-logo" aria-label="SparrowDevLabs home">
+        <img src="assets/images/logo1.png" alt="SparrowDevLabs" class="nav-logo-light" style="height: 28px; width: auto; object-fit: contain;">
+        <img src="assets/images/logo.png" alt="SparrowDevLabs" class="nav-logo-dark" style="height: 28px; width: auto; object-fit: contain; display: none;">
+      </a>
+      <ul class="nav-links" role="list">
+        <li><a href="#services" class="nav-link">Services</a></li>
+        <li><a href="#work" class="nav-link">Our Work</a></li>
+        <li><a href="#process" class="nav-link">Process</a></li>
+        <li><a href="#about" class="nav-link">About Us</a></li>
+      </ul>
+      <a href="#footer" class="nav-cta" id="nav-cta">
+        Let's Talk
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+          <path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </a>
+    </div>
+  </nav>
+
+  <!-- ===================== HERO ===================== -->
+  <section class="hero" id="hero" aria-label="Hero section">
+<video autoplay loop muted playsinline class="hero-video" src="assets/images/hero.mp4" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: 1;"></video>
+    <img src="./assets/images/hero.png" alt="" class="hero-image-overlay" />
+    <!-- Our Project Button -->
+    <div style="position: absolute; bottom: 200px; left: 50%; transform: translateX(-50%); z-index: 10;">
+      <a href="#work" class="hero-glass-btn">
+        Our Project
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-left: 10px;"><line x1="12" y1="5" x2="12" y2="19"></line><polyline points="19 12 12 19 5 12"></polyline></svg>
+      </a>
+    </div>
+
+    <!-- Hero bottom curved transition -->
+    <div class="hero-transition" aria-hidden="true">
+      <svg viewBox="0 0 1440 160" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg" style="overflow: visible;">
+        <defs>
+          <filter id="inkBrush" x="-10%" y="-20%" width="120%" height="140%">
+            <feTurbulence type="fractalNoise" baseFrequency="0.06 0.008" numOctaves="3" result="bristles"/>
+            <feTurbulence type="fractalNoise" baseFrequency="0.01 0.01" numOctaves="2" result="wobble"/>
+            <feDisplacementMap in="SourceGraphic" in2="bristles" scale="24" xChannelSelector="R" yChannelSelector="G" result="disp1"/>
+            <feDisplacementMap in="disp1" in2="wobble" scale="12" xChannelSelector="R" yChannelSelector="G"/>
+          </filter>
+        </defs>
+        <path d="M-50,200 L-50,50 Q720,200 1490,50 L1490,200 Z" fill="#F5F3EE" filter="url(#inkBrush)"/>
+      </svg>
+    </div>
+  </section>
+
+  <!-- ===================== SERVICES ===================== -->
+  <section class="services" id="services" aria-label="Services section">
+    <div class="services-inner max-w">
+      <div class="services-left">
+        <div class="section-label section-label--green">
+          <span>WHAT WE DO</span>
+          <span class="label-line"></span>
+        </div>
+        <h2 class="services-heading uppercase">
+          DIGITAL SOLUTIONS<br/>
+          THAT ELEVATE BRANDS.
+        </h2>
+        <p class="services-desc">
+          From strategy to execution, we design and develop<br/>
+          digital solutions that help brands grow, engage<br/>
+          and stand out in the digital world.
+        </p>
+        <a href="#work" class="btn-dark" id="services-view-btn">
+          <span>VIEW ALL SERVICES</span>
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+            <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </a>
+      </div>
+      <div class="services-cards horizontal-scroll" aria-label="Service cards">
+        <!-- Card 1 -->
+        <article class="service-card" id="sc-1" style="--delay:0ms;">
+          <div class="sc-icon" aria-hidden="true">
+            <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+              <path d="M16 2.667C8.636 2.667 2.667 8.636 2.667 16S8.636 29.333 16 29.333 29.333 23.364 29.333 16 23.364 2.667 16 2.667z" stroke="currentColor" stroke-width="2"/>
+              <path d="M16 8c-4.418 0-8 3.582-8 8s3.582 8 8 8 8-3.582 8-8-3.582-8-8-8z" stroke="currentColor" stroke-width="2"/>
+              <path d="M16 8v16" stroke="currentColor" stroke-width="2"/>
+              <path d="M9.333 12.667l13.334 6.666" stroke="currentColor" stroke-width="2"/>
+              <path d="M9.333 19.333l13.334-6.666" stroke="currentColor" stroke-width="2"/>
+            </svg>
+          </div>
+          <h3 class="sc-title">WEB DESIGN</h3>
+          <p class="sc-desc">Beautiful, modern websites built with creativity and precision.</p>
+          <div class="sc-bottom">
+            <div class="sc-index">01</div>
+            <div class="sc-arrow" aria-hidden="true">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+          </div>
+        </article>
+
+        <!-- Card 2 -->
+        <article class="service-card" id="sc-2" style="--delay:80ms;">
+          <div class="sc-icon" aria-hidden="true">
+            <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+              <polyline points="11,10 4,16 11,22" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+              <polyline points="21,10 28,16 21,22" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+              <line x1="19" y1="6" x2="13" y2="26" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <h3 class="sc-title">WEB DEVELOPMENT</h3>
+          <p class="sc-desc">Fast, scalable and secure websites &amp; web apps custom built.</p>
+          <div class="sc-bottom">
+            <div class="sc-index">02</div>
+            <div class="sc-arrow" aria-hidden="true">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+          </div>
+        </article>
+
+        <!-- Card 3 -->
+        <article class="service-card" id="sc-3" style="--delay:160ms;">
+          <div class="sc-icon" aria-hidden="true">
+            <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+              <path d="M16 28C16 28 26 21 26 12C26 6.5 21.5 2 16 2C10.5 2 6 6.5 6 12C6 21 16 28 16 28Z" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round"/>
+              <path d="M16 17C18.7614 17 21 14.7614 21 12C21 9.23858 18.7614 7 16 7C13.2386 7 11 9.23858 11 12C11 14.7614 13.2386 17 16 17Z" stroke="currentColor" stroke-width="2.5"/>
+            </svg>
+          </div>
+          <h3 class="sc-title">BRANDING</h3>
+          <p class="sc-desc">Strong identities that connect, inspire and leave a mark.</p>
+          <div class="sc-bottom">
+            <div class="sc-index">03</div>
+            <div class="sc-arrow" aria-hidden="true">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+          </div>
+        </article>
+
+        <!-- Card 4 -->
+        <article class="service-card" id="sc-4" style="--delay:240ms;">
+          <div class="sc-icon" aria-hidden="true">
+            <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+              <path d="M4 28H28" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+              <rect x="7" y="16" width="4" height="12" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round"/>
+              <rect x="14" y="10" width="4" height="18" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round"/>
+              <rect x="21" y="4" width="4" height="24" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <h3 class="sc-title">DIGITAL MARKETING</h3>
+          <p class="sc-desc">Data-driven strategies to grow your brand and reach the right audience.</p>
+          <div class="sc-bottom">
+            <div class="sc-index">04</div>
+            <div class="sc-arrow" aria-hidden="true">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+          </div>
+        </article>
+
+        <!-- Card 5 -->
+        <article class="service-card" id="sc-5" style="--delay:320ms;">
+          <div class="sc-icon" aria-hidden="true">
+            <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+              <rect x="3" y="9" width="26" height="18" rx="2" stroke="currentColor" stroke-width="2.5"/>
+              <path d="M11 9V6C11 5 12 4 13 4H19C20 4 21 5 21 6V9" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round"/>
+              <circle cx="16" cy="18" r="4" stroke="currentColor" stroke-width="2.5"/>
+            </svg>
+          </div>
+          <h3 class="sc-title">PHOTOGRAPHY</h3>
+          <p class="sc-desc">Capturing nature and brands with a storytelling approach.</p>
+          <div class="sc-bottom">
+            <div class="sc-index">05</div>
+            <div class="sc-arrow" aria-hidden="true">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+          </div>
+        </article>
+      </div>
+    </div>
+
+    <!-- Ink brush transition to dark -->
+    <div class="services-transition" aria-hidden="true">
+      <svg viewBox="0 0 1440 200" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <filter id="brushToDark" x="-20%" y="-20%" width="140%" height="140%">
+            <!-- Fine bristle texture -->
+            <feTurbulence type="fractalNoise" baseFrequency="0.06 0.005" numOctaves="4" result="noise1" seed="3"/>
+            <feDisplacementMap in="SourceGraphic" in2="noise1" scale="24" xChannelSelector="R" yChannelSelector="G" result="disp1"/>
+            <!-- Large structural wobble -->
+            <feTurbulence type="fractalNoise" baseFrequency="0.005 0.005" numOctaves="2" result="noise2" seed="6"/>
+            <feDisplacementMap in="disp1" in2="noise2" scale="35" xChannelSelector="R" yChannelSelector="G"/>
+          </filter>
+        </defs>
+        <!-- Main ink stroke, pushed lower -->
+        <path d="M0,110 Q360,80 720,110 T1440,110 L1440,300 L0,300 Z" fill="#141414" filter="url(#brushToDark)"/>
+        <!-- Semi-transparent wet ink bleed beneath it -->
+        <path d="M0,110 Q360,80 720,110 T1440,110 L1440,300 L0,300 Z" fill="#141414" opacity="0.6" transform="translate(0, 15)"/>
+      </svg>
+    </div>
+  </section>
+
+  <!-- ===================== FEATURED PROJECTS ===================== -->
+  <section class="projects" id="work" aria-label="Featured projects">
+    <div class="projects-inner max-w">
+      <div class="projects-left">
+        <div class="section-label section-label--green">
+          <span>OUR WORK</span>
+          <span class="label-line"></span>
+        </div>
+        <h2 class="projects-heading uppercase">
+          FEATURED<br/>
+          PROJECTS
+        </h2>
+        <p class="projects-desc">
+          We partner with ambitious brands and<br/>
+          bring their ideas to life through design,<br/>
+          technology and strategy.
+        </p>
+      </div>
+
+      <div class="projects-right-wrap">
+        <div class="projects-cards horizontal-scroll" aria-label="Project showcase cards">
+        <!-- Project Card 1 -->
+        <article class="project-card" id="proj-1">
+          <div class="project-img-wrap">
+            <div class="project-img proj-img-1" aria-hidden="true">
+              <img src="assets/images/prithibi.png" alt="prithibi portfolio" style="width: 100%; height: 100%; object-fit: cover;">
+            </div>
+            <!-- Gradient Overlay for text readability -->
+            <div class="project-gradient-overlay"></div>
+          </div>
+          <div class="project-overlay-content">
+            <div class="project-info">
+              <h3 class="project-title uppercase">prithibi prort folio</h3>
+              <span class="project-cat">WEB DESIGN / BRANDING</span>
+            </div>
+            <a href="https://prithibi-portfolio.vercel.app/" target="_blank" class="project-arrow-btn" aria-label="View Prithibi Portfolio project">
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M5 15L15 5M15 5H7M15 5V13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </a>
+          </div>
+        </article>
+
+        <!-- Project Card 2 -->
+        <article class="project-card" id="proj-2">
+          <div class="project-img-wrap">
+            <div class="project-img proj-img-2" aria-hidden="true">
+              <img src="assets/images/Shivasai WILDLIFE PHOTOGRAPHY.png" alt="Shivasai WILDLIFE PHOTOGRAPHY" style="width: 100%; height: 100%; object-fit: cover;">
+            </div>
+            <!-- Gradient Overlay for text readability -->
+            <div class="project-gradient-overlay"></div>
+          </div>
+          <div class="project-overlay-content">
+            <div class="project-info">
+              <h3 class="project-title uppercase">Shivasai WILDLIFE PHOTOGRAPHY</h3>
+              <span class="project-cat">WEB DEVELOPMENT / UI-UX</span>
+            </div>
+            <a href="https://prithibi17.github.io/photo-web/" target="_blank" class="project-arrow-btn" aria-label="View Shivasai Wildlife Photography project">
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M5 15L15 5M15 5H7M15 5V13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </a>
+          </div>
+        </article>
+      </div>
+
+      <!-- Navigation UI -->
+      <div class="projects-nav">
+        <button class="nav-btn nav-up" aria-label="Previous project">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 13V3M3 8l5-5 5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <div class="nav-track">
+          <div class="nav-thumb"></div>
+        </div>
+        <button class="nav-btn nav-down" aria-label="Next project">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 3v10M3 8l5 5 5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+      </div>
+    </div>
+    </div> <!-- Close projects-inner -->
+
+    <!-- Torn paper transition to stats -->
+    <div class="projects-transition" aria-hidden="true" style="position: relative; overflow: visible; z-index: 10;">
+      <!-- Main ink stroke (torn paper) -->
+      <svg viewBox="0 0 1440 160" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg" style="position: relative; z-index: 2; display: block; overflow: visible;">
+        <defs>
+          <filter id="tornPaperWhite" x="-10%" y="-10%" width="120%" height="130%">
+            <feTurbulence type="fractalNoise" baseFrequency="0.08 0.03" numOctaves="6" result="noise" seed="22"/>
+            <feDisplacementMap in="SourceGraphic" in2="noise" scale="28" xChannelSelector="R" yChannelSelector="G"/>
+          </filter>
+        </defs>
+        <!-- Fills the bottom part with white -->
+        <path d="M-50,80 C100,50 200,120 360,80 C520,40 600,110 720,70 C840,30 960,100 1080,60 C1200,20 1340,90 1490,50 L1490,200 L-50,200 Z" 
+              fill="white" filter="url(#tornPaperWhite)"/>
+      </svg>
+      
+      <!-- Grass images -->
+      <img src="assets/images/new_grass2.png" alt="" style="position: absolute; left: -20px; top: 0; width: 280px; z-index: 3; pointer-events: none;" />
+      <img src="assets/images/new_grass1.png" alt="" style="position: absolute; right: -20px; top: 0; width: 340px; z-index: 3; pointer-events: none;" />
+    </div>
+  </section>
+
+  <!-- ===================== STATISTICS STRIP ===================== -->
+  <section class="stats" id="stats" aria-label="Statistics">
+    <div class="stats-inner max-w">
+      <div class="stat-item" id="stat-1">
+        <div class="stat-icon" aria-hidden="true">
+          <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+            <circle cx="12" cy="10" r="5" stroke="currentColor" stroke-width="1.6"/>
+            <circle cx="22" cy="12" r="4" stroke="currentColor" stroke-width="1.6"/>
+            <path d="M2 26c0-5.5 4.5-8 10-8s10 2.5 10 8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+            <path d="M22 20c3.5 0 6 1.5 6 5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <div class="stat-num-row"><div class="stat-number" data-target="250">0</div><div class="stat-suffix">+</div></div>
+        <div class="stat-label">Happy Clients</div>
+      </div>
+      <div class="stat-divider" aria-hidden="true"></div>
+      <div class="stat-item" id="stat-2">
+        <div class="stat-icon" aria-hidden="true">
+          <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+            <circle cx="16" cy="16" r="13" stroke="currentColor" stroke-width="1.6"/>
+            <path d="M10 16l4 4 8-8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <div class="stat-num-row"><div class="stat-number" data-target="120">0</div><div class="stat-suffix">+</div></div>
+        <div class="stat-label">Projects Completed</div>
+      </div>
+      <div class="stat-divider" aria-hidden="true"></div>
+      <div class="stat-item" id="stat-3">
+        <div class="stat-icon" aria-hidden="true">
+          <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+            <path d="M16 4l3 9h9.5l-7.7 5.6 2.9 9L16 22l-7.7 5.6 2.9-9L3.5 13H13Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <div class="stat-num-row"><div class="stat-number" data-target="18">0</div><div class="stat-suffix">+</div></div>
+        <div class="stat-label">Awards Received</div>
+      </div>
+      <div class="stat-divider" aria-hidden="true"></div>
+      <div class="stat-item" id="stat-4">
+        <div class="stat-icon" aria-hidden="true">
+          <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+            <circle cx="16" cy="16" r="13" stroke="currentColor" stroke-width="1.6"/>
+            <path d="M16 9v7l4 3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <div class="stat-num-row"><div class="stat-number" data-target="10">0</div><div class="stat-suffix">+</div></div>
+        <div class="stat-label">Years Experience</div>
+      </div>
+    </div>
+
+    <!-- Stats to dark transition: brush stroke -->
+    <div class="stats-transition" aria-hidden="true">
+      <svg viewBox="0 0 1440 160" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg" style="overflow: visible;">
+        <defs>
+          <filter id="brushFilter" x="-10%" y="-10%" width="120%" height="130%">
+            <feTurbulence type="fractalNoise" baseFrequency="0.08 0.03" numOctaves="6" result="noise" seed="15"/>
+            <feDisplacementMap in="SourceGraphic" in2="noise" scale="28" xChannelSelector="R" yChannelSelector="G"/>
+          </filter>
+        </defs>
+        <path d="M-50,40 C100,20 200,80 360,50 C520,20 600,90 720,55 C840,20 960,80 1080,45 C1200,10 1340,70 1490,35 L1490,170 L-50,170 Z" 
+              fill="#141414" filter="url(#brushFilter)"/>
+      </svg>
+    </div>
+  </section>
+
+  <!-- ===================== PROCESS ===================== -->
+  <section class="process" id="process" aria-label="Our process">
+    <div class="process-inner max-w">
+      <div class="process-left">
+        <div class="section-label section-label--green" style="margin-bottom:16px;">
+          <span>OUR PROCESS</span>
+          <span class="label-line"></span>
+        </div>
+        <h2 class="process-heading uppercase">
+          A SIMPLE PROCESS<br/>FOR BIG IMPACT
+        </h2>
+        <p class="process-sub">
+          We follow a collaborative approach to ensure<br/>every project is delivered with excellence.
+        </p>
+      </div>
+
+      <div class="process-steps" aria-label="Process steps">
+        <!-- Step 1 -->
+        <div class="process-step" id="ps-1">
+          <div class="ps-header">
+            <div class="ps-circle" aria-hidden="true">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                <circle cx="10" cy="10" r="6" stroke="currentColor" stroke-width="1.5"/>
+                <path d="M15 15L20 20" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+              </svg>
+            </div>
+            <div class="ps-line"></div>
+            <div class="ps-dot"></div>
+          </div>
+          <div class="ps-number">01</div>
+          <h3 class="ps-title">DISCOVER</h3>
+          <p class="ps-desc">We understand your business, audience and goals in depth.</p>
+        </div>
+
+        <!-- Step 2 -->
+        <div class="process-step" id="ps-2">
+          <div class="ps-header">
+            <div class="ps-circle" aria-hidden="true">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                <path d="M8 8l8 8M16 8l-8 8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                <circle cx="6" cy="6" r="2" fill="currentColor"/>
+                <circle cx="18" cy="18" r="2" fill="currentColor"/>
+              </svg>
+            </div>
+            <div class="ps-line"></div>
+            <div class="ps-dot"></div>
+          </div>
+          <div class="ps-number">02</div>
+          <h3 class="ps-title">STRATEGY</h3>
+          <p class="ps-desc">We plan the right strategy to achieve measurable results.</p>
+        </div>
+
+        <!-- Step 3 -->
+        <div class="process-step" id="ps-3">
+          <div class="ps-header">
+            <div class="ps-circle" aria-hidden="true">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                <path d="M12 2L4 22l8-6 8 6L12 2z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <div class="ps-line"></div>
+            <div class="ps-dot"></div>
+          </div>
+          <div class="ps-number">03</div>
+          <h3 class="ps-title">DESIGN</h3>
+          <p class="ps-desc">We create stunning designs that align with your brand.</p>
+        </div>
+
+        <!-- Step 4 -->
+        <div class="process-step" id="ps-4">
+          <div class="ps-header">
+            <div class="ps-circle" aria-hidden="true">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                <path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+              </svg>
+            </div>
+          </div>
+          <div class="ps-number">04</div>
+          <h3 class="ps-title">DEVELOP &amp; LAUNCH</h3>
+          <p class="ps-desc">We build, test and launch products that deliver performance.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Ink wave transition to white -->
+    <div class="process-transition" aria-hidden="true">
+      <svg viewBox="0 0 1440 180" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <filter id="waveInk">
+            <feTurbulence type="turbulence" baseFrequency="0.02 0.05" numOctaves="4" result="noise" seed="22"/>
+            <feDisplacementMap in="SourceGraphic" in2="noise" scale="16" xChannelSelector="R" yChannelSelector="G"/>
+          </filter>
+        </defs>
+        <path d="M0,90 C240,20 480,160 720,70 C960,-20 1200,130 1440,50 L1440,180 L0,180 Z" 
+              fill="white" filter="url(#waveInk)"/>
+        <path d="M0,110 C280,30 560,180 840,90 C1120,0 1320,150 1440,70 L1440,180 L0,180 Z" 
+              fill="white" opacity="0.5"/>
+      </svg>
+    </div>
+  </section>
+
+  <!-- ===================== TESTIMONIALS & NEWSLETTER WRAPPER ===================== -->
+  <div class="bottom-section-wrapper">
+    <section class="testimonials" id="about" aria-label="Client testimonials">
+      <div class="testimonials-inner max-w">
+        <div class="testimonials-left">
+          <div class="section-label section-label--green" style="margin-bottom: 8px;">
+            <span>WHAT CLIENTS SAY</span>
+            <span class="label-line"></span>
+          </div>
+          <h2 class="testimonials-heading uppercase" style="font-size: 42px; margin-bottom: 12px; font-weight: 900; letter-spacing: -1px; color: #111;">
+            TRUSTED BY BRANDS<br/>
+            WE WORK WITH
+          </h2>
+          <div class="testimonials-rating-summary" style="display: flex; flex-direction: column; align-items: flex-start; gap: 8px;">
+            <div class="stars" aria-label="5 out of 5 stars" style="color: #5B8A31; font-size: 24px; letter-spacing: 2px;">
+              <span>★★★★★</span>
+            </div>
+            <span class="rating-detail" style="font-family: var(--font-secondary); font-size: 14px; font-weight: 500; color: #555;">4.9/5 from 250+ reviews</span>
+          </div>
+        </div>
+
+        <div class="testimonials-cards-wrapper" style="display: flex; align-items: center; gap: 24px;">
+          <div class="testimonials-cards" aria-label="Testimonial cards" style="display: flex; gap: 20px;">
+            <!-- Testimonial 1 -->
+            <article class="testimonial-card" id="tc-1">
+              <div class="tc-quote-icon" aria-hidden="true" style="color: #5B8A31; margin-bottom: 8px;">
+                <svg width="24" height="20" viewBox="0 0 28 20" fill="none">
+                  <path d="M0 20V11.6C0 5.2 4 1.6 12 0l1.4 2.4C8.4 3.6 5.8 6.4 5.4 11H10V20H0ZM16 20V11.6C16 5.2 20 1.6 28 0l1.4 2.4c-5 1.2-7.6 4-8 8.6H27V20H16Z" fill="currentColor"/>
+                </svg>
+              </div>
+              <p class="tc-text" style="font-family: var(--font-secondary); font-size: 14px; line-height: 1.6; color: #555; margin-bottom: 16px;">Dave Agency delivered a website that not only looks incredible but also performs beyond expectations. Highly recommended!</p>
+              <div class="tc-author" style="display: flex; align-items: center; gap: 12px; margin-top: auto;">
+                <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=100&q=80" alt="Jessica Miller" style="width: 40px; height: 40px; border-radius: 50%; object-fit: cover;">
+                <div class="tc-info">
+                  <span class="tc-name" style="display: block; font-family: var(--font-primary); font-size: 14px; font-weight: 700; color: #111;">Jessica Miller</span>
+                  <span class="tc-role" style="display: block; font-family: var(--font-secondary); font-size: 12px; color: #777;">CEO, GreenPeak</span>
+                </div>
+              </div>
+            </article>
+
+            <!-- Testimonial 2 -->
+            <article class="testimonial-card" id="tc-2">
+              <div class="tc-quote-icon" aria-hidden="true" style="color: #5B8A31; margin-bottom: 8px;">
+                <svg width="24" height="20" viewBox="0 0 28 20" fill="none">
+                  <path d="M0 20V11.6C0 5.2 4 1.6 12 0l1.4 2.4C8.4 3.6 5.8 6.4 5.4 11H10V20H0ZM16 20V11.6C16 5.2 20 1.6 28 0l1.4 2.4c-5 1.2-7.6 4-8 8.6H27V20H16Z" fill="currentColor"/>
+                </svg>
+              </div>
+              <p class="tc-text" style="font-family: var(--font-secondary); font-size: 14px; line-height: 1.6; color: #555; margin-bottom: 16px;">Professional, creative and reliable team. They truly understood our vision and turned it into reality.</p>
+              <div class="tc-author" style="display: flex; align-items: center; gap: 12px; margin-top: auto;">
+                <img src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=100&q=80" alt="Michael Brown" style="width: 40px; height: 40px; border-radius: 50%; object-fit: cover;">
+                <div class="tc-info">
+                  <span class="tc-name" style="display: block; font-family: var(--font-primary); font-size: 14px; font-weight: 700; color: #111;">Michael Brown</span>
+                  <span class="tc-role" style="display: block; font-family: var(--font-secondary); font-size: 12px; color: #777;">Founder, BrightCode</span>
+                </div>
+              </div>
+            </article>
+
+            <!-- Testimonial 3 -->
+            <article class="testimonial-card" id="tc-3">
+              <div class="tc-quote-icon" aria-hidden="true" style="color: #5B8A31; margin-bottom: 8px;">
+                <svg width="24" height="20" viewBox="0 0 28 20" fill="none">
+                  <path d="M0 20V11.6C0 5.2 4 1.6 12 0l1.4 2.4C8.4 3.6 5.8 6.4 5.4 11H10V20H0ZM16 20V11.6C16 5.2 20 1.6 28 0l1.4 2.4c-5 1.2-7.6 4-8 8.6H27V20H16Z" fill="currentColor"/>
+                </svg>
+              </div>
+              <p class="tc-text" style="font-family: var(--font-secondary); font-size: 14px; line-height: 1.6; color: #555; margin-bottom: 16px;">Their attention to detail and ability to deliver on time is what makes them our go-to digital partner.</p>
+              <div class="tc-author" style="display: flex; align-items: center; gap: 12px; margin-top: auto;">
+                <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=100&q=80" alt="David Wilson" style="width: 40px; height: 40px; border-radius: 50%; object-fit: cover;">
+                <div class="tc-info">
+                  <span class="tc-name" style="display: block; font-family: var(--font-primary); font-size: 14px; font-weight: 700; color: #111;">David Wilson</span>
+                  <span class="tc-role" style="display: block; font-family: var(--font-secondary); font-size: 12px; color: #777;">Marketing Head, Nexa</span>
+                </div>
+              </div>
+            </article>
+          </div>
+
+          <!-- Carousel Arrow Controls on the right -->
+          <div class="carousel-arrows" aria-label="Testimonial navigation" style="display: flex; flex-direction: column; gap: 12px;">
+            <button class="carousel-btn-circle" id="tc-prev" aria-label="Previous testimonial" style="width: 40px; height: 40px; border-radius: 50%; border: 1px solid rgba(0,0,0,0.1); background: white; display: flex; align-items: center; justify-content: center; cursor: pointer;">
+              <svg width="18" height="18" viewBox="0 0 18 18" fill="none" style="color: #555;">
+                <path d="M11 4L6 9l5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </button>
+            <button class="carousel-btn-circle" id="tc-next" aria-label="Next testimonial" style="width: 40px; height: 40px; border-radius: 50%; border: 1px solid rgba(0,0,0,0.1); background: white; display: flex; align-items: center; justify-content: center; cursor: pointer;">
+              <svg width="18" height="18" viewBox="0 0 18 18" fill="none" style="color: #555;">
+                <path d="M7 4l5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
+      <!-- Dash controls below cards -->
+      <div class="carousel-dashes" aria-label="Testimonial position" style="display: flex; justify-content: center; gap: 8px; margin-top: 8px; padding-left: 360px;">
+        <span class="c-dash active" style="width: 24px; height: 3px; background: #5B8A31; border-radius: 2px;"></span>
+        <span class="c-dash" style="width: 16px; height: 3px; background: rgba(0,0,0,0.2); border-radius: 2px;"></span>
+        <span class="c-dash" style="width: 16px; height: 3px; background: rgba(0,0,0,0.2); border-radius: 2px;"></span>
+      </div>
+    </section>
+
+  </div> <!-- End of bottom-section-wrapper -->
+
+  <!-- ===================== FOOTER ===================== -->
+  <footer class="footer" id="footer" aria-label="Site footer">
+    <div class="footer-inner max-w">
+      <div class="footer-col footer-brand" style="flex: 1; max-width: 300px;">
+        <a href="#" class="footer-logo" aria-label="SparrowDevLabs home">
+          <img src="assets/images/logo.png" alt="SparrowDevLabs" class="footer-logo-img" style="height: 32px; width: auto; object-fit: contain;">
+        </a>
+        <p class="footer-brand-desc" style="margin-top: 16px;">
+          We design and build digital experiences that connect people, ideas and brands.
+        </p>
+        <div class="footer-social" aria-label="Social media links">
+          <a href="#" class="social-icon" aria-label="LinkedIn"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><rect x="1.5" y="1.5" width="15" height="15" rx="3" stroke="currentColor" stroke-width="1.4"/><path d="M5 7.5v5M5 5.5v.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/><path d="M8.5 12.5V9.5c0-1.1.9-2 2-2s2 .9 2 2v3" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg></a>
+          <a href="#" class="social-icon" aria-label="Twitter / X"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M2 3h4.5L9 7 11.5 3H16L12 9.5 17 15h-4.5L10 11 7.5 15H3l4.5-6.5L2 3Z" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/></svg></a>
+          <a href="https://www.instagram.com/spar.rowlabs?igsh=dWs4eXVwa3VpbWR5" target="_blank" class="social-icon" aria-label="Instagram"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><rect x="2" y="2" width="14" height="14" rx="4" stroke="currentColor" stroke-width="1.4"/><circle cx="9" cy="9" r="3.5" stroke="currentColor" stroke-width="1.4"/><circle cx="13" cy="5" r="1" fill="currentColor"/></svg></a>
+        </div>
+      </div>
+
+      <div class="footer-form-wrapper" style="flex: 2; max-width: 500px; padding: 0 40px;">
+        <h4 class="footer-col-title" style="margin-bottom: 24px;">Start a Conversation</h4>
+        <form id="contact-form" class="footer-contact-form" style="display: flex; flex-direction: column; gap: 16px;">
+          <select id="contact-category" class="footer-input" required aria-label="Choose Category" style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; padding: 12px 16px; color: white; font-family: var(--font-secondary); outline: none;">
+            <option value="" disabled selected>Choose Category...</option>
+            <option value="web-design" style="color: black;">Web Design</option>
+            <option value="web-dev" style="color: black;">Web Development</option>
+            <option value="other" style="color: black;">Other Inquiry</option>
+          </select>
+          <input type="email" id="contact-email" class="footer-input" placeholder="Your Gmail address" required aria-label="Email address" style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; padding: 12px 16px; color: white; font-family: var(--font-secondary); outline: none;">
+          <textarea id="contact-message" class="footer-input" placeholder="Your Message" required aria-label="Message" rows="3" style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; padding: 12px 16px; color: white; font-family: var(--font-secondary); outline: none; resize: none;"></textarea>
+          <div style="display: flex; justify-content: flex-end;">
+            <button id="contact-submit" type="submit" style="background: white; color: black; border: none; border-radius: 8px; padding: 12px 24px; font-family: var(--font-primary); font-size: 13px; font-weight: 700; cursor: pointer; text-transform: uppercase;">Send Message</button>
+          </div>
+        </form>
+      </div>
+
+      <div class="footer-id-cards" style="flex: 1; max-width: 300px;">
+        <h4 class="footer-col-title" style="margin-bottom: 24px;">Key Contacts</h4>
+        <div style="display: flex; flex-direction: column; gap: 16px;">
+          <div class="id-card" style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; padding: 16px; display: flex; align-items: center; gap: 12px;">
+            <div style="width: 48px; height: 48px; border-radius: 50%; background: #333; overflow: hidden;"><img src="https://ui-avatars.com/api/?name=Anupam+Sarkar&background=random" style="width: 100%; height: 100%; object-fit: cover;"></div>
+            <div>
+              <div style="color: white; font-family: var(--font-primary); font-size: 14px; font-weight: 600;">Anupam Sarkar</div>
+              <div style="color: rgba(255,255,255,0.5); font-family: var(--font-secondary); font-size: 12px;">Project Manager</div>
+            </div>
+          </div>
+          <div class="id-card" style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; padding: 16px; display: flex; align-items: center; gap: 12px;">
+            <div style="width: 48px; height: 48px; border-radius: 50%; background: #333; overflow: hidden;"><img src="https://ui-avatars.com/api/?name=Prithibi+Mandi&background=random" style="width: 100%; height: 100%; object-fit: cover;"></div>
+            <div>
+              <div style="color: white; font-family: var(--font-primary); font-size: 14px; font-weight: 600;">Prithibi Mandi</div>
+              <div style="color: rgba(255,255,255,0.5); font-family: var(--font-secondary); font-size: 12px;">Lead Designer</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-bottom max-w">
+      <div class="footer-divider" aria-hidden="true"></div>
+      <div class="footer-bottom-inner">
+        <p class="footer-copy">© 2026 SparrowDevLabs. All rights reserved.</p>
+        <p class="footer-made">
+          Made with 
+          <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true" style="display:inline;margin:0 3px;vertical-align:middle;">
+            <path d="M6 10.5C6 10.5 1 7 1 4a2.5 2.5 0 015 0 2.5 2.5 0 015 0c0 3-5 6.5-5 6.5Z" fill="#555" stroke="#555" stroke-width="0.8"/>
+          </svg>
+          by SparrowDevLabs
+        </p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+  <!-- Toast Notification Container -->
+  <div id="toast-container" class="toast-container"></div>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
