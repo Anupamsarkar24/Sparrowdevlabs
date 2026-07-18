@@ -2332,3 +2332,68 @@ body.loading { overflow: hidden; }
     box-sizing: border-box !important;
   }
 }
+/* ABSOLUTE BULLETPROOF MOBILE FIXES */
+@media (max-width: 900px) {
+  /* Force all main containers to 100% width and stack vertically */
+  .services-inner, .projects-inner, .process-inner, .testimonials-inner, .footer-inner {
+    display: flex !important;
+    flex-direction: column !important;
+    width: 100% !important;
+    max-width: 100vw !important;
+    box-sizing: border-box !important;
+  }
+  
+  /* Force all child columns to 100% width */
+  .services-left, .services-grid, .services-cards,
+  .projects-left, .projects-cards-wrapper,
+  .process-left, .process-steps,
+  .testimonials-left, .testimonials-cards-wrapper,
+  .footer-left, .footer-right {
+    flex: none !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+
+  /* Force word wrapping to prevent horizontal squishing */
+  .section-heading, .section-desc, .hero-title, .ps-desc, .sc-desc, .ps-title {
+    word-wrap: break-word !important;
+    white-space: normal !important;
+    max-width: 100% !important;
+  }
+
+  /* Stats Grid Explicit Fix */
+  .stats-inner {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+    gap: 16px !important;
+  }
+  .stat-item {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    grid-column: auto !important; /* Override the nth-child grid-column styles from desktop */
+    width: 100% !important;
+  }
+  .stat-item:nth-child(1), .stat-item:nth-child(3), .stat-item:nth-child(5) {
+    grid-column: auto !important; /* Erase desktop specific placement */
+  }
+
+  /* Process Steps Align Fix */
+  .process-step {
+    display: grid !important;
+    grid-template-columns: 48px 1fr !important;
+    gap: 16px !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+  }
+  .ps-header {
+    grid-column: 1 / 2 !important;
+    grid-row: 1 / 4 !important;
+  }
+}
