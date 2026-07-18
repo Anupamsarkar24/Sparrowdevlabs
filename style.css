@@ -2415,3 +2415,16 @@ body.loading { overflow: hidden; }
     z-index: 10 !important;
   }
 }
+/* FIX SVG FILTER TEARING EDGES ON MOBILE */
+@media (max-width: 900px) {
+  .services-transition, .projects-transition, .stats-transition, .process-transition, .testimonials-transition {
+    margin-left: -30px !important;
+    margin-right: -30px !important;
+    width: calc(100% + 60px) !important;
+    margin-bottom: -25px !important;
+  }
+  .services-transition svg, .projects-transition svg, .stats-transition svg, .process-transition svg, .testimonials-transition svg {
+    width: 100% !important;
+    transform: scale(1.05) translateY(10px);
+  }
+}
