@@ -2245,3 +2245,90 @@ body.loading { overflow: hidden; }
     max-width: 100% !important;
   }
 }
+/* FIX INDIVIDUAL COMPONENT OVERFLOWS & ALIGNMENTS */
+@media (max-width: 768px) {
+  /* Fix Process Steps Overlapping */
+  .process-step {
+    display: grid !important;
+    grid-template-columns: 40px 1fr !important;
+    column-gap: 20px !important;
+    row-gap: 4px !important;
+    align-items: start !important;
+    text-align: left !important;
+    padding: 0 !important;
+    z-index: 1;
+  }
+  .ps-header {
+    grid-column: 1 / 2 !important;
+    grid-row: 1 / 4 !important;
+    margin: 0 !important;
+  }
+  .ps-number {
+    grid-column: 2 / 3 !important;
+    grid-row: 1 / 2 !important;
+    margin: 0 !important;
+    font-size: 12px !important;
+  }
+  .ps-title {
+    grid-column: 2 / 3 !important;
+    grid-row: 2 / 3 !important;
+    margin: 0 !important;
+  }
+  .ps-desc {
+    grid-column: 2 / 3 !important;
+    grid-row: 3 / 4 !important;
+    margin: 0 !important;
+  }
+  .process-steps::before {
+    left: 20px !important;
+  }
+  .ps-circle {
+    background: #141414 !important;
+  }
+
+  /* Fix Stats Overflow */
+  .stats-inner {
+    width: 100% !important;
+    box-sizing: border-box !important;
+    padding: 20px 15px !important;
+    gap: 12px !important;
+  }
+  .stat-item {
+    min-width: 0 !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+    padding: 12px !important;
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    gap: 8px !important;
+  }
+  .stat-number {
+    font-size: 20px !important;
+  }
+  .stat-label {
+    font-size: 9px !important;
+    line-height: 1.2 !important;
+  }
+  .stat-icon {
+    width: 24px !important;
+    height: 24px !important;
+    flex-shrink: 0 !important;
+  }
+
+  /* Fix Testimonials Overflow */
+  .testimonials-cards-wrapper {
+    width: 100% !important;
+    max-width: 100vw !important;
+    overflow: hidden !important;
+  }
+  .testimonials-cards {
+    box-sizing: border-box !important;
+    width: 100% !important;
+  }
+  .testimonial-card {
+    min-width: 85vw !important;
+    max-width: 85vw !important;
+    box-sizing: border-box !important;
+  }
+}
