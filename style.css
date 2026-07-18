@@ -2481,3 +2481,31 @@ body.loading { overflow: hidden; }
     border-radius: 24px !important;
   }
 }
+/* MOBILE NAVBAR MENU FIX */
+@media (max-width: 900px) {
+  .navbar.menu-open .nav-links {
+    display: flex !important;
+    position: absolute;
+    top: 60px;
+    left: 10px;
+    right: 10px;
+    background: #141414;
+    border-radius: 16px;
+    padding: 24px;
+    flex-direction: column !important;
+    gap: 24px !important;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+  }
+  .navbar.menu-open .nav-link {
+    font-size: 18px !important;
+    color: white !important;
+    text-align: center;
+    display: block;
+  }
+  .nav-hamburger {
+    cursor: pointer;
+    z-index: 1001;
+  }
+}

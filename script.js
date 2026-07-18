@@ -971,3 +971,26 @@ function showToast(message, type = 'info') {
     }, 400); // Wait for transition out
   }, 4000);
 }
+
+/* ============================================================
+   12. MOBILE HAMBURGER MENU
+   ============================================================ */
+function initMobileMenu() {
+  const hamburger = document.querySelector('.nav-hamburger');
+  const navbar = document.getElementById('navbar');
+  const navLinks = document.querySelectorAll('.nav-link, .nav-cta');
+
+  if (!hamburger || !navbar) return;
+
+  hamburger.addEventListener('click', () => {
+    navbar.classList.toggle('menu-open');
+  });
+
+  navLinks.forEach(link => {
+    link.addEventListener('click', () => {
+      navbar.classList.remove('menu-open');
+    });
+  });
+}
+
+document.addEventListener('DOMContentLoaded', initMobileMenu);
