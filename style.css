@@ -2447,3 +2447,31 @@ body.loading { overflow: hidden; }
     transform: none !important;
   }
 }
+/* FIX TESTIMONIAL CAROUSEL MOBILE ALIGNMENT */
+@media (max-width: 900px) {
+  .carousel-arrows, .carousel-dashes, .testimonials-nav {
+    display: none !important;
+  }
+  .testimonials-cards-wrapper {
+    display: block !important;
+    width: 100vw !important;
+    margin-left: -20px !important; /* Pull out of max-w padding to allow edge-to-edge scroll */
+    padding-left: 20px !important;
+    padding-right: 20px !important;
+    box-sizing: border-box !important;
+    overflow: visible !important;
+  }
+  .testimonials-cards {
+    display: flex !important;
+    overflow-x: auto !important;
+    gap: 16px !important;
+    padding: 10px 0 !important; /* Remove internal padding to prevent misalignment */
+    scroll-snap-type: x mandatory !important;
+    -webkit-overflow-scrolling: touch !important;
+  }
+  .testimonial-card {
+    min-width: 85vw !important;
+    max-width: 85vw !important;
+    scroll-snap-align: center !important;
+  }
+}
