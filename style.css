@@ -2407,3 +2407,11 @@ body.loading { overflow: hidden; }
     padding-right: var(--gutter) !important;
   }
 }
+/* FIX OVERLAPPING STICKY HEADINGS ON MOBILE */
+@media (max-width: 900px) {
+  .services-left, .projects-left, .process-left, .testimonials-left {
+    position: relative !important;
+    top: auto !important;
+    z-index: 10 !important;
+  }
+}
