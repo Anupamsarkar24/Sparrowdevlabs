@@ -2219,3 +2219,29 @@ body.loading { overflow: hidden; }
     font-size: 12px !important;
   }
 }
+/* FIX ALL MULTI-COLUMN LAYOUTS ON MOBILE */
+@media (max-width: 768px) {
+  .services-inner,
+  .projects-inner,
+  .process-inner,
+  .testimonials-inner {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 32px !important;
+  }
+
+  .services-left,
+  .projects-left,
+  .process-left,
+  .testimonials-left {
+    flex: 0 0 auto !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    text-align: left !important;
+  }
+  
+  /* Minor layout tweaks to avoid cut-off text */
+  .projects-desc, .process-desc {
+    max-width: 100% !important;
+  }
+}
