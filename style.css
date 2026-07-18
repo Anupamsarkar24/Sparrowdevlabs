@@ -2428,3 +2428,22 @@ body.loading { overflow: hidden; }
     transform: scale(1.05) translateY(10px);
   }
 }
+/* FIX ROGUE MOBILE SECTION PADDING CAUSING GAPS */
+@media (max-width: 900px) {
+  .services, .projects, .process, .testimonials, .stats {
+    padding-bottom: 0 !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+  
+  /* Readjust transition to bridge cleanly */
+  .services-transition, .projects-transition, .stats-transition, .process-transition, .testimonials-transition {
+    margin-left: -10px !important;
+    margin-right: -10px !important;
+    width: calc(100% + 20px) !important;
+    margin-bottom: -5px !important;
+  }
+  .services-transition svg, .projects-transition svg, .stats-transition svg, .process-transition svg, .testimonials-transition svg {
+    transform: none !important;
+  }
+}
