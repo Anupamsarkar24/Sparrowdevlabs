@@ -2089,3 +2089,133 @@ body.loading { overflow: hidden; }
   .testimonials-transition svg { height: 70px !important; }
 }
 
+/* ADDITIONAL MOBILE REFINEMENTS (SERVICES, TESTIMONIALS, FOOTER) */
+@media (max-width: 768px) {
+  /* Services Horizontal Layout */
+  .services-cards {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 16px !important;
+  }
+  .service-card {
+    display: grid !important;
+    grid-template-columns: 50px 1fr 30px !important;
+    grid-template-rows: auto auto !important;
+    column-gap: 16px !important;
+    row-gap: 4px !important;
+    align-items: center !important;
+    text-align: left !important;
+    padding: 20px 16px !important;
+    background: white !important;
+    border-radius: 16px !important;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05) !important;
+    height: auto !important;
+  }
+  .sc-icon {
+    grid-column: 1 / 2 !important;
+    grid-row: 1 / 3 !important;
+    margin: 0 !important;
+    width: 48px !important;
+    height: 48px !important;
+    background: transparent !important;
+    color: #4CAF50 !important; /* Green icon */
+  }
+  .sc-title {
+    grid-column: 2 / 3 !important;
+    grid-row: 1 / 2 !important;
+    margin: 0 !important;
+    font-size: 14px !important;
+    font-weight: 800 !important;
+  }
+  .sc-desc {
+    grid-column: 2 / 3 !important;
+    grid-row: 2 / 3 !important;
+    margin: 0 !important;
+    font-size: 11px !important;
+    line-height: 1.4 !important;
+  }
+  .sc-bottom {
+    grid-column: 3 / 4 !important;
+    grid-row: 1 / 3 !important;
+    display: flex !important;
+    justify-content: flex-end !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border: none !important;
+  }
+  .sc-index {
+    display: none !important; /* Hide number index on mobile */
+  }
+  .sc-arrow {
+    transform: none !important;
+    opacity: 1 !important;
+    width: 24px !important;
+    height: 24px !important;
+    background: transparent !important;
+    color: #141414 !important;
+  }
+
+  /* Testimonials Carousel */
+  .testimonials-cards {
+    display: flex !important;
+    flex-direction: row !important;
+    flex-wrap: nowrap !important;
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+    scroll-snap-type: x mandatory !important;
+    gap: 16px !important;
+    padding: 0 20px 20px !important;
+  }
+  .testimonial-card {
+    min-width: 90% !important;
+    scroll-snap-align: center !important;
+  }
+  .testimonials-nav {
+    display: none !important;
+  }
+
+  /* Process Timeline Alignment */
+  .process-steps::before {
+    left: 48px !important; /* Center the line behind the 48px icons */
+  }
+
+  /* Footer Refinements */
+  .footer-inner {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 48px !important;
+  }
+  .footer-left, .footer-right {
+    width: 100% !important;
+  }
+  .team-members {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 16px !important;
+  }
+  .team-member {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    gap: 16px !important;
+    background: rgba(255,255,255,0.03) !important;
+    padding: 16px !important;
+    border-radius: 16px !important;
+    border: 1px solid rgba(255,255,255,0.05) !important;
+  }
+  .tm-avatar {
+    width: 48px !important;
+    height: 48px !important;
+    margin: 0 !important;
+  }
+  .tm-info {
+    text-align: left !important;
+  }
+  .tm-name {
+    font-size: 16px !important;
+    margin-bottom: 4px !important;
+  }
+  .tm-role {
+    font-size: 12px !important;
+  }
+}
