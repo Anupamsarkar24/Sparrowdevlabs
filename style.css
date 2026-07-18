@@ -2475,3 +2475,9 @@ body.loading { overflow: hidden; }
     scroll-snap-align: center !important;
   }
 }
+/* INCREASE BORDER RADIUS FOR CARDS ON MOBILE */
+@media (max-width: 900px) {
+  .testimonial-card, .service-card, .project-card, .stat-item {
+    border-radius: 24px !important;
+  }
+}
