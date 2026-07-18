@@ -363,7 +363,7 @@ function initScrollReveal() {
         });
       }
     });
-  }, { threshold: 0.1 });
+  }, { threshold: 0 });
   const servicesSection = document.querySelector('.services-cards');
   if (servicesSection) serviceObserver.observe(servicesSection);
 
@@ -377,7 +377,7 @@ function initScrollReveal() {
         });
       }
     });
-  }, { threshold: 0.1 });
+  }, { threshold: 0 });
   const processSection = document.querySelector('.process-steps');
   if (processSection) processObserver.observe(processSection);
 
@@ -391,7 +391,7 @@ function initScrollReveal() {
         });
       }
     });
-  }, { threshold: 0.1 });
+  }, { threshold: 0 });
   const projSection = document.querySelector('.projects-cards');
   if (projSection) projObserver.observe(projSection);
 
@@ -405,7 +405,7 @@ function initScrollReveal() {
         });
       }
     });
-  }, { threshold: 0.1 });
+  }, { threshold: 0 });
   const tcSection = document.querySelector('.testimonials-cards');
   if (tcSection) tcObserver.observe(tcSection);
 
@@ -813,7 +813,7 @@ document.head.appendChild(rippleStyle);
         });
       }
     });
-  }, { threshold: 0.3 });
+  }, { threshold: 0 });
 
   const processSection = document.querySelector('.process-steps');
   if (processSection) {
