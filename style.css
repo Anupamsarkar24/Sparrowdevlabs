@@ -1953,3 +1953,12 @@ body.loading { overflow: hidden; }
     min-height: 70vh !important;
   }
 }
+/* FIX MOBILE TRANSITION GAPS */
+@media (max-width: 768px) {
+  .hero-transition svg { height: 60px !important; }
+  .services-transition svg { height: 70px !important; }
+  .projects-transition svg { height: 40px !important; }
+  .stats-transition svg { height: 60px !important; }
+  .process-transition svg { height: 70px !important; }
+  .testimonials-transition svg { height: 70px !important; }
+}
