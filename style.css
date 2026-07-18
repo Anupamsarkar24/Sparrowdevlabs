@@ -1914,3 +1914,42 @@ body.loading { overflow: hidden; }
     display: none !important;
   }
 }
+/* OVERRIDE ALL MOBILE ISSUES */
+@media (max-width: 768px) {
+  /* 1. Force all animated cards to be visible instantly */
+  .service-card, .project-card, .process-step, .testimonial-card, .stat-item, .services-left, .process-left, .projects-left {
+    opacity: 1 !important;
+    transform: none !important;
+    animation: none !important;
+    visibility: visible !important;
+  }
+  
+  /* 2. Fix Navbar squishing */
+  .navbar {
+    width: 95% !important;
+    padding: 10px 15px !important;
+    height: auto !important;
+  }
+  .nav-inner {
+    flex-wrap: nowrap !important;
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch;
+    justify-content: flex-start !important;
+    padding-bottom: 5px; /* for scrollbar */
+  }
+  .nav-links {
+    flex-wrap: nowrap !important;
+    white-space: nowrap !important;
+  }
+  .nav-btn {
+    display: none !important;
+  }
+
+  /* 3. Fix Hero Text Cutoff */
+  .hero-image-overlay {
+    object-position: center 10% !important;
+  }
+  .hero {
+    min-height: 70vh !important;
+  }
+}
