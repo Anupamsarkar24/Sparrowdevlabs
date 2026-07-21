@@ -2,7 +2,7 @@ User-agent: *
 Allow: /
 
 # Sitemap location
-Sitemap: https://sparrowdevlabs.vercel.app/sitemap.xml
+Sitemap: https://sparrow-dev-labs.vercel.app/sitemap.xml
 
 # Crawl delay (optional, helps manage server load)
 Crawl-delay: 5

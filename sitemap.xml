@@ -6,7 +6,7 @@
 
   <!-- Homepage (root) -->
   <url>
-    <loc>https://sparrowdevlabs.vercel.app/</loc>
+    <loc>https://sparrow-dev-labs.vercel.app/</loc>
     <lastmod>2026-07-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
@@ -14,7 +14,7 @@
 
   <!-- Services Section -->
   <url>
-    <loc>https://sparrowdevlabs.vercel.app/#services</loc>
+    <loc>https://sparrow-dev-labs.vercel.app/#services</loc>
     <lastmod>2026-07-21</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
@@ -22,7 +22,7 @@
 
   <!-- Our Work / Portfolio Section -->
   <url>
-    <loc>https://sparrowdevlabs.vercel.app/#work</loc>
+    <loc>https://sparrow-dev-labs.vercel.app/#work</loc>
     <lastmod>2026-07-21</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
@@ -30,7 +30,7 @@
 
   <!-- Process Section -->
   <url>
-    <loc>https://sparrowdevlabs.vercel.app/#process</loc>
+    <loc>https://sparrow-dev-labs.vercel.app/#process</loc>
     <lastmod>2026-07-21</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
@@ -38,7 +38,7 @@
 
   <!-- About Section -->
   <url>
-    <loc>https://sparrowdevlabs.vercel.app/#about</loc>
+    <loc>https://sparrow-dev-labs.vercel.app/#about</loc>
     <lastmod>2026-07-21</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
@@ -46,7 +46,7 @@
 
   <!-- Contact / Footer Section -->
   <url>
-    <loc>https://sparrowdevlabs.vercel.app/#footer</loc>
+    <loc>https://sparrow-dev-labs.vercel.app/#footer</loc>
     <lastmod>2026-07-21</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
