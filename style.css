@@ -2607,45 +2607,47 @@ body.loading { overflow: hidden; }
    ============================================================ */
 .membership {
   background: #f7f7fb;
-  padding: 80px 0 100px;
+  padding: 48px 0;
 }
 
+/* Two-column layout: Left text, Right cards */
 .membership-inner {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
-  gap: 48px;
+  gap: 40px;
 }
 
-/* Centered header */
+/* Left column header */
 .membership-header {
-  text-align: center;
-  max-width: 560px;
+  flex: 0 0 280px;
+  max-width: 280px;
+  text-align: left;
 }
 
 .membership-title {
   font-family: var(--font-primary);
-  font-size: 42px;
+  font-size: 34px;
   font-weight: 900;
   letter-spacing: -1.5px;
   color: #111;
-  margin-bottom: 12px;
+  margin-bottom: 10px;
   line-height: 1.1;
 }
 
 .membership-subtitle {
   font-family: var(--font-secondary);
-  font-size: 15px;
-  color: #777;
-  line-height: 1.6;
+  font-size: 13.5px;
+  color: #666;
+  line-height: 1.5;
 }
 
-/* ---- 3-col card grid ---- */
+/* Right column cards container */
 .membership-cards {
+  flex: 1;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 20px;
-  width: 100%;
+  gap: 16px;
   align-items: stretch;
 }
 
@@ -2653,20 +2655,20 @@ body.loading { overflow: hidden; }
 .plan-card {
   position: relative;
   background: #fff;
-  border-radius: 20px;
-  padding: 24px;
+  border-radius: 18px;
+  padding: 20px 18px;
   display: flex;
   flex-direction: column;
-  gap: 14px;
+  gap: 10px;
   border: 1.5px solid rgba(0,0,0,0.06);
-  box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+  box-shadow: 0 4px 16px rgba(0,0,0,0.05);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   overflow: hidden;
 }
 
 .plan-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 14px 40px rgba(0,0,0,0.1);
+  transform: translateY(-4px);
+  box-shadow: 0 12px 32px rgba(0,0,0,0.1);
 }
 
 /* ---- Top row: icon+name LEFT, gift box RIGHT ---- */
@@ -2674,19 +2676,19 @@ body.loading { overflow: hidden; }
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
-  gap: 8px;
+  gap: 6px;
 }
 
 .plan-top-left {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 8px;
 }
 
 .plan-icon-circle {
-  width: 36px;
-  height: 36px;
-  border-radius: 10px;
+  width: 30px;
+  height: 30px;
+  border-radius: 8px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -2699,19 +2701,19 @@ body.loading { overflow: hidden; }
 
 .plan-name {
   font-family: var(--font-primary);
-  font-size: 13px;
+  font-size: 12px;
   font-weight: 800;
-  letter-spacing: 2px;
+  letter-spacing: 1.5px;
   color: #333;
 }
 
 /* Gift box image top-right */
 .plan-giftbox {
-  width: 80px;
-  height: 80px;
+  width: 60px;
+  height: 60px;
   object-fit: contain;
-  margin-top: -8px;
-  margin-right: -8px;
+  margin-top: -6px;
+  margin-right: -6px;
   flex-shrink: 0;
 }
 
@@ -2724,264 +2726,6 @@ body.loading { overflow: hidden; }
   display: flex;
   align-items: baseline;
   gap: 2px;
-}
-
-.plan-currency {
-  font-family: var(--font-primary);
-  font-size: 18px;
-  font-weight: 700;
-  color: #111;
-}
-
-.plan-amount {
-  font-family: var(--font-primary);
-  font-size: 40px;
-  font-weight: 900;
-  letter-spacing: -2px;
-  color: #111;
-  line-height: 1;
-}
-
-.plan-period {
-  font-family: var(--font-secondary);
-  font-size: 13px;
-  color: #999;
-  margin-left: 2px;
-}
-
-/* ---- Tagline ---- */
-.plan-tagline {
-  font-family: var(--font-secondary);
-  font-size: 13px;
-  color: #666;
-  line-height: 1.5;
-  margin-top: -6px;
-}
-
-/* ---- Divider ---- */
-.plan-divider {
-  border: none;
-  border-top: 1px solid rgba(0,0,0,0.08);
-  margin: 0;
-}
-
-.plan-divider--light {
-  border-top-color: rgba(255,255,255,0.15);
-}
-
-/* ---- Features: 2-column grid ---- */
-.plan-features {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 8px 12px;
-  flex: 1;
-}
-
-.plan-features li {
-  font-family: var(--font-secondary);
-  font-size: 12px;
-  color: #444;
-  display: flex;
-  align-items: center;
-  gap: 6px;
-}
-
-/* Coloured check circles */
-.plan-check {
-  width: 18px;
-  height: 18px;
-  border-radius: 50%;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 9px;
-  font-weight: 700;
-  flex-shrink: 0;
-}
-
-.plan-check--purple { background: rgba(124,58,237,0.12); color: #7c3aed; }
-.plan-check--white  { background: rgba(255,255,255,0.25); color: #fff; }
-.plan-check--gold   { background: rgba(217,119,6,0.12);  color: #d97706; }
-
-/* "+X more" row */
-.plan-more {
-  font-family: var(--font-secondary);
-  font-size: 12px;
-  color: #7c3aed;
-  font-weight: 600;
-  grid-column: 1 / -1;
-}
-
-.plan-more--light {
-  color: rgba(255,255,255,0.7);
-}
-
-/* ---- CTA Buttons ---- */
-.plan-cta {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  padding: 12px 20px;
-  border-radius: 100px;
-  font-family: var(--font-secondary);
-  font-size: 12px;
-  font-weight: 700;
-  letter-spacing: 1px;
-  text-decoration: none;
-  transition: all 0.3s ease;
-  margin-top: auto;
-}
-
-.plan-cta--outline { background: transparent; }
-.plan-cta--purple  { border: 1.5px solid #7c3aed; color: #7c3aed; }
-.plan-cta--purple:hover { background: #7c3aed; color: #fff; }
-
-.plan-cta--gold    { border: 1.5px solid #d97706; color: #d97706; }
-.plan-cta--gold:hover { background: #d97706; color: #fff; }
-
-.plan-cta--solid   { border: none; }
-.plan-cta--white   { background: #fff; color: #7c3aed; }
-.plan-cta--white:hover { background: rgba(255,255,255,0.85); }
-
-/* ---- PRO featured (purple dark) ---- */
-.plan-featured {
-  background: linear-gradient(145deg, #7c3aed, #5b21b6);
-  border-color: transparent;
-  box-shadow: 0 16px 48px rgba(124,58,237,0.35);
-}
-
-.plan-featured .plan-name    { color: rgba(255,255,255,0.85); }
-.plan-featured .plan-currency,
-.plan-featured .plan-amount  { color: #fff; }
-.plan-featured .plan-period  { color: rgba(255,255,255,0.55); }
-.plan-featured .plan-tagline { color: rgba(255,255,255,0.65); }
-.plan-featured .plan-features li { color: rgba(255,255,255,0.85); }
-
-/* ---- MOST POPULAR diagonal ribbon ---- */
-.plan-popular-ribbon {
-  position: absolute;
-  top: 18px;
-  right: -24px;
-  background: #fff;
-  color: #7c3aed;
-  font-family: var(--font-secondary);
-  font-size: 8px;
-  font-weight: 800;
-  letter-spacing: 1.5px;
-  padding: 4px 36px;
-  transform: rotate(45deg);
-  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
-}
-
-/* ---- Legend gold price ---- */
-.plan-currency--gold,
-.plan-amount--gold {
-  background: linear-gradient(135deg, #c9a227, #f0c040);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-/* ---- Mobile ---- */
-@media (max-width: 900px) {
-  .membership { padding: 60px 0; }
-  .membership-title { font-size: 32px; }
-  .membership-cards {
-    grid-template-columns: 1fr;
-    max-width: 380px;
-    margin: 0 auto;
-  }
-  .plan-featured { order: -1; }
-  .plan-card { border-radius: 20px !important; }
-  .plan-features { grid-template-columns: 1fr; }
-}
-  position: relative;
-  overflow: hidden;
-}
-
-/* Two-column: left heading | right cards */
-.membership-inner {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  gap: 56px;
-}
-
-/* Left column */
-.membership-header {
-  flex: 0 0 300px;
-  max-width: 300px;
-}
-
-.membership-title {
-  font-family: var(--font-primary);
-  font-size: 38px;
-  font-weight: 900;
-  letter-spacing: -1.5px;
-  line-height: 1.05;
-  color: #111;
-  margin-bottom: 12px;
-}
-
-.membership-subtitle {
-  font-family: var(--font-secondary);
-  font-size: 13px;
-  color: #666;
-  line-height: 1.6;
-}
-
-/* Right column: 3 compact cards */
-.membership-cards {
-  flex: 1;
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 14px;
-  align-items: stretch;
-}
-
-/* ---- Base plan card (compact) ---- */
-.plan-card {
-  position: relative;
-  background: #fff;
-  border-radius: 20px;
-  padding: 22px 20px;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  border: 1.5px solid rgba(0,0,0,0.07);
-  box-shadow: 0 2px 12px rgba(0,0,0,0.05);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  overflow: hidden;
-}
-
-.plan-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 10px 32px rgba(0,0,0,0.1);
-}
-
-/* ---- Icon (hidden for compactness) ---- */
-.plan-icon { display: none; }
-
-/* ---- Badge ---- */
-.plan-badge {
-  font-family: var(--font-primary);
-  font-size: 10px;
-  font-weight: 800;
-  letter-spacing: 3px;
-  color: #888;
-  text-transform: uppercase;
-}
-
-/* ---- Price ---- */
-.plan-price {
-  display: flex;
-  align-items: baseline;
-  gap: 2px;
-  line-height: 1;
 }
 
 .plan-currency {
@@ -3004,74 +2748,81 @@ body.loading { overflow: hidden; }
   font-family: var(--font-secondary);
   font-size: 12px;
   color: #999;
+  margin-left: 2px;
 }
 
 /* ---- Tagline ---- */
 .plan-tagline {
   font-family: var(--font-secondary);
-  font-size: 11px;
-  color: #777;
+  font-size: 11.5px;
+  color: #666;
   line-height: 1.4;
   margin-top: -4px;
-  padding-bottom: 12px;
-  border-bottom: 1px solid rgba(0,0,0,0.07);
 }
 
-/* ---- Features list ---- */
+/* ---- Divider ---- */
+.plan-divider {
+  border: none;
+  border-top: 1px solid rgba(0,0,0,0.08);
+  margin: 0;
+}
+
+.plan-divider--light {
+  border-top-color: rgba(255,255,255,0.15);
+}
+
+/* ---- Features: 2-column grid ---- */
 .plan-features {
   list-style: none;
   padding: 0;
   margin: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px 8px;
   flex: 1;
 }
 
 .plan-features li {
   font-family: var(--font-secondary);
-  font-size: 11.5px;
+  font-size: 11px;
   color: #444;
   display: flex;
   align-items: center;
-  gap: 7px;
+  gap: 5px;
 }
 
+/* Coloured check circles */
 .plan-check {
-  width: 16px;
-  height: 16px;
+  width: 15px;
+  height: 15px;
   border-radius: 50%;
-  background: rgba(91,138,49,0.12);
-  color: #5B8A31;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  font-size: 9px;
+  font-size: 8px;
   font-weight: 700;
   flex-shrink: 0;
 }
 
-.plan-cross {
-  width: 16px;
-  height: 16px;
-  border-radius: 50%;
-  background: rgba(0,0,0,0.05);
-  color: #bbb;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 9px;
-  font-weight: 700;
-  flex-shrink: 0;
+.plan-check--purple { background: rgba(124,58,237,0.12); color: #7c3aed; }
+.plan-check--white  { background: rgba(255,255,255,0.25); color: #fff; }
+.plan-check--gold   { background: rgba(217,119,6,0.12);  color: #d97706; }
+
+/* "+X more" row */
+.plan-more {
+  font-family: var(--font-secondary);
+  font-size: 11px;
+  color: #7c3aed;
+  font-weight: 600;
+  grid-column: 1 / -1;
 }
 
-.plan-features li:has(.plan-cross) {
-  opacity: 0.45;
+.plan-more--light {
+  color: rgba(255,255,255,0.7);
 }
 
 /* ---- CTA Buttons ---- */
 .plan-cta {
-  margin-top: 4px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -3081,112 +2832,83 @@ body.loading { overflow: hidden; }
   font-family: var(--font-secondary);
   font-size: 11px;
   font-weight: 700;
-  letter-spacing: 1px;
+  letter-spacing: 0.5px;
   text-decoration: none;
   transition: all 0.3s ease;
+  margin-top: auto;
 }
 
-.plan-cta--outline {
-  border: 1.5px solid rgba(0,0,0,0.15);
-  color: #111;
-  background: transparent;
-}
+.plan-cta--outline { background: transparent; }
+.plan-cta--purple  { border: 1.5px solid #7c3aed; color: #7c3aed; }
+.plan-cta--purple:hover { background: #7c3aed; color: #fff; }
 
-.plan-cta--outline:hover {
-  border-color: #5B8A31;
-  color: #5B8A31;
-  background: rgba(91,138,49,0.05);
-}
+.plan-cta--gold    { border: 1.5px solid #d97706; color: #d97706; }
+.plan-cta--gold:hover { background: #d97706; color: #fff; }
 
-.plan-cta--solid {
-  background: #141414;
-  color: #fff;
-  border: 1.5px solid #141414;
-}
+.plan-cta--solid   { border: none; }
+.plan-cta--white   { background: #fff; color: #7c3aed; }
+.plan-cta--white:hover { background: rgba(255,255,255,0.85); }
 
-.plan-cta--solid:hover {
-  background: #5B8A31;
-  border-color: #5B8A31;
-}
-
-/* ---- PRO (Featured) dark card ---- */
+/* ---- PRO featured (purple dark) ---- */
 .plan-featured {
-  background: #141414;
-  border-color: #141414;
-  box-shadow: 0 12px 40px rgba(0,0,0,0.22);
+  background: linear-gradient(145deg, #7c3aed, #5b21b6);
+  border-color: transparent;
+  box-shadow: 0 12px 36px rgba(124,58,237,0.3);
 }
 
-.plan-featured .plan-badge  { color: rgba(255,255,255,0.4); }
+.plan-featured .plan-name    { color: rgba(255,255,255,0.9); }
 .plan-featured .plan-currency,
-.plan-featured .plan-amount { color: #fff; }
-.plan-featured .plan-period { color: rgba(255,255,255,0.45); }
-.plan-featured .plan-tagline {
-  color: rgba(255,255,255,0.45);
-  border-bottom-color: rgba(255,255,255,0.1);
-}
-.plan-featured .plan-features li { color: rgba(255,255,255,0.8); }
-.plan-featured .plan-cross {
-  background: rgba(255,255,255,0.07);
-  color: rgba(255,255,255,0.25);
-}
+.plan-featured .plan-amount  { color: #fff; }
+.plan-featured .plan-period  { color: rgba(255,255,255,0.55); }
+.plan-featured .plan-tagline { color: rgba(255,255,255,0.65); }
+.plan-featured .plan-features li { color: rgba(255,255,255,0.85); }
 
-/* ---- Most Popular ribbon ---- */
-.plan-popular-badge {
+/* ---- MOST POPULAR diagonal ribbon ---- */
+.plan-popular-ribbon {
   position: absolute;
   top: 14px;
-  right: -26px;
-  background: #5B8A31;
-  color: #fff;
+  right: -24px;
+  background: #fff;
+  color: #7c3aed;
   font-family: var(--font-secondary);
-  font-size: 8px;
-  font-weight: 700;
-  letter-spacing: 2px;
-  padding: 4px 32px;
+  font-size: 7.5px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  padding: 3px 30px;
   transform: rotate(45deg);
+  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
 }
 
-/* ---- Legend gold accent ---- */
-.plan-legend .plan-amount,
-.plan-legend .plan-currency {
-  background: linear-gradient(135deg, #c9a227, #f0d060);
+/* ---- Legend gold price ---- */
+.plan-currency--gold,
+.plan-amount--gold {
+  background: linear-gradient(135deg, #c9a227, #f0c040);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
 
-/* ---- Mobile: stack vertically ---- */
+/* ---- Mobile ---- */
 @media (max-width: 900px) {
-  .membership {
-    padding: 60px 0;
-  }
+  .membership { padding: 48px 0; }
   .membership-inner {
     flex-direction: column;
-    gap: 32px;
+    gap: 28px;
+    align-items: flex-start;
   }
   .membership-header {
     flex: none;
     max-width: 100%;
     width: 100%;
+    text-align: left;
   }
-  .membership-title {
-    font-size: 32px;
-  }
+  .membership-title { font-size: 28px; }
   .membership-cards {
     grid-template-columns: 1fr;
+    max-width: 380px;
     width: 100%;
-    max-width: 360px;
     margin: 0 auto;
   }
-  .plan-card {
-    border-radius: 20px !important;
-  }
-  .plan-featured {
-    transform: scale(1);
-    order: -1;
-  }
-  .plan-featured:hover {
-  }
-  .plan-card {
-    border-radius: 24px !important;
-  }
+  .plan-featured { order: -1; }
+  .plan-card { border-radius: 18px !important; }
 }
