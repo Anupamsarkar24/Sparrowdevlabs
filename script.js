@@ -1372,11 +1372,19 @@ document.addEventListener('DOMContentLoaded', () => {
             }
             const dateAndDayDisplay = sub.startDate + (dayOfWeekStr ? ` (${dayOfWeekStr})` : '');
 
+            let giftImgSrc = 'assets/images/giftbox-beginner.png';
+            const planUpper = (sub.plan || '').toUpperCase();
+            if (planUpper.includes('PRO')) giftImgSrc = 'assets/images/giftbox-pro.png';
+            else if (planUpper.includes('LEGEND')) giftImgSrc = 'assets/images/giftbox-legend.png';
+
             activeView.innerHTML = `
               <span class="active-sub-badge">ACTIVE SUBSCRIPTION FOUND</span>
+              <div class="active-sub-giftbox-container">
+                <img src="${giftImgSrc}" alt="${sub.plan} Gift" class="active-sub-giftbox-img" />
+              </div>
               <div class="active-sub-row"><span class="label">Gmail Address:</span><span class="value">${sub.email}</span></div>
               <div class="active-sub-row"><span class="label">Active Plan:</span><span class="value">${sub.plan}</span></div>
-              <div class="active-sub-row"><span class="label">Plan Price:</span><span class="value">${sub.price || '₹1 / month'}</span></div>
+              <div class="active-sub-row"><span class="label">Plan Price:</span><span class="value">${sub.price || '₹999 / month'}</span></div>
               <div class="active-sub-row"><span class="label">Date & Day Bought:</span><span class="value">${dateAndDayDisplay}</span></div>
               <div class="active-sub-row"><span class="label">Expiry Date:</span><span class="value">${sub.expiryDate}</span></div>
               <div class="active-sub-row"><span class="label">Time Remaining:</span><span class="value value--highlight">${timeRemainingText}</span></div>
