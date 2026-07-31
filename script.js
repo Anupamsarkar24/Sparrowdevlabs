@@ -1159,20 +1159,35 @@ document.addEventListener('DOMContentLoaded', () => {
 
           if (checkData && checkData.active && checkData.subscription) {
             const sub = checkData.subscription;
-            const expDate = new Date(sub.expiryDate + 'T23:59:59');
+            const expDate = new Date(sub.expiryDate);
             const today = new Date();
             const timeDiff = expDate.getTime() - today.getTime();
-            const daysDiff = Math.floor(timeDiff / (1000 * 3600 * 24));
-            const hoursDiff = Math.floor((timeDiff % (1000 * 3600 * 24)) / (1000 * 3600));
-            const daysRemainingText = daysDiff > 0 ? `${daysDiff} Days, ${hoursDiff} Hours Remaining` : `${hoursDiff} Hours Remaining`;
+            const daysDiff = Math.max(0, Math.ceil(timeDiff / (1000 * 3600 * 24)));
+            const hoursDiff = Math.max(0, Math.ceil(timeDiff / (1000 * 3600)) % 24);
+            const timeRemainingText = daysDiff > 0 ? `${daysDiff} Days, ${hoursDiff} Hours Remaining` : 'Expires Today';
+
+            // Calculate Day Bought display (e.g. 2026-07-31, Friday)
+            let dayOfWeekStr = sub.dayBought || '';
+            if (!dayOfWeekStr && sub.startDate) {
+              try {
+                const parts = sub.startDate.split('-');
+                if (parts.length === 3) {
+                  const d = new Date(parseInt(parts[0], 10), parseInt(parts[1], 10) - 1, parseInt(parts[2], 10));
+                  const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+                  dayOfWeekStr = days[d.getDay()];
+                }
+              } catch (e) {}
+            }
+            const dateAndDayDisplay = sub.startDate + (dayOfWeekStr ? ` (${dayOfWeekStr})` : '');
 
             activeView.innerHTML = `
               <span class="active-sub-badge">ACTIVE SUBSCRIPTION FOUND</span>
-              <div class="active-sub-row"><span class="label">Gmail:</span><span class="value">${sub.email}</span></div>
+              <div class="active-sub-row"><span class="label">Gmail Address:</span><span class="value">${sub.email}</span></div>
               <div class="active-sub-row"><span class="label">Active Plan:</span><span class="value">${sub.plan}</span></div>
-              <div class="active-sub-row"><span class="label">Purchase Date:</span><span class="value">${sub.startDate}</span></div>
+              <div class="active-sub-row"><span class="label">Plan Price:</span><span class="value">${sub.price || '₹1 / month'}</span></div>
+              <div class="active-sub-row"><span class="label">Date & Day Bought:</span><span class="value">${dateAndDayDisplay}</span></div>
               <div class="active-sub-row"><span class="label">Expiry Date:</span><span class="value">${sub.expiryDate}</span></div>
-              <div class="active-sub-row"><span class="label">Time Remaining:</span><span class="value value--highlight">${daysRemainingText}</span></div>
+              <div class="active-sub-row"><span class="label">Time Remaining:</span><span class="value value--highlight">${timeRemainingText}</span></div>
               <div class="active-sub-notice">You already have an active subscription linked to this Gmail address! Payment checkout has been stopped so you are not double-charged.</div>
             `;
             activeView.style.display = 'flex';

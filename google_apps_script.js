@@ -1,12 +1,7 @@
 /**
  * ============================================================================
- * SPARROWDEVLABS - GOOGLE APPS SCRIPT DATABASE & AUTOMATION (V8 COMPLETE)
+ * SPARROWDEVLABS - GOOGLE APPS SCRIPT DATABASE (V8 COMPLETE ACTIVE CHECK & INACTIVE STATUS)
  * ============================================================================
- * Features:
- * 1. 1 User = 1 Subscription Row (Updates existing row upon re-subscribing).
- * 2. Status changes to 'INACTIVE' when expired (No row deletion).
- * 3. Pre-checkout active check returns full details (Email, Plan, Start Date, Expiry Date, Time Remaining).
- * 4. Combines Payment ID & Payment Receipt in the same column.
  */
 
 function getSheet() {
@@ -37,6 +32,19 @@ function formatDateString(val) {
   return str;
 }
 
+function getDayOfWeek(dateStr) {
+  if (!dateStr) return '';
+  try {
+    const parts = dateStr.split('-');
+    if (parts.length === 3) {
+      const d = new Date(parseInt(parts[0], 10), parseInt(parts[1], 10) - 1, parseInt(parts[2], 10));
+      const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+      return days[d.getDay()];
+    }
+  } catch (e) {}
+  return '';
+}
+
 function saveSubscriptionData(data) {
   const sheet = getSheet();
   if (!sheet) {
@@ -51,7 +59,7 @@ function saveSubscriptionData(data) {
       "Plan", 
       "Purchase Date", 
       "Expiry Date", 
-      "Payment ID & Receipt", 
+      "Payment ID", 
       "Order ID / UTR", 
       "Status"
     ]);
@@ -62,39 +70,38 @@ function saveSubscriptionData(data) {
   }
   
   data = data || {};
-  const email = (data.email || data.Email || 'Subscriber').toLowerCase().trim();
-  const plan = data.plan || data.Plan || 'BEGINNER (MONTHLY)';
+  const email = (data.email || data.Email || '').toString().toLowerCase().trim();
+  const plan = (data.plan || data.Plan || 'BEGINNER (MONTHLY)').toString().toUpperCase();
   const startDate = data.startDate || new Date().toISOString().split('T')[0];
   const expiryDate = data.expiryDate || '';
   const paymentId = data.paymentId || data.razorpay_payment_id || 'N/A';
   const orderId = data.orderId || data.razorpay_order_id || data.utr || 'N/A';
   const status = 'ACTIVE';
-  
+
+  if (!email) return false;
+
   const rows = sheet.getDataRange().getValues();
   let existingRowIndex = -1;
 
-  // Search if email already exists in spreadsheet (starting after headers)
   for (let i = 1; i < rows.length; i++) {
     const rowEmail = (rows[i][0] || '').toString().toLowerCase().trim();
     if (rowEmail === email) {
-      existingRowIndex = i + 1; // 1-indexed row number in Google Sheets
+      existingRowIndex = i + 1; // 1-based row index
       break;
     }
   }
 
   if (existingRowIndex > 0) {
-    // UPDATE existing row instead of creating duplicate!
+    // Update existing subscriber row in-place
     sheet.getRange(existingRowIndex, 2).setValue(plan);
     sheet.getRange(existingRowIndex, 3).setValue(startDate);
     sheet.getRange(existingRowIndex, 4).setValue(expiryDate);
     sheet.getRange(existingRowIndex, 5).setValue(paymentId);
     sheet.getRange(existingRowIndex, 6).setValue(orderId);
     sheet.getRange(existingRowIndex, 7).setValue(status);
-    Logger.log("Updated existing subscription row for: " + email);
   } else {
-    // APPEND new row
+    // Append new subscriber row
     sheet.appendRow([email, plan, startDate, expiryDate, paymentId, orderId, status]);
-    Logger.log("Created new subscription row for: " + email);
   }
 
   SpreadsheetApp.flush();
@@ -118,7 +125,7 @@ function doPost(e) {
     
     return ContentService.createTextOutput(JSON.stringify({
       success: true,
-      message: "Subscription recorded successfully in Google Sheet"
+      message: "Subscription recorded/updated successfully in Google Sheet"
     })).setMimeType(ContentService.MimeType.JSON);
 
   } catch (err) {
@@ -138,7 +145,7 @@ function doGet(e) {
       saveSubscriptionData(params);
       return ContentService.createTextOutput(JSON.stringify({
         success: true,
-        message: "Subscription recorded successfully via GET"
+        message: "Subscription recorded/updated successfully via GET"
       })).setMimeType(ContentService.MimeType.JSON);
     }
     
@@ -162,13 +169,20 @@ function doGet(e) {
         const rowOrderId = (rows[i][5] || 'N/A').toString();
         const rowStatus = (rows[i][6] || 'ACTIVE').toString().toUpperCase().trim();
         
-        // ONLY match if status is ACTIVE and expiry date >= Today!
         if (rowEmail === email && rowStatus === 'ACTIVE') {
           if (!rowExpiry || rowExpiry >= today) {
+            // Price lookup helper
+            let planPrice = '₹1 / month';
+            if (rowPlan.includes('PRO')) planPrice = rowPlan.includes('YEARLY') ? '₹108 / year' : '₹10 / month';
+            if (rowPlan.includes('LEGEND')) planPrice = rowPlan.includes('YEARLY') ? '₹315 / year' : '₹29 / month';
+            if (rowPlan.includes('BEGINNER')) planPrice = rowPlan.includes('YEARLY') ? '₹11 / year' : '₹1 / month';
+
             activeSub = {
               email: rowEmail,
               plan: rowPlan.toUpperCase(),
+              price: planPrice,
               startDate: rowStartDate,
+              dayBought: getDayOfWeek(rowStartDate),
               expiryDate: rowExpiry,
               paymentId: rowPaymentId,
               orderId: rowOrderId,
@@ -196,7 +210,7 @@ function doGet(e) {
     }
 
     return ContentService.createTextOutput(JSON.stringify({
-      status: "SparrowDevLabs Database Active"
+      status: "SparrowDevLabs Database V8 Active"
     })).setMimeType(ContentService.MimeType.JSON);
 
   } catch (err) {
@@ -207,10 +221,10 @@ function doGet(e) {
 }
 
 /**
- * AUTOMATED TRIGGER: Changes expired subscriptions from 'ACTIVE' to 'INACTIVE'
- * (Replaces old deletion trigger so history is retained!)
+ * DAILY CRON JOB: Automatically sets Status = 'INACTIVE' when expiry date is reached!
+ * (Does NOT delete rows!)
  */
-function updateExpiredToInactive() {
+function checkAndSetInactive() {
   const sheet = getSheet();
   if (!sheet) return;
   const rows = sheet.getDataRange().getValues();
@@ -218,17 +232,11 @@ function updateExpiredToInactive() {
   
   for (let i = 1; i < rows.length; i++) {
     const rowExpiry = formatDateString(rows[i][3]);
-    const rowStatus = (rows[i][6] || '').toString().toUpperCase().trim();
+    const currentStatus = (rows[i][6] || '').toString().toUpperCase().trim();
     
-    if (rowExpiry && rowExpiry < today && rowStatus === 'ACTIVE') {
+    if (rowExpiry && rowExpiry < today && currentStatus === 'ACTIVE') {
       sheet.getRange(i + 1, 7).setValue('INACTIVE');
       Logger.log("Marked subscription INACTIVE for: " + rows[i][0]);
     }
   }
-  SpreadsheetApp.flush();
-}
-
-// Retain checkAndRemoveExpired alias for backward compatibility
-function checkAndRemoveExpired() {
-  updateExpiredToInactive();
 }
