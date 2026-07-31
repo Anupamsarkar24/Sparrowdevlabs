@@ -1,6 +1,6 @@
 /**
  * ============================================================================
- * SPARROWDEVLABS - GOOGLE APPS SCRIPT DATABASE & AUTOMATION (ULTIMATE V5)
+ * SPARROWDEVLABS - GOOGLE APPS SCRIPT DATABASE & AUTOMATION (V6 ACTIVE CHECK)
  * ============================================================================
  */
 
@@ -89,11 +89,8 @@ function doGet(e) {
     const action = params.action || '';
     const email = (params.email || '').toLowerCase().trim();
 
-    // If query has add_subscription or any email/plan parameter, save row!
-    if (action === 'add_subscription' || params.email || params.plan || params.paymentId) {
+    if (action === 'add_subscription') {
       saveSubscriptionData(params);
-      
-      // Return 1x1 transparent GIF image for Image beacons or JSON output
       return ContentService.createTextOutput(JSON.stringify({
         success: true,
         message: "Subscription recorded successfully via GET"
@@ -107,28 +104,49 @@ function doGet(e) {
 
     const rows = sheet.getDataRange().getValues();
     
-    if (action === 'check_membership') {
+    if (action === 'check_membership' || action === 'check_active_subscription') {
       const today = new Date().toISOString().split('T')[0];
-      let activePlan = 'NONE';
+      let activeSub = null;
       
       for (let i = 1; i < rows.length; i++) {
         const rowEmail = (rows[i][0] || '').toString().toLowerCase().trim();
-        const rowPlan = rows[i][1];
-        const rowExpiry = rows[i][3];
-        const rowStatus = rows[i][6] || rows[i][5];
+        const rowPlan = rows[i][1] || 'MEMBER';
+        const rowStartDate = rows[i][2] || today;
+        const rowExpiry = rows[i][3] || '';
+        const rowPaymentId = rows[i][4] || 'N/A';
+        const rowOrderId = rows[i][5] || 'N/A';
+        const rowStatus = rows[i][6] || 'ACTIVE';
         
         if (rowEmail === email && (rowStatus === 'ACTIVE' || !rowStatus)) {
           if (!rowExpiry || rowExpiry >= today) {
-            activePlan = rowPlan;
+            activeSub = {
+              email: rowEmail,
+              plan: rowPlan.toUpperCase(),
+              startDate: rowStartDate,
+              expiryDate: rowExpiry,
+              paymentId: rowPaymentId,
+              orderId: rowOrderId,
+              status: 'ACTIVE'
+            };
             break;
           }
         }
       }
       
-      return ContentService.createTextOutput(JSON.stringify({
-        email: email,
-        plan: activePlan
-      })).setMimeType(ContentService.MimeType.JSON);
+      if (activeSub) {
+        return ContentService.createTextOutput(JSON.stringify({
+          active: true,
+          email: email,
+          plan: activeSub.plan,
+          subscription: activeSub
+        })).setMimeType(ContentService.MimeType.JSON);
+      } else {
+        return ContentService.createTextOutput(JSON.stringify({
+          active: false,
+          email: email,
+          plan: 'FREE USER'
+        })).setMimeType(ContentService.MimeType.JSON);
+      }
     }
 
     return ContentService.createTextOutput(JSON.stringify({

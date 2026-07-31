@@ -1100,6 +1100,11 @@ document.addEventListener('DOMContentLoaded', () => {
       modalPeriod.textContent = plan.isYearly ? '/year' : '/month';
     }
 
+    const activeView = document.getElementById('active-sub-view');
+    if (activeView) activeView.style.display = 'none';
+    const submitBtn = document.getElementById('payment-submit-btn');
+    if (submitBtn) submitBtn.style.display = 'flex';
+
     modal.classList.add('active');
     modal.setAttribute('aria-hidden', 'false');
   }
@@ -1126,7 +1131,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // Form Submit -> Initiate Razorpay Payment
+  // Form Submit -> Initiate Razorpay Payment (With Pre-Check for Active Subscriptions)
   if (paymentForm) {
     paymentForm.addEventListener('submit', async (e) => {
       e.preventDefault();
@@ -1139,11 +1144,46 @@ document.addEventListener('DOMContentLoaded', () => {
       }
 
       const submitBtn = document.getElementById('payment-submit-btn');
+      const activeView = document.getElementById('active-sub-view');
       const originalText = submitBtn.innerHTML;
       submitBtn.disabled = true;
-      submitBtn.innerHTML = '<span>Opening Razorpay...</span>';
+      submitBtn.innerHTML = '<span>Checking membership status...</span>';
+
+      const sheetUrl = 'https://script.google.com/macros/s/AKfycbxsxS1i1xrBdL_RQqeGG_fmTwLwvC-UFtRbHeQJtvGfl38BTPApljhlbIe0DjWNmN-C-Q/exec';
 
       try {
+        // Step 0: Check if an active paid subscription already exists for this Gmail in Google Sheets
+        try {
+          const checkRes = await fetch(`${sheetUrl}?action=check_active_subscription&email=${encodeURIComponent(email)}`);
+          const checkData = await checkRes.json();
+
+          if (checkData && checkData.active && checkData.subscription) {
+            const sub = checkData.subscription;
+            const expDate = new Date(sub.expiryDate);
+            const today = new Date();
+            const timeDiff = expDate.getTime() - today.getTime();
+            const daysDiff = Math.ceil(timeDiff / (1000 * 3600 * 24));
+            const daysRemainingText = daysDiff > 0 ? `${daysDiff} Days Remaining` : 'Expires Today';
+
+            activeView.innerHTML = `
+              <span class="active-sub-badge">ACTIVE SUBSCRIPTION FOUND</span>
+              <div class="active-sub-row"><span class="label">Gmail:</span><span class="value">${sub.email}</span></div>
+              <div class="active-sub-row"><span class="label">Active Plan:</span><span class="value">${sub.plan}</span></div>
+              <div class="active-sub-row"><span class="label">Purchase Date:</span><span class="value">${sub.startDate}</span></div>
+              <div class="active-sub-row"><span class="label">Expiry Date:</span><span class="value">${sub.expiryDate}</span></div>
+              <div class="active-sub-row"><span class="label">Time Remaining:</span><span class="value value--highlight">${daysRemainingText}</span></div>
+              <div class="active-sub-notice">You already have an active subscription linked to this Gmail address! Payment checkout has been stopped so you are not double-charged.</div>
+            `;
+            activeView.style.display = 'flex';
+            submitBtn.style.display = 'none';
+            showToast(`Active subscription found for ${email}`, 'info');
+            return; // Stop execution - DO NOT open Razorpay!
+          }
+        } catch (checkErr) {
+          console.warn('Pre-checkout subscription check notice:', checkErr.message);
+        }
+
+        submitBtn.innerHTML = '<span>Opening Razorpay...</span>';
         await ensureRazorpayLoaded();
 
         let orderData = null;
