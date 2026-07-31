@@ -2603,314 +2603,299 @@ body.loading { overflow: hidden; }
 }
 
 /* ============================================================
-   MEMBERSHIP / PRICING SECTION — Landscape Card Style
+   MEMBERSHIP / PRICING SECTION
    ============================================================ */
 .membership {
-  background: #6B21A8;
-  background: linear-gradient(135deg, #5B1A99 0%, #7C3AED 50%, #6B21A8 100%);
-  padding: 80px 0;
+  background: #F5F3EE;
+  padding: 72px 0;
   position: relative;
   overflow: hidden;
 }
 
-/* Sparkle stars */
-.mem-spark {
-  position: absolute;
-  color: rgba(255,255,255,0.35);
-  font-size: 18px;
-  pointer-events: none;
-  animation: sparkPulse 3s ease-in-out infinite alternate;
-}
-.mem-spark-1 { top: 12%; left: 8%;  font-size: 22px; animation-delay: 0s; }
-.mem-spark-2 { top: 60%; left: 4%;  font-size: 14px; animation-delay: 0.8s; }
-.mem-spark-3 { top: 20%; right: 6%; font-size: 16px; animation-delay: 1.4s; }
-.mem-spark-4 { bottom: 15%; right: 10%; font-size: 24px; animation-delay: 0.4s; }
-
-@keyframes sparkPulse {
-  from { opacity: 0.2; transform: scale(0.9); }
-  to   { opacity: 0.7; transform: scale(1.2); }
-}
-
-/* Two-column: left heading | right stacked cards */
+/* Two-column: left heading | right cards */
 .membership-inner {
   display: flex;
   flex-direction: row;
   align-items: center;
-  gap: 52px;
+  gap: 56px;
 }
 
 /* Left column */
 .membership-header {
-  flex: 0 0 260px;
-  max-width: 260px;
+  flex: 0 0 300px;
+  max-width: 300px;
 }
-
-/* White label for purple bg */
-.section-label--light span { color: rgba(255,255,255,0.8); }
-.section-label--light .label-line { background: rgba(255,255,255,0.4); }
 
 .membership-title {
   font-family: var(--font-primary);
-  font-size: 36px;
+  font-size: 38px;
   font-weight: 900;
   letter-spacing: -1.5px;
-  line-height: 1.1;
-  color: #ffffff;
-  margin-bottom: 14px;
+  line-height: 1.05;
+  color: #111;
+  margin-bottom: 12px;
 }
 
 .membership-subtitle {
   font-family: var(--font-secondary);
   font-size: 13px;
-  color: rgba(255,255,255,0.65);
+  color: #666;
   line-height: 1.6;
 }
 
-/* Right column: stacked landscape cards */
+/* Right column: 3 compact cards */
 .membership-cards {
   flex: 1;
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
   gap: 14px;
+  align-items: stretch;
 }
 
-/* ── Base landscape card ── */
+/* ---- Base plan card (compact) ---- */
 .plan-card {
   position: relative;
-  background: #ffffff;
+  background: #fff;
   border-radius: 20px;
-  padding: 22px 24px;
+  padding: 22px 20px;
   display: flex;
-  flex-direction: row;
-  align-items: center;
-  gap: 0;
-  overflow: hidden;
+  flex-direction: column;
+  gap: 12px;
+  border: 1.5px solid rgba(0,0,0,0.07);
+  box-shadow: 0 2px 12px rgba(0,0,0,0.05);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
-  box-shadow: 0 4px 24px rgba(0,0,0,0.18);
+  overflow: hidden;
 }
 
 .plan-card:hover {
-  transform: translateY(-3px) scale(1.01);
-  box-shadow: 0 12px 40px rgba(0,0,0,0.28);
+  transform: translateY(-4px);
+  box-shadow: 0 10px 32px rgba(0,0,0,0.1);
 }
 
-/* Left content inside card */
-.plan-card-left {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-}
+/* ---- Icon (hidden for compactness) ---- */
+.plan-icon { display: none; }
 
-/* Right illustration inside card */
-.plan-card-right {
-  flex: 0 0 110px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-/* Plan name badge (small brand label) */
+/* ---- Badge ---- */
 .plan-badge {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  font-family: var(--font-secondary);
+  font-family: var(--font-primary);
   font-size: 10px;
-  font-weight: 700;
-  letter-spacing: 1.5px;
+  font-weight: 800;
+  letter-spacing: 3px;
   color: #888;
   text-transform: uppercase;
-  margin-bottom: 2px;
 }
 
-.plan-dot {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: #5B8A31;
-  display: inline-block;
-  flex-shrink: 0;
-}
-.plan-dot--gold   { background: #F59E0B; }
-.plan-dot--purple { background: #7C3AED; }
-
-/* Big bold plan name */
-.plan-name {
-  font-family: var(--font-primary);
-  font-size: 20px;
-  font-weight: 900;
-  letter-spacing: -0.5px;
-  line-height: 1.1;
-  color: #111;
-  margin: 0;
-}
-
-.plan-name-accent        { color: #5B8A31; }
-.plan-name-accent--gold  { color: #D97706; }
-
-/* Price row */
+/* ---- Price ---- */
 .plan-price {
   display: flex;
   align-items: baseline;
   gap: 2px;
-  margin-top: 2px;
+  line-height: 1;
 }
+
 .plan-currency {
   font-family: var(--font-primary);
-  font-size: 14px;
+  font-size: 16px;
   font-weight: 700;
-  color: #333;
+  color: #111;
 }
+
 .plan-amount {
   font-family: var(--font-primary);
-  font-size: 28px;
+  font-size: 32px;
   font-weight: 900;
-  letter-spacing: -1px;
+  letter-spacing: -1.5px;
   color: #111;
   line-height: 1;
 }
+
 .plan-period {
   font-family: var(--font-secondary);
-  font-size: 11px;
+  font-size: 12px;
   color: #999;
 }
 
-/* Divider */
-.plan-divider {
-  border: none;
-  border-top: 1px solid rgba(0,0,0,0.09);
-  margin: 6px 0;
-}
-.plan-divider--light { border-top-color: rgba(255,255,255,0.2); }
-
-/* Tagline */
+/* ---- Tagline ---- */
 .plan-tagline {
   font-family: var(--font-secondary);
   font-size: 11px;
   color: #777;
-  line-height: 1.5;
-  margin: 0;
+  line-height: 1.4;
+  margin-top: -4px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid rgba(0,0,0,0.07);
 }
 
-/* CTA button — sits at the far right of the card row */
-.plan-cta {
-  flex-shrink: 0;
+/* ---- Features list ---- */
+.plan-features {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  flex: 1;
+}
+
+.plan-features li {
+  font-family: var(--font-secondary);
+  font-size: 11.5px;
+  color: #444;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.plan-check {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: rgba(91,138,49,0.12);
+  color: #5B8A31;
   display: inline-flex;
   align-items: center;
+  justify-content: center;
+  font-size: 9px;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.plan-cross {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: rgba(0,0,0,0.05);
+  color: #bbb;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 9px;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.plan-features li:has(.plan-cross) {
+  opacity: 0.45;
+}
+
+/* ---- CTA Buttons ---- */
+.plan-cta {
+  margin-top: 4px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   gap: 6px;
-  padding: 9px 18px;
+  padding: 10px 16px;
   border-radius: 100px;
   font-family: var(--font-secondary);
   font-size: 11px;
   font-weight: 700;
   letter-spacing: 1px;
   text-decoration: none;
-  transition: all 0.25s ease;
-  white-space: nowrap;
-  margin-left: 16px;
+  transition: all 0.3s ease;
 }
 
 .plan-cta--outline {
-  border: 1.5px solid rgba(0,0,0,0.18);
+  border: 1.5px solid rgba(0,0,0,0.15);
   color: #111;
   background: transparent;
 }
+
 .plan-cta--outline:hover {
-  border-color: #7C3AED;
-  color: #7C3AED;
-  background: rgba(124,58,237,0.06);
+  border-color: #5B8A31;
+  color: #5B8A31;
+  background: rgba(91,138,49,0.05);
 }
+
 .plan-cta--solid {
-  background: #111;
+  background: #141414;
   color: #fff;
-  border: 1.5px solid #111;
+  border: 1.5px solid #141414;
 }
+
 .plan-cta--solid:hover {
-  background: #7C3AED;
-  border-color: #7C3AED;
+  background: #5B8A31;
+  border-color: #5B8A31;
 }
 
-/* ── Decoration bubbles ── */
-.plan-deco {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 6px;
-}
-
-.plan-deco-label {
-  font-family: var(--font-primary);
-  font-size: 9px;
-  font-weight: 800;
-  letter-spacing: 2px;
-  color: #888;
-  text-transform: uppercase;
-}
-
-/* PRO featured card — dark */
+/* ---- PRO (Featured) dark card ---- */
 .plan-featured {
-  background: #1a0533;
-  box-shadow: 0 8px 32px rgba(108,40,200,0.45);
-}
-.plan-featured .plan-badge      { color: rgba(255,255,255,0.45); }
-.plan-featured .plan-name       { color: #fff; }
-.plan-featured .plan-currency,
-.plan-featured .plan-amount     { color: #fff; }
-.plan-featured .plan-period     { color: rgba(255,255,255,0.5); }
-.plan-featured .plan-tagline    { color: rgba(255,255,255,0.55); }
-.plan-featured .plan-deco-label { color: rgba(255,255,255,0.5); }
-.plan-featured .plan-cta--solid {
-  background: #7C3AED;
-  border-color: #7C3AED;
-}
-.plan-featured .plan-cta--solid:hover {
-  background: #6D28D9;
-  border-color: #6D28D9;
+  background: #141414;
+  border-color: #141414;
+  box-shadow: 0 12px 40px rgba(0,0,0,0.22);
 }
 
-/* MOST POPULAR ribbon */
+.plan-featured .plan-badge  { color: rgba(255,255,255,0.4); }
+.plan-featured .plan-currency,
+.plan-featured .plan-amount { color: #fff; }
+.plan-featured .plan-period { color: rgba(255,255,255,0.45); }
+.plan-featured .plan-tagline {
+  color: rgba(255,255,255,0.45);
+  border-bottom-color: rgba(255,255,255,0.1);
+}
+.plan-featured .plan-features li { color: rgba(255,255,255,0.8); }
+.plan-featured .plan-cross {
+  background: rgba(255,255,255,0.07);
+  color: rgba(255,255,255,0.25);
+}
+
+/* ---- Most Popular ribbon ---- */
 .plan-popular-badge {
   position: absolute;
-  top: 12px;
-  right: -24px;
-  background: #7C3AED;
+  top: 14px;
+  right: -26px;
+  background: #5B8A31;
   color: #fff;
   font-family: var(--font-secondary);
   font-size: 8px;
   font-weight: 700;
-  letter-spacing: 1.5px;
-  padding: 4px 30px;
+  letter-spacing: 2px;
+  padding: 4px 32px;
   transform: rotate(45deg);
 }
 
-/* Legend gold price */
+/* ---- Legend gold accent ---- */
 .plan-legend .plan-amount,
 .plan-legend .plan-currency {
-  background: linear-gradient(135deg, #D97706, #FBBF24);
+  background: linear-gradient(135deg, #c9a227, #f0d060);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
 
-/* ── Mobile ── */
+/* ---- Mobile: stack vertically ---- */
 @media (max-width: 900px) {
-  .membership { padding: 60px 0; }
+  .membership {
+    padding: 60px 0;
+  }
   .membership-inner {
     flex-direction: column;
-    gap: 28px;
+    gap: 32px;
   }
   .membership-header {
     flex: none;
     max-width: 100%;
     width: 100%;
   }
-  .membership-title { font-size: 30px; }
-  .membership-cards { width: 100%; }
+  .membership-title {
+    font-size: 32px;
+  }
+  .membership-cards {
+    grid-template-columns: 1fr;
+    width: 100%;
+    max-width: 360px;
+    margin: 0 auto;
+  }
   .plan-card {
-    flex-direction: column;
-    align-items: flex-start;
     border-radius: 20px !important;
   }
-  .plan-card-right { align-self: center; }
-  .plan-cta { align-self: stretch; text-align: center; justify-content: center; margin-left: 0; margin-top: 8px; }
+  .plan-featured {
+    transform: scale(1);
+    order: -1;
+  }
+  .plan-featured:hover {
+  }
+  .plan-card {
+    border-radius: 24px !important;
+  }
+}
