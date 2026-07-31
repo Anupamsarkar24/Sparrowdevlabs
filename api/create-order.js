@@ -19,7 +19,14 @@ module.exports = async function handler(req, res) {
   }
 
   try {
-    const { amount, currency = 'INR', receipt = `receipt_${Date.now()}` } = req.body || {};
+    // Robust body parsing (handles stringified JSON on Vercel)
+    let body = req.body;
+    if (typeof body === 'string') {
+      try { body = JSON.parse(body); } catch (e) { body = {}; }
+    }
+    body = body || {};
+
+    const { amount, currency = 'INR', receipt = `rcpt_${Date.now()}` } = body;
 
     const key_id = process.env.RAZORPAY_KEY_ID || 'rzp_test_TK6UJsQdNoMty1';
     const key_secret = process.env.RAZORPAY_KEY_SECRET || 'nuDuDjliQKO2rheq4J0UOUV4';
@@ -29,9 +36,9 @@ module.exports = async function handler(req, res) {
     }
 
     // Minimum amount check: 100 paise (₹1)
-    const amountPaise = Number(amount);
+    const amountPaise = Math.round(Number(amount));
     if (!amountPaise || isNaN(amountPaise) || amountPaise < 100) {
-      return res.status(400).json({ error: 'Amount must be at least 100 paise (₹1)' });
+      return res.status(400).json({ error: `Invalid amount: ${amount}. Amount must be at least 100 paise (₹1)` });
     }
 
     const instance = new Razorpay({
@@ -42,8 +49,7 @@ module.exports = async function handler(req, res) {
     const orderOptions = {
       amount: amountPaise,
       currency: currency,
-      receipt: receipt,
-      payment_capture: 1
+      receipt: String(receipt).slice(0, 40)
     };
 
     const order = await instance.orders.create(orderOptions);
@@ -56,9 +62,10 @@ module.exports = async function handler(req, res) {
     });
   } catch (error) {
     console.error('Razorpay Create Order Error:', error);
+    const errorDetails = error.error ? (error.error.description || JSON.stringify(error.error)) : (error.message || error.toString());
     return res.status(500).json({
       error: 'Failed to create order with Razorpay',
-      details: error.message || error
+      details: errorDetails
     });
   }
 };

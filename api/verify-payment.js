@@ -19,7 +19,14 @@ module.exports = async function handler(req, res) {
   }
 
   try {
-    const { razorpay_order_id, razorpay_payment_id, razorpay_signature, plan = 'PRO', email, isYearly } = req.body || {};
+    // Robust body parsing (handles stringified JSON on Vercel)
+    let body = req.body;
+    if (typeof body === 'string') {
+      try { body = JSON.parse(body); } catch (e) { body = {}; }
+    }
+    body = body || {};
+
+    const { razorpay_order_id, razorpay_payment_id, razorpay_signature, plan = 'PRO', email, isYearly } = body;
 
     // Validate required fields
     if (!razorpay_order_id || !razorpay_payment_id || !razorpay_signature) {

@@ -1130,7 +1130,9 @@ document.addEventListener('DOMContentLoaded', () => {
         const orderData = await orderRes.json();
 
         if (!orderRes.ok || !orderData.order_id) {
-          throw new Error(orderData.error || 'Failed to create order');
+          const errMsg = orderData.error || 'Failed to create order';
+          const errDetail = orderData.details ? `: ${orderData.details}` : '';
+          throw new Error(`${errMsg}${errDetail}`);
         }
 
         closePaymentModal();
@@ -1169,29 +1171,30 @@ document.addEventListener('DOMContentLoaded', () => {
               const verifyData = await verifyRes.json();
 
               if (verifyRes.ok && verifyData.success) {
-                alert(`🎉 PAYMENT SUCCESSFUL!\n\nThank you! Your ${selectedPlan.name} (${selectedPlan.isYearly ? 'Yearly' : 'Monthly'}) membership has been activated.\nExpiry Date: ${verifyData.subscription ? verifyData.subscription.expiryDate : 'Calculated'}\nReceipt & details sent to: ${email}`);
+                showToast(`🎉 Payment Successful! Your ${selectedPlan.name} membership is active. Details sent to ${email}`, 'success');
               } else {
-                alert(`⚠️ Payment verification failed: ${verifyData.error || 'Invalid signature'}`);
+                showToast(`⚠️ Payment Verification Failed: ${verifyData.error || 'Invalid signature'}`, 'error');
               }
             } catch (err) {
-              alert(`Error verifying payment: ${err.message}`);
+              showToast(`Verification Error: ${err.message}`, 'error');
             }
           },
           modal: {
             ondismiss: function () {
-              console.log('Razorpay Checkout modal dismissed by user');
+              showToast('Checkout cancelled by user.', 'info');
             }
           }
         };
 
         const rzp = new Razorpay(options);
         rzp.on('payment.failed', function (response) {
-          alert(`❌ Payment Failed: ${response.error.description || 'Transaction cancelled'}`);
+          const failMsg = response.error ? response.error.description : 'Transaction failed';
+          showToast(`❌ Payment Failed: ${failMsg}`, 'error');
         });
         rzp.open();
 
       } catch (err) {
-        alert(`Payment Initialization Error: ${err.message}`);
+        showToast(`Payment Initialization Error: ${err.message}`, 'error');
       } finally {
         submitBtn.disabled = false;
         submitBtn.innerHTML = originalText;
