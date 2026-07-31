@@ -25,19 +25,17 @@ function saveSubscriptionData(data) {
     headerRange.setFontColor("#ffffff");
   }
   
-  const email = data.email || '';
-  const plan = data.plan || '';
+  data = data || {};
+  const email = data.email || data.Email || 'Subscriber';
+  const plan = data.plan || data.Plan || 'BEGINNER (MONTHLY)';
   const startDate = data.startDate || new Date().toISOString().split('T')[0];
   const expiryDate = data.expiryDate || '';
   const paymentId = data.paymentId || data.razorpay_payment_id || 'N/A';
   const orderId = data.orderId || data.razorpay_order_id || data.utr || 'N/A';
   const status = data.status || 'ACTIVE';
   
-  if (email) {
-    sheet.appendRow([email, plan, startDate, expiryDate, paymentId, orderId, status]);
-    return true;
-  }
-  return false;
+  sheet.appendRow([email, plan, startDate, expiryDate, paymentId, orderId, status]);
+  return true;
 }
 
 function doPost(e) {
