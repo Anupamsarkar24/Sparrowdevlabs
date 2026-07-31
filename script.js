@@ -256,7 +256,19 @@ document.addEventListener('DOMContentLoaded', () => {
   initParallax();
   initServiceCardHover();
   initHeroMask();
+  initMutedHeroVideos();
 });
+
+/* Enforce 100% Silent Hero Video */
+function initMutedHeroVideos() {
+  const videos = document.querySelectorAll('video');
+  videos.forEach(v => {
+    v.muted = true;
+    v.volume = 0;
+    v.setAttribute('muted', '');
+    v.setAttribute('playsinline', '');
+  });
+}
 
 /* ============================================================
    1. NAVBAR — Scroll blur effect
