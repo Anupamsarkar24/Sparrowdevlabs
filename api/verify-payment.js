@@ -73,11 +73,8 @@ module.exports = async function handler(req, res) {
     const googleSheetWebhook = process.env.GOOGLE_SHEET_WEBHOOK_URL || 'https://script.google.com/macros/s/AKfycbxsxS1i1xrBdL_RQqeGG_fmTwLwvC-UFtRbHeQJtvGfl38BTPApljhlbIe0DjWNmN-C-Q/exec';
     if (googleSheetWebhook) {
       try {
-        await fetch(googleSheetWebhook, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ action: 'add_subscription', ...payload })
-        });
+        const query = new URLSearchParams({ action: 'add_subscription', ...payload }).toString();
+        await fetch(`${googleSheetWebhook}?${query}`);
       } catch (err) {
         console.warn('Failed to send to Google Sheet Webhook:', err.message);
       }

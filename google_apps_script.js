@@ -1,12 +1,44 @@
 /**
  * ============================================================================
- * SPARROWDEVLABS - GOOGLE APPS SCRIPT DATABASE & AUTOMATION (V2)
+ * SPARROWDEVLABS - GOOGLE APPS SCRIPT DATABASE & AUTOMATION (BULLETPROOF V3)
  * ============================================================================
- * Features:
- * 1. Automatically creates Headers: Email, Plan, Purchase Date, Expiry Date, Payment ID, Order ID / UTR, Status
- * 2. Parses both Server & Frontend payloads reliably.
- * 3. Daily cron checkAndRemoveExpired() automatically removes expired rows.
+ * Supports both GET and POST requests for instant Google Sheet logging.
  */
+
+function saveSubscriptionData(data) {
+  const sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
+  
+  // Create Styled Header Row if sheet is blank
+  if (sheet.getLastRow() === 0) {
+    sheet.appendRow([
+      "Email", 
+      "Plan", 
+      "Purchase Date", 
+      "Expiry Date", 
+      "Payment ID", 
+      "Order ID / UTR", 
+      "Status"
+    ]);
+    const headerRange = sheet.getRange(1, 1, 1, 7);
+    headerRange.setFontWeight("bold");
+    headerRange.setBackground("#7c3aed");
+    headerRange.setFontColor("#ffffff");
+  }
+  
+  const email = data.email || '';
+  const plan = data.plan || '';
+  const startDate = data.startDate || new Date().toISOString().split('T')[0];
+  const expiryDate = data.expiryDate || '';
+  const paymentId = data.paymentId || data.razorpay_payment_id || 'N/A';
+  const orderId = data.orderId || data.razorpay_order_id || data.utr || 'N/A';
+  const status = data.status || 'ACTIVE';
+  
+  if (email) {
+    sheet.appendRow([email, plan, startDate, expiryDate, paymentId, orderId, status]);
+    return true;
+  }
+  return false;
+}
 
 function doPost(e) {
   try {
@@ -21,37 +53,7 @@ function doPost(e) {
       data = e.parameter;
     }
 
-    const sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
-    
-    // Create Header Row if sheet is blank
-    if (sheet.getLastRow() === 0) {
-      sheet.appendRow([
-        "Email", 
-        "Plan", 
-        "Purchase Date", 
-        "Expiry Date", 
-        "Payment ID", 
-        "Order ID / UTR", 
-        "Status"
-      ]);
-      // Format header style
-      const headerRange = sheet.getRange(1, 1, 1, 7);
-      headerRange.setFontWeight("bold");
-      headerRange.setBackground("#7c3aed");
-      headerRange.setFontColor("#ffffff");
-    }
-    
-    const email = data.email || '';
-    const plan = data.plan || '';
-    const startDate = data.startDate || new Date().toISOString().split('T')[0];
-    const expiryDate = data.expiryDate || '';
-    const paymentId = data.paymentId || data.razorpay_payment_id || 'N/A';
-    const orderId = data.orderId || data.razorpay_order_id || data.utr || 'N/A';
-    const status = data.status || 'ACTIVE';
-    
-    if (email) {
-      sheet.appendRow([email, plan, startDate, expiryDate, paymentId, orderId, status]);
-    }
+    saveSubscriptionData(data);
     
     return ContentService.createTextOutput(JSON.stringify({
       success: true,
@@ -69,6 +71,15 @@ function doGet(e) {
   try {
     const action = e ? e.parameter.action : '';
     const email = e ? (e.parameter.email || '').toLowerCase().trim() : '';
+
+    if (action === 'add_subscription' || (e && e.parameter && e.parameter.email && e.parameter.plan)) {
+      saveSubscriptionData(e.parameter);
+      return ContentService.createTextOutput(JSON.stringify({
+        success: true,
+        message: "Subscription recorded successfully via GET"
+      })).setMimeType(ContentService.MimeType.JSON);
+    }
+    
     const sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
     const rows = sheet.getDataRange().getValues();
     

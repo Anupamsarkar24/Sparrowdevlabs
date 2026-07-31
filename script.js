@@ -1185,20 +1185,21 @@ document.addEventListener('DOMContentLoaded', () => {
             const expiryDate = expiry.toISOString().split('T')[0];
 
             try {
-              const params = new URLSearchParams();
-              params.append('action', 'add_subscription');
-              params.append('email', email);
-              params.append('plan', `${selectedPlan.name} (${selectedPlan.isYearly ? 'YEARLY' : 'MONTHLY'})`);
-              params.append('startDate', startDate);
-              params.append('expiryDate', expiryDate);
-              params.append('paymentId', response.razorpay_payment_id || 'N/A');
-              params.append('orderId', response.razorpay_order_id || 'N/A');
-              params.append('status', 'ACTIVE');
+              const params = new URLSearchParams({
+                action: 'add_subscription',
+                email: email,
+                plan: `${selectedPlan.name} (${selectedPlan.isYearly ? 'YEARLY' : 'MONTHLY'})`,
+                startDate: startDate,
+                expiryDate: expiryDate,
+                paymentId: response.razorpay_payment_id || 'N/A',
+                orderId: response.razorpay_order_id || 'N/A',
+                status: 'ACTIVE'
+              });
 
-              await fetch(sheetUrl, {
-                method: 'POST',
-                mode: 'no-cors',
-                body: params
+              // Fire GET request (never blocked by CORS or redirects on Apps Script)
+              fetch(`${sheetUrl}?${params.toString()}`, {
+                method: 'GET',
+                mode: 'no-cors'
               });
             } catch (sheetErr) {
               console.warn('Google Sheet log warning:', sheetErr.message);
