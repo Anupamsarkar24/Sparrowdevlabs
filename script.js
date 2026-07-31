@@ -1155,18 +1155,22 @@ document.addEventListener('DOMContentLoaded', () => {
 
         closePaymentModal();
 
-        // Open Razorpay Standard Checkout Modal
+        // Open Razorpay Standard Checkout Modal with logo1.png and modern theme
+        const logoUrl = window.location.origin + '/assets/images/logo1.png';
         const options = {
           key: (orderData && orderData.key_id) || 'rzp_live_TKASfdnAAW6hJu',
           amount: (orderData && orderData.amount) || selectedPlan.amount,
           currency: (orderData && orderData.currency) || 'INR',
           name: 'SparrowDevLabs',
-          description: `${selectedPlan.name} (${selectedPlan.isYearly ? 'Yearly' : 'Monthly'}) Membership`,
+          description: `${selectedPlan.name} Membership (${selectedPlan.isYearly ? '1 Year' : '1 Month'})`,
+          image: logoUrl,
           prefill: {
             email: email
           },
           theme: {
-            color: '#7c3aed'
+            color: '#7c3aed',
+            backdrop_color: 'rgba(15, 23, 42, 0.88)',
+            hide_topbar: false
           },
           handler: async function (response) {
             // Payment Success -> Web Toast
