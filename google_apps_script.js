@@ -1,6 +1,6 @@
 /**
  * ============================================================================
- * SPARROWDEVLABS - GOOGLE APPS SCRIPT DATABASE & AUTOMATION (V6 ACTIVE CHECK)
+ * SPARROWDEVLABS - GOOGLE APPS SCRIPT DATABASE & AUTOMATION (V7 DATE FIX)
  * ============================================================================
  */
 
@@ -17,6 +17,19 @@ function getSheet() {
     Logger.log("getSheet Error: " + err.message);
   }
   return null;
+}
+
+function formatDateString(val) {
+  if (!val) return '';
+  if (val instanceof Date) {
+    const yyyy = val.getFullYear();
+    const mm = String(val.getMonth() + 1).padStart(2, '0');
+    const dd = String(val.getDate()).padStart(2, '0');
+    return `${yyyy}-${mm}-${dd}`;
+  }
+  const str = String(val).trim();
+  if (str.includes('T')) return str.split('T')[0];
+  return str;
 }
 
 function saveSubscriptionData(data) {
@@ -110,12 +123,12 @@ function doGet(e) {
       
       for (let i = 1; i < rows.length; i++) {
         const rowEmail = (rows[i][0] || '').toString().toLowerCase().trim();
-        const rowPlan = rows[i][1] || 'MEMBER';
-        const rowStartDate = rows[i][2] || today;
-        const rowExpiry = rows[i][3] || '';
-        const rowPaymentId = rows[i][4] || 'N/A';
-        const rowOrderId = rows[i][5] || 'N/A';
-        const rowStatus = rows[i][6] || 'ACTIVE';
+        const rowPlan = (rows[i][1] || 'FREE USER').toString().trim();
+        const rowStartDate = formatDateString(rows[i][2]) || today;
+        const rowExpiry = formatDateString(rows[i][3]);
+        const rowPaymentId = (rows[i][4] || 'N/A').toString();
+        const rowOrderId = (rows[i][5] || 'N/A').toString();
+        const rowStatus = (rows[i][6] || 'ACTIVE').toString().toUpperCase().trim();
         
         if (rowEmail === email && (rowStatus === 'ACTIVE' || !rowStatus)) {
           if (!rowExpiry || rowExpiry >= today) {
@@ -160,9 +173,6 @@ function doGet(e) {
   }
 }
 
-/**
- * DAILY CRON JOB: Automatically checks and deletes expired subscription rows!
- */
 function checkAndRemoveExpired() {
   const sheet = getSheet();
   if (!sheet) return;
@@ -170,10 +180,9 @@ function checkAndRemoveExpired() {
   const today = new Date().toISOString().split('T')[0];
   
   for (let i = rows.length - 1; i >= 1; i--) {
-    const rowExpiry = rows[i][3];
+    const rowExpiry = formatDateString(rows[i][3]);
     if (rowExpiry && rowExpiry < today) {
       sheet.deleteRow(i + 1);
-      Logger.log("Deleted expired row for: " + rows[i][0]);
     }
   }
 }
