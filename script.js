@@ -21,57 +21,34 @@ function initPreloaderLogoCanvas() {
   let logoLoaded = false;
   logoImg.onload = () => { logoLoaded = true; };
 
-  const imgW = 280;
-  const imgH = 280;
+  const imgW = 260;
+  const imgH = 260;
   const imgX = cx - imgW / 2;
   const imgY = cy - imgH / 2;
 
-  const pathPoints = [
-    { x: imgX + 30,  y: imgY + 250 },
-    { x: imgX + 75,  y: imgY + 200 },
-    { x: imgX + 130, y: imgY + 125 },
-    { x: imgX + 160, y: imgY + 180 },
-    { x: imgX + 195, y: imgY + 140 },
-    { x: imgX + 180, y: imgY + 80  },
-    { x: imgX + 210, y: imgY + 45  },
-    { x: imgX + 245, y: imgY + 68  },
-    { x: imgX + 215, y: imgY + 95  },
-    { x: imgX + 210, y: imgY + 170 },
-    { x: imgX + 190, y: imgY + 245 },
+  const contourPoints = [
+    { x: imgX + 25,  y: imgY + 250 },
+    { x: imgX + 80,  y: imgY + 180 },
+    { x: imgX + 135, y: imgY + 120 },
+    { x: imgX + 175, y: imgY + 120 },
+    { x: imgX + 200, y: imgY + 50  },
+    { x: imgX + 240, y: imgY + 70  },
+    { x: imgX + 205, y: imgY + 180 },
     { x: imgX + 245, y: imgY + 245 },
-    { x: imgX + 170, y: imgY + 245 },
-    { x: imgX + 30,  y: imgY + 250 }
+    { x: imgX + 25,  y: imgY + 250 }
   ];
 
-  function getSplinePoint(t) {
-    const total = pathPoints.length - 1;
+  function getContourPoint(t) {
+    const total = contourPoints.length - 1;
     const scaledT = Math.max(0, Math.min(1, t)) * total;
     const i = Math.floor(scaledT);
     const localT = scaledT - i;
-
-    const p0 = pathPoints[Math.max(0, i - 1)];
-    const p1 = pathPoints[i];
-    const p2 = pathPoints[Math.min(total, i + 1)];
-    const p3 = pathPoints[Math.min(total, i + 2)];
-
-    const tt = localT * localT;
-    const ttt = tt * localT;
-
-    const q0 = -ttt + 2 * tt - localT;
-    const q1 = 3 * ttt - 5 * tt + 2;
-    const q2 = -3 * ttt + 4 * tt + localT;
-    const q3 = ttt - tt;
-
+    const p1 = contourPoints[i];
+    const p2 = contourPoints[Math.min(total, i + 1)];
     return {
-      x: 0.5 * (p0.x * q0 + p1.x * q1 + p2.x * q2 + p3.x * q3),
-      y: 0.5 * (p0.y * q0 + p1.y * q1 + p2.y * q2 + p3.y * q3)
+      x: p1.x + (p2.x - p1.x) * localT,
+      y: p1.y + (p2.y - p1.y) * localT
     };
-  }
-
-  const sampledPath = [];
-  const sampleSteps = 200;
-  for (let s = 0; s <= sampleSteps; s++) {
-    sampledPath.push(getSplinePoint(s / sampleSteps));
   }
 
   const dust = [];
@@ -112,22 +89,21 @@ function initPreloaderLogoCanvas() {
     ctx.globalAlpha = 1.0;
 
     let drawPct = 0, fillOpacity = 0;
-    let activeParticlePos = sampledPath[0];
+    let activeParticlePos = getContourPoint(0);
     let particleAlpha = 0, ringAlpha = 0, ringAngle = 0, breathingGlow = 0, sheenPos = -1;
 
     if (seconds < 0.3) {
       const t = seconds / 0.3;
       particleAlpha = easeOutCubic(t);
-      activeParticlePos = sampledPath[0];
+      activeParticlePos = getContourPoint(0);
     }
     else if (seconds < 1.3) {
       const t = (seconds - 0.3) / 1.0;
       const easedT = easeInOutCubic(t);
       drawPct = easedT;
-      fillOpacity = Math.max(0, (t - 0.3) / 0.7);
+      fillOpacity = Math.max(0, (t - 0.2) / 0.8);
       particleAlpha = 1.0;
-      const idx = Math.floor(drawPct * (sampledPath.length - 1));
-      activeParticlePos = sampledPath[idx];
+      activeParticlePos = getContourPoint(drawPct);
     }
     else if (seconds < 1.7) {
       const t = (seconds - 1.3) / 0.4;
@@ -157,25 +133,24 @@ function initPreloaderLogoCanvas() {
       drawPct = unDraw; fillOpacity = unDraw;
       particleAlpha = Math.max(0.3, 1.0 - t * 0.4);
       ringAlpha = (1.0 - t) * 0.3;
-      const idx = Math.floor(unDraw * (sampledPath.length - 1));
-      activeParticlePos = sampledPath[Math.max(0, idx)];
+      activeParticlePos = getContourPoint(unDraw);
     }
     else {
       const t = (seconds - 2.8) / 0.2;
       particleAlpha = 1.0 - t;
-      activeParticlePos = sampledPath[0];
+      activeParticlePos = getContourPoint(0);
     }
 
     if (logoLoaded && fillOpacity > 0.01) {
       ctx.save();
       ctx.globalAlpha = fillOpacity;
-      ctx.shadowColor = 'rgba(56, 189, 248, ' + (0.35 + breathingGlow) + ')';
-      ctx.shadowBlur = 24 + breathingGlow * 10;
+      ctx.shadowColor = 'rgba(56, 189, 248, ' + (0.3 + breathingGlow * 0.3) + ')';
+      ctx.shadowBlur = 20 + breathingGlow * 12;
 
       if (drawPct < 0.99) {
-        const clipRadius = drawPct * (imgW * 1.3);
+        const clipRadius = drawPct * (imgW * 1.4);
         ctx.beginPath();
-        ctx.arc(sampledPath[0].x, sampledPath[0].y, clipRadius, 0, Math.PI * 2);
+        ctx.arc(contourPoints[0].x, contourPoints[0].y, clipRadius, 0, Math.PI * 2);
         ctx.clip();
       }
 
@@ -185,7 +160,7 @@ function initPreloaderLogoCanvas() {
         const sx = imgX - 100 + sheenPos * (imgW + 200);
         const sheenGrad = ctx.createLinearGradient(sx - 30, imgY, sx + 30, imgY + imgH);
         sheenGrad.addColorStop(0, 'rgba(255,255,255,0)');
-        sheenGrad.addColorStop(0.5, 'rgba(255,255,255,0.45)');
+        sheenGrad.addColorStop(0.5, 'rgba(255,255,255,0.4)');
         sheenGrad.addColorStop(1, 'rgba(255,255,255,0)');
         ctx.globalCompositeOperation = 'source-atop';
         ctx.fillStyle = sheenGrad;
@@ -195,51 +170,31 @@ function initPreloaderLogoCanvas() {
       ctx.restore();
     }
 
-    if (drawPct > 0.01) {
-      const drawCount = Math.floor(sampledPath.length * drawPct);
-      if (drawCount > 1) {
-        ctx.save();
-        ctx.beginPath();
-        for (let i = 0; i < drawCount; i++) {
-          if (i === 0) ctx.moveTo(sampledPath[i].x, sampledPath[i].y);
-          else ctx.lineTo(sampledPath[i].x, sampledPath[i].y);
-        }
-        ctx.strokeStyle = '#38bdf8';
-        ctx.lineWidth = 3.0;
-        ctx.lineCap = 'round';
-        ctx.lineJoin = 'round';
-        ctx.shadowColor = 'rgba(56, 189, 248, 1.0)';
-        ctx.shadowBlur = 18;
-        ctx.stroke();
-        ctx.restore();
-      }
-    }
-
     if (ringAlpha > 0.01) {
       ctx.save();
       ctx.globalAlpha = ringAlpha;
       ctx.beginPath(); ctx.ellipse(cx, cy, 175, 155, -0.08, 0, Math.PI * 2);
-      ctx.strokeStyle = 'rgba(56, 189, 248, ' + (ringAlpha * 0.6) + ')';
-      ctx.lineWidth = 1.8; ctx.shadowColor = '#38bdf8'; ctx.shadowBlur = 16; ctx.stroke();
+      ctx.strokeStyle = 'rgba(56, 189, 248, ' + (ringAlpha * 0.55) + ')';
+      ctx.lineWidth = 1.6; ctx.shadowColor = '#38bdf8'; ctx.shadowBlur = 14; ctx.stroke();
       ctx.restore();
     }
 
     if (particleAlpha > 0.01) {
-      drawEnergyParticle(ctx, activeParticlePos.x, activeParticlePos.y, particleAlpha);
+      drawEnergyOrb(ctx, activeParticlePos.x, activeParticlePos.y, particleAlpha);
     }
 
     requestAnimationFrame(render);
   }
 
-  function drawEnergyParticle(context, x, y, alpha) {
+  function drawEnergyOrb(context, x, y, alpha) {
     context.save(); context.globalAlpha = alpha;
-    const glowGrad = context.createRadialGradient(x, y, 0, x, y, 28);
+    const glowGrad = context.createRadialGradient(x, y, 0, x, y, 26);
     glowGrad.addColorStop(0, '#38bdf8'); glowGrad.addColorStop(0.4, 'rgba(56, 189, 248, 0.4)'); glowGrad.addColorStop(1, 'rgba(56, 189, 248, 0)');
-    context.fillStyle = glowGrad; context.beginPath(); context.arc(x, y, 28, 0, Math.PI * 2); context.fill();
+    context.fillStyle = glowGrad; context.beginPath(); context.arc(x, y, 26, 0, Math.PI * 2); context.fill();
 
-    const coreGrad = context.createRadialGradient(x, y, 0, x, y, 7);
+    const coreGrad = context.createRadialGradient(x, y, 0, x, y, 6.5);
     coreGrad.addColorStop(0, '#FFFFFF'); coreGrad.addColorStop(0.6, '#93c5fd'); coreGrad.addColorStop(1, '#38bdf8');
-    context.fillStyle = coreGrad; context.beginPath(); context.arc(x, y, 7, 0, Math.PI * 2); context.fill();
+    context.fillStyle = coreGrad; context.beginPath(); context.arc(x, y, 6.5, 0, Math.PI * 2); context.fill();
     context.restore();
   }
 
