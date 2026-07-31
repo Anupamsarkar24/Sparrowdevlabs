@@ -2663,12 +2663,49 @@ body.loading { overflow: hidden; }
   border: 1.5px solid rgba(0,0,0,0.06);
   box-shadow: 0 4px 16px rgba(0,0,0,0.05);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
-  overflow: hidden;
+  overflow: visible;
 }
 
 .plan-card:hover {
   transform: translateY(-4px);
   box-shadow: 0 12px 32px rgba(0,0,0,0.1);
+}
+
+/* ---- Side cut-out notches ---- */
+.plan-notch {
+  position: absolute;
+  top: 134px;
+  width: 18px;
+  height: 18px;
+  background: #f7f7fb;
+  border-radius: 50%;
+  z-index: 5;
+}
+
+.plan-notch-left {
+  left: -9px;
+  border-right: 1.5px solid rgba(0,0,0,0.08);
+}
+
+.plan-notch-right {
+  right: -9px;
+  border-left: 1.5px solid rgba(0,0,0,0.08);
+}
+
+.plan-pro .plan-notch-left {
+  border-right: 1.5px solid #7c3aed;
+}
+
+.plan-pro .plan-notch-right {
+  border-left: 1.5px solid #7c3aed;
+}
+
+.plan-legend .plan-notch-left {
+  border-right: 1.5px solid #d97706;
+}
+
+.plan-legend .plan-notch-right {
+  border-left: 1.5px solid #d97706;
 }
 
 /* ---- Top row: icon+name LEFT, gift box RIGHT ---- */
@@ -2763,12 +2800,12 @@ body.loading { overflow: hidden; }
 /* ---- Divider ---- */
 .plan-divider {
   border: none;
-  border-top: 1px solid rgba(0,0,0,0.08);
-  margin: 0;
+  border-top: 1px dashed rgba(0,0,0,0.1);
+  margin: 4px -18px 0 -18px;
 }
 
 .plan-divider--light {
-  border-top-color: rgba(255,255,255,0.15);
+  border-top-color: rgba(255,255,255,0.22);
 }
 
 /* ---- Features: 2-column grid ---- */
