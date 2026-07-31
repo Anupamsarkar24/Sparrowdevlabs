@@ -1,7 +1,12 @@
 /**
  * ============================================================================
- * SPARROWDEVLABS - GOOGLE APPS SCRIPT DATABASE & AUTOMATION (V7 DATE FIX)
+ * SPARROWDEVLABS - GOOGLE APPS SCRIPT DATABASE & AUTOMATION (V8 COMPLETE)
  * ============================================================================
+ * Features:
+ * 1. 1 User = 1 Subscription Row (Updates existing row upon re-subscribing).
+ * 2. Status changes to 'INACTIVE' when expired (No row deletion).
+ * 3. Pre-checkout active check returns full details (Email, Plan, Start Date, Expiry Date, Time Remaining).
+ * 4. Combines Payment ID & Payment Receipt in the same column.
  */
 
 function getSheet() {
@@ -46,7 +51,7 @@ function saveSubscriptionData(data) {
       "Plan", 
       "Purchase Date", 
       "Expiry Date", 
-      "Payment ID", 
+      "Payment ID & Receipt", 
       "Order ID / UTR", 
       "Status"
     ]);
@@ -57,15 +62,42 @@ function saveSubscriptionData(data) {
   }
   
   data = data || {};
-  const email = data.email || data.Email || 'Subscriber';
+  const email = (data.email || data.Email || 'Subscriber').toLowerCase().trim();
   const plan = data.plan || data.Plan || 'BEGINNER (MONTHLY)';
   const startDate = data.startDate || new Date().toISOString().split('T')[0];
   const expiryDate = data.expiryDate || '';
   const paymentId = data.paymentId || data.razorpay_payment_id || 'N/A';
   const orderId = data.orderId || data.razorpay_order_id || data.utr || 'N/A';
-  const status = data.status || 'ACTIVE';
+  const status = 'ACTIVE';
   
-  sheet.appendRow([email, plan, startDate, expiryDate, paymentId, orderId, status]);
+  const rows = sheet.getDataRange().getValues();
+  let existingRowIndex = -1;
+
+  // Search if email already exists in spreadsheet (starting after headers)
+  for (let i = 1; i < rows.length; i++) {
+    const rowEmail = (rows[i][0] || '').toString().toLowerCase().trim();
+    if (rowEmail === email) {
+      existingRowIndex = i + 1; // 1-indexed row number in Google Sheets
+      break;
+    }
+  }
+
+  if (existingRowIndex > 0) {
+    // UPDATE existing row instead of creating duplicate!
+    sheet.getRange(existingRowIndex, 2).setValue(plan);
+    sheet.getRange(existingRowIndex, 3).setValue(startDate);
+    sheet.getRange(existingRowIndex, 4).setValue(expiryDate);
+    sheet.getRange(existingRowIndex, 5).setValue(paymentId);
+    sheet.getRange(existingRowIndex, 6).setValue(orderId);
+    sheet.getRange(existingRowIndex, 7).setValue(status);
+    Logger.log("Updated existing subscription row for: " + email);
+  } else {
+    // APPEND new row
+    sheet.appendRow([email, plan, startDate, expiryDate, paymentId, orderId, status]);
+    Logger.log("Created new subscription row for: " + email);
+  }
+
+  SpreadsheetApp.flush();
   return true;
 }
 
@@ -130,7 +162,8 @@ function doGet(e) {
         const rowOrderId = (rows[i][5] || 'N/A').toString();
         const rowStatus = (rows[i][6] || 'ACTIVE').toString().toUpperCase().trim();
         
-        if (rowEmail === email && (rowStatus === 'ACTIVE' || !rowStatus)) {
+        // ONLY match if status is ACTIVE and expiry date >= Today!
+        if (rowEmail === email && rowStatus === 'ACTIVE') {
           if (!rowExpiry || rowExpiry >= today) {
             activeSub = {
               email: rowEmail,
@@ -173,16 +206,29 @@ function doGet(e) {
   }
 }
 
-function checkAndRemoveExpired() {
+/**
+ * AUTOMATED TRIGGER: Changes expired subscriptions from 'ACTIVE' to 'INACTIVE'
+ * (Replaces old deletion trigger so history is retained!)
+ */
+function updateExpiredToInactive() {
   const sheet = getSheet();
   if (!sheet) return;
   const rows = sheet.getDataRange().getValues();
   const today = new Date().toISOString().split('T')[0];
   
-  for (let i = rows.length - 1; i >= 1; i--) {
+  for (let i = 1; i < rows.length; i++) {
     const rowExpiry = formatDateString(rows[i][3]);
-    if (rowExpiry && rowExpiry < today) {
-      sheet.deleteRow(i + 1);
+    const rowStatus = (rows[i][6] || '').toString().toUpperCase().trim();
+    
+    if (rowExpiry && rowExpiry < today && rowStatus === 'ACTIVE') {
+      sheet.getRange(i + 1, 7).setValue('INACTIVE');
+      Logger.log("Marked subscription INACTIVE for: " + rows[i][0]);
     }
   }
+  SpreadsheetApp.flush();
+}
+
+// Retain checkAndRemoveExpired alias for backward compatibility
+function checkAndRemoveExpired() {
+  updateExpiredToInactive();
 }

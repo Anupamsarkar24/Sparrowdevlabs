@@ -1159,11 +1159,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
           if (checkData && checkData.active && checkData.subscription) {
             const sub = checkData.subscription;
-            const expDate = new Date(sub.expiryDate);
+            const expDate = new Date(sub.expiryDate + 'T23:59:59');
             const today = new Date();
             const timeDiff = expDate.getTime() - today.getTime();
-            const daysDiff = Math.ceil(timeDiff / (1000 * 3600 * 24));
-            const daysRemainingText = daysDiff > 0 ? `${daysDiff} Days Remaining` : 'Expires Today';
+            const daysDiff = Math.floor(timeDiff / (1000 * 3600 * 24));
+            const hoursDiff = Math.floor((timeDiff % (1000 * 3600 * 24)) / (1000 * 3600));
+            const daysRemainingText = daysDiff > 0 ? `${daysDiff} Days, ${hoursDiff} Hours Remaining` : `${hoursDiff} Hours Remaining`;
 
             activeView.innerHTML = `
               <span class="active-sub-badge">ACTIVE SUBSCRIPTION FOUND</span>
