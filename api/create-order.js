@@ -28,8 +28,8 @@ module.exports = async function handler(req, res) {
 
     const { amount, currency = 'INR', receipt = `rcpt_${Date.now()}` } = body;
 
-    const key_id = process.env.RAZORPAY_KEY_ID || 'rzp_test_TK98ktrTGelu02';
-    const key_secret = process.env.RAZORPAY_KEY_SECRET || 'xLH5C5vrhRdklIAVK1NuJZ74';
+    const key_id = process.env.RAZORPAY_KEY_ID || 'rzp_live_TKASfdnAAW6hJu';
+    const key_secret = process.env.RAZORPAY_KEY_SECRET || '21RXB8LEOTQBFvpORGFyxFp7';
 
     if (!key_id || !key_secret) {
       return res.status(401).json({ error: 'Razorpay API credentials missing' });
