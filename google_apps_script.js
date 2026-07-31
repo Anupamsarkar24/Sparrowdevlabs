@@ -1,14 +1,32 @@
 /**
  * ============================================================================
- * SPARROWDEVLABS - GOOGLE APPS SCRIPT DATABASE & AUTOMATION (BULLETPROOF V3)
+ * SPARROWDEVLABS - GOOGLE APPS SCRIPT DATABASE & AUTOMATION (ULTIMATE V5)
  * ============================================================================
- * Supports both GET and POST requests for instant Google Sheet logging.
  */
 
+function getSheet() {
+  try {
+    let ss = SpreadsheetApp.getActiveSpreadsheet();
+    if (!ss) {
+      ss = SpreadsheetApp.getActive();
+    }
+    if (ss) {
+      return ss.getActiveSheet() || ss.getSheets()[0];
+    }
+  } catch (err) {
+    Logger.log("getSheet Error: " + err.message);
+  }
+  return null;
+}
+
 function saveSubscriptionData(data) {
-  const sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
-  
-  // Create Styled Header Row if sheet is blank
+  const sheet = getSheet();
+  if (!sheet) {
+    Logger.log("ERROR: Could not get active sheet");
+    return false;
+  }
+
+  // Create Styled Header Row automatically if sheet is blank
   if (sheet.getLastRow() === 0) {
     sheet.appendRow([
       "Email", 
@@ -67,18 +85,26 @@ function doPost(e) {
 
 function doGet(e) {
   try {
-    const action = e ? e.parameter.action : '';
-    const email = e ? (e.parameter.email || '').toLowerCase().trim() : '';
+    const params = (e && e.parameter) ? e.parameter : {};
+    const action = params.action || '';
+    const email = (params.email || '').toLowerCase().trim();
 
-    if (action === 'add_subscription' || (e && e.parameter && e.parameter.email && e.parameter.plan)) {
-      saveSubscriptionData(e.parameter);
+    // If query has add_subscription or any email/plan parameter, save row!
+    if (action === 'add_subscription' || params.email || params.plan || params.paymentId) {
+      saveSubscriptionData(params);
+      
+      // Return 1x1 transparent GIF image for Image beacons or JSON output
       return ContentService.createTextOutput(JSON.stringify({
         success: true,
         message: "Subscription recorded successfully via GET"
       })).setMimeType(ContentService.MimeType.JSON);
     }
     
-    const sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
+    const sheet = getSheet();
+    if (!sheet) {
+      return ContentService.createTextOutput(JSON.stringify({ status: "No sheet found" })).setMimeType(ContentService.MimeType.JSON);
+    }
+
     const rows = sheet.getDataRange().getValues();
     
     if (action === 'check_membership') {
@@ -120,7 +146,8 @@ function doGet(e) {
  * DAILY CRON JOB: Automatically checks and deletes expired subscription rows!
  */
 function checkAndRemoveExpired() {
-  const sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
+  const sheet = getSheet();
+  if (!sheet) return;
   const rows = sheet.getDataRange().getValues();
   const today = new Date().toISOString().split('T')[0];
   

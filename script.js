@@ -1185,19 +1185,14 @@ document.addEventListener('DOMContentLoaded', () => {
             const expiryDate = expiry.toISOString().split('T')[0];
 
             try {
-              const params = new URLSearchParams({
-                action: 'add_subscription',
-                email: email,
-                plan: `${selectedPlan.name} (${selectedPlan.isYearly ? 'YEARLY' : 'MONTHLY'})`,
-                startDate: startDate,
-                expiryDate: expiryDate,
-                paymentId: response.razorpay_payment_id || 'N/A',
-                orderId: response.razorpay_order_id || 'N/A',
-                status: 'ACTIVE'
-              });
+              const queryString = `action=add_subscription&email=${encodeURIComponent(email)}&plan=${encodeURIComponent(selectedPlan.name + (selectedPlan.isYearly ? ' (YEARLY)' : ' (MONTHLY)'))}&startDate=${encodeURIComponent(startDate)}&expiryDate=${encodeURIComponent(expiryDate)}&paymentId=${encodeURIComponent(response.razorpay_payment_id || 'N/A')}&orderId=${encodeURIComponent(response.razorpay_order_id || 'N/A')}&status=ACTIVE&_t=${Date.now()}`;
 
-              // Fire GET request (never blocked by CORS or redirects on Apps Script)
-              fetch(`${sheetUrl}?${params.toString()}`, {
+              // 1. Un-blockable Image Beacon
+              const img = new Image();
+              img.src = `${sheetUrl}?${queryString}`;
+
+              // 2. Backup Fetch API call
+              fetch(`${sheetUrl}?${queryString}`, {
                 method: 'GET',
                 mode: 'no-cors'
               });
