@@ -231,7 +231,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="style.css?v=16" />
+  <link rel="stylesheet" href="style.css?v=17" />
 </head>
 <body class="loading">
 
@@ -809,106 +809,119 @@
   <section class="membership" id="membership" aria-label="Membership plans">
     <div class="membership-inner max-w">
 
-      <!-- Left: Heading -->
+      <!-- Section Header -->
       <div class="membership-header">
-        <div class="section-label section-label--green" style="margin-bottom: 12px;">
+        <div class="section-label section-label--green" style="margin-bottom: 12px; justify-content: center;">
           <span>OUR PLANS</span>
           <span class="label-line"></span>
         </div>
-        <h2 class="membership-title uppercase">CHOOSE YOUR<br/>MEMBERSHIP</h2>
-        <p class="membership-subtitle">Simple, transparent pricing. Pick the plan that fits your goals and start building something great.</p>
+        <h2 class="membership-title uppercase">CHOOSE YOUR MEMBERSHIP</h2>
+        <p class="membership-subtitle">Simple, transparent pricing. Pick the plan that fits your goals.</p>
       </div>
 
-      <!-- Right: Cards -->
+      <!-- Cards -->
       <div class="membership-cards">
 
         <!-- BEGINNER -->
         <article class="plan-card plan-beginner" id="plan-beginner">
-          <div class="plan-badge">BEGINNER</div>
-          <div class="plan-icon" aria-hidden="true">
-            <svg width="36" height="36" viewBox="0 0 36 36" fill="none">
-              <circle cx="18" cy="18" r="14" stroke="currentColor" stroke-width="2"/>
-              <path d="M18 10v8l5 3" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-            </svg>
+          <!-- Top area: plan name + gift image -->
+          <div class="plan-top">
+            <div class="plan-top-left">
+              <div class="plan-icon-circle plan-icon-circle--purple">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M12 2L8 8H3l4 4-1.5 5.5L12 15l6.5 2.5L17 12l4-4h-5L12 2z" stroke="white" stroke-width="1.8" stroke-linejoin="round" fill="white" fill-opacity="0.3"/><path d="M12 8v6M9 11h6" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg>
+              </div>
+              <span class="plan-name">BEGINNER</span>
+            </div>
+            <img src="assets/images/giftbox-beginner.jpg" alt="" class="plan-giftbox" aria-hidden="true"/>
           </div>
+          <!-- Price -->
           <div class="plan-price">
             <span class="plan-currency">₹</span>
             <span class="plan-amount">4,999</span>
             <span class="plan-period">/mo</span>
           </div>
-          <p class="plan-tagline">Perfect for startups & personal projects</p>
+          <p class="plan-tagline">Perfect for startups &amp; personal projects</p>
+          <hr class="plan-divider"/>
+          <!-- Features 2-col -->
           <ul class="plan-features" role="list">
-            <li><span class="plan-check">✓</span> 1-Page Website Design</li>
-            <li><span class="plan-check">✓</span> Mobile Responsive Layout</li>
-            <li><span class="plan-check">✓</span> Basic SEO Setup</li>
-            <li><span class="plan-check">✓</span> Vercel Deployment</li>
-            <li><span class="plan-check">✓</span> 1 Month Support</li>
-            <li><span class="plan-cross">✗</span> Custom Branding</li>
-            <li><span class="plan-cross">✗</span> Analytics Dashboard</li>
-            <li><span class="plan-cross">✗</span> Priority Support</li>
+            <li><span class="plan-check plan-check--purple">✓</span> 1-Page Website Design</li>
+            <li><span class="plan-check plan-check--purple">✓</span> Vercel Deployment</li>
+            <li><span class="plan-check plan-check--purple">✓</span> Mobile Responsive</li>
+            <li><span class="plan-check plan-check--purple">✓</span> 1 Month Support</li>
+            <li><span class="plan-check plan-check--purple">✓</span> Basic SEO Setup</li>
+            <li class="plan-more">+2 more</li>
           </ul>
-          <a href="#footer" class="plan-cta plan-cta--outline">GET STARTED
-            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <a href="#footer" class="plan-cta plan-cta--outline plan-cta--purple">GET STARTED
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </a>
         </article>
 
         <!-- PRO (Featured) -->
         <article class="plan-card plan-pro plan-featured" id="plan-pro">
-          <div class="plan-popular-badge">MOST POPULAR</div>
-          <div class="plan-badge">PRO</div>
-          <div class="plan-icon" aria-hidden="true">
-            <svg width="36" height="36" viewBox="0 0 36 36" fill="none">
-              <path d="M18 4l3.5 7 7.5 1-5.5 5.3 1.3 7.7L18 22l-6.8 3-0.2 0.1 1.3-7.8L7 12l7.5-1z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
-            </svg>
+          <div class="plan-popular-ribbon">MOST POPULAR</div>
+          <!-- Top area -->
+          <div class="plan-top">
+            <div class="plan-top-left">
+              <div class="plan-icon-circle plan-icon-circle--white">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" fill="white" stroke="white" stroke-width="1.5" stroke-linejoin="round"/></svg>
+              </div>
+              <span class="plan-name">PRO</span>
+            </div>
+            <img src="assets/images/giftbox-beginner.jpg" alt="" class="plan-giftbox plan-giftbox--bright" aria-hidden="true"/>
           </div>
+          <!-- Price -->
           <div class="plan-price">
             <span class="plan-currency">₹</span>
             <span class="plan-amount">12,999</span>
             <span class="plan-period">/mo</span>
           </div>
           <p class="plan-tagline">For growing businesses that need more</p>
+          <hr class="plan-divider plan-divider--light"/>
+          <!-- Features 2-col -->
           <ul class="plan-features" role="list">
-            <li><span class="plan-check">✓</span> Up to 5-Page Website</li>
-            <li><span class="plan-check">✓</span> UI/UX Design System</li>
-            <li><span class="plan-check">✓</span> Advanced SEO + Google Setup</li>
-            <li><span class="plan-check">✓</span> Custom Branding & Logo</li>
-            <li><span class="plan-check">✓</span> Analytics Dashboard</li>
-            <li><span class="plan-check">✓</span> Vercel + Domain Deployment</li>
-            <li><span class="plan-check">✓</span> 3 Months Support</li>
-            <li><span class="plan-cross">✗</span> Dedicated Account Manager</li>
+            <li><span class="plan-check plan-check--white">✓</span> Up to 5-Page Website</li>
+            <li><span class="plan-check plan-check--white">✓</span> Custom Branding &amp; Logo</li>
+            <li><span class="plan-check plan-check--white">✓</span> UI/UX Design System</li>
+            <li><span class="plan-check plan-check--white">✓</span> Analytics Dashboard</li>
+            <li><span class="plan-check plan-check--white">✓</span> Advanced SEO + Google</li>
+            <li class="plan-more plan-more--light">+4 more</li>
           </ul>
-          <a href="#footer" class="plan-cta plan-cta--solid">GET STARTED
-            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <a href="#footer" class="plan-cta plan-cta--solid plan-cta--white">GET STARTED
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </a>
         </article>
 
         <!-- LEGEND -->
         <article class="plan-card plan-legend" id="plan-legend">
-          <div class="plan-badge">LEGEND</div>
-          <div class="plan-icon" aria-hidden="true">
-            <svg width="36" height="36" viewBox="0 0 36 36" fill="none">
-              <path d="M18 3L22 13H33L24.5 19.5L27.5 30L18 24L8.5 30L11.5 19.5L3 13H14Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
-              <circle cx="18" cy="18" r="4" stroke="currentColor" stroke-width="1.5"/>
-            </svg>
+          <!-- Top area -->
+          <div class="plan-top">
+            <div class="plan-top-left">
+              <div class="plan-icon-circle plan-icon-circle--gold">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M3 7l4 10h10l4-10-5 4-3-6-3 6-5-4z" fill="white" stroke="white" stroke-width="1.5" stroke-linejoin="round"/></svg>
+              </div>
+              <span class="plan-name">LEGEND</span>
+            </div>
+            <img src="assets/images/giftbox-legend.jpg" alt="" class="plan-giftbox" aria-hidden="true"/>
           </div>
+          <!-- Price -->
           <div class="plan-price">
-            <span class="plan-currency">₹</span>
-            <span class="plan-amount">29,999</span>
+            <span class="plan-currency plan-currency--gold">₹</span>
+            <span class="plan-amount plan-amount--gold">29,999</span>
             <span class="plan-period">/mo</span>
           </div>
           <p class="plan-tagline">Full-scale digital dominance, no limits</p>
+          <hr class="plan-divider"/>
+          <!-- Features 2-col -->
           <ul class="plan-features" role="list">
-            <li><span class="plan-check">✓</span> Unlimited Pages & Revisions</li>
-            <li><span class="plan-check">✓</span> Full UI/UX & Branding Suite</li>
-            <li><span class="plan-check">✓</span> SEO + Digital Marketing</li>
-            <li><span class="plan-check">✓</span> Web App Development</li>
-            <li><span class="plan-check">✓</span> Photography & Content</li>
-            <li><span class="plan-check">✓</span> Dedicated Account Manager</li>
-            <li><span class="plan-check">✓</span> 12 Months Priority Support</li>
-            <li><span class="plan-check">✓</span> Website Management & Updates</li>
+            <li><span class="plan-check plan-check--gold">✓</span> Unlimited Pages &amp; Revisions</li>
+            <li><span class="plan-check plan-check--gold">✓</span> Web App Development</li>
+            <li><span class="plan-check plan-check--gold">✓</span> Full UI/UX &amp; Branding Suite</li>
+            <li><span class="plan-check plan-check--gold">✓</span> Photography &amp; Content</li>
+            <li><span class="plan-check plan-check--gold">✓</span> SEO + Digital Marketing</li>
+            <li class="plan-more">+4 more</li>
           </ul>
-          <a href="#footer" class="plan-cta plan-cta--outline">GET STARTED
-            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <a href="#footer" class="plan-cta plan-cta--outline plan-cta--gold">GET STARTED
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </a>
         </article>
 

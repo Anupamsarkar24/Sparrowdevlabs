@@ -2606,8 +2606,299 @@ body.loading { overflow: hidden; }
    MEMBERSHIP / PRICING SECTION
    ============================================================ */
 .membership {
-  background: #F5F3EE;
-  padding: 72px 0;
+  background: #f7f7fb;
+  padding: 80px 0 100px;
+}
+
+.membership-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 48px;
+}
+
+/* Centered header */
+.membership-header {
+  text-align: center;
+  max-width: 560px;
+}
+
+.membership-title {
+  font-family: var(--font-primary);
+  font-size: 42px;
+  font-weight: 900;
+  letter-spacing: -1.5px;
+  color: #111;
+  margin-bottom: 12px;
+  line-height: 1.1;
+}
+
+.membership-subtitle {
+  font-family: var(--font-secondary);
+  font-size: 15px;
+  color: #777;
+  line-height: 1.6;
+}
+
+/* ---- 3-col card grid ---- */
+.membership-cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  width: 100%;
+  align-items: stretch;
+}
+
+/* ---- Base card ---- */
+.plan-card {
+  position: relative;
+  background: #fff;
+  border-radius: 20px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  border: 1.5px solid rgba(0,0,0,0.06);
+  box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  overflow: hidden;
+}
+
+.plan-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 14px 40px rgba(0,0,0,0.1);
+}
+
+/* ---- Top row: icon+name LEFT, gift box RIGHT ---- */
+.plan-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.plan-top-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.plan-icon-circle {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.plan-icon-circle--purple { background: #7c3aed; }
+.plan-icon-circle--white  { background: rgba(255,255,255,0.25); border: 1.5px solid rgba(255,255,255,0.4); }
+.plan-icon-circle--gold   { background: #d97706; }
+
+.plan-name {
+  font-family: var(--font-primary);
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 2px;
+  color: #333;
+}
+
+/* Gift box image top-right */
+.plan-giftbox {
+  width: 80px;
+  height: 80px;
+  object-fit: contain;
+  margin-top: -8px;
+  margin-right: -8px;
+  flex-shrink: 0;
+}
+
+.plan-giftbox--bright {
+  filter: brightness(1.2) saturate(1.1);
+}
+
+/* ---- Price ---- */
+.plan-price {
+  display: flex;
+  align-items: baseline;
+  gap: 2px;
+}
+
+.plan-currency {
+  font-family: var(--font-primary);
+  font-size: 18px;
+  font-weight: 700;
+  color: #111;
+}
+
+.plan-amount {
+  font-family: var(--font-primary);
+  font-size: 40px;
+  font-weight: 900;
+  letter-spacing: -2px;
+  color: #111;
+  line-height: 1;
+}
+
+.plan-period {
+  font-family: var(--font-secondary);
+  font-size: 13px;
+  color: #999;
+  margin-left: 2px;
+}
+
+/* ---- Tagline ---- */
+.plan-tagline {
+  font-family: var(--font-secondary);
+  font-size: 13px;
+  color: #666;
+  line-height: 1.5;
+  margin-top: -6px;
+}
+
+/* ---- Divider ---- */
+.plan-divider {
+  border: none;
+  border-top: 1px solid rgba(0,0,0,0.08);
+  margin: 0;
+}
+
+.plan-divider--light {
+  border-top-color: rgba(255,255,255,0.15);
+}
+
+/* ---- Features: 2-column grid ---- */
+.plan-features {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px 12px;
+  flex: 1;
+}
+
+.plan-features li {
+  font-family: var(--font-secondary);
+  font-size: 12px;
+  color: #444;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* Coloured check circles */
+.plan-check {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 9px;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.plan-check--purple { background: rgba(124,58,237,0.12); color: #7c3aed; }
+.plan-check--white  { background: rgba(255,255,255,0.25); color: #fff; }
+.plan-check--gold   { background: rgba(217,119,6,0.12);  color: #d97706; }
+
+/* "+X more" row */
+.plan-more {
+  font-family: var(--font-secondary);
+  font-size: 12px;
+  color: #7c3aed;
+  font-weight: 600;
+  grid-column: 1 / -1;
+}
+
+.plan-more--light {
+  color: rgba(255,255,255,0.7);
+}
+
+/* ---- CTA Buttons ---- */
+.plan-cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px 20px;
+  border-radius: 100px;
+  font-family: var(--font-secondary);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  margin-top: auto;
+}
+
+.plan-cta--outline { background: transparent; }
+.plan-cta--purple  { border: 1.5px solid #7c3aed; color: #7c3aed; }
+.plan-cta--purple:hover { background: #7c3aed; color: #fff; }
+
+.plan-cta--gold    { border: 1.5px solid #d97706; color: #d97706; }
+.plan-cta--gold:hover { background: #d97706; color: #fff; }
+
+.plan-cta--solid   { border: none; }
+.plan-cta--white   { background: #fff; color: #7c3aed; }
+.plan-cta--white:hover { background: rgba(255,255,255,0.85); }
+
+/* ---- PRO featured (purple dark) ---- */
+.plan-featured {
+  background: linear-gradient(145deg, #7c3aed, #5b21b6);
+  border-color: transparent;
+  box-shadow: 0 16px 48px rgba(124,58,237,0.35);
+}
+
+.plan-featured .plan-name    { color: rgba(255,255,255,0.85); }
+.plan-featured .plan-currency,
+.plan-featured .plan-amount  { color: #fff; }
+.plan-featured .plan-period  { color: rgba(255,255,255,0.55); }
+.plan-featured .plan-tagline { color: rgba(255,255,255,0.65); }
+.plan-featured .plan-features li { color: rgba(255,255,255,0.85); }
+
+/* ---- MOST POPULAR diagonal ribbon ---- */
+.plan-popular-ribbon {
+  position: absolute;
+  top: 18px;
+  right: -24px;
+  background: #fff;
+  color: #7c3aed;
+  font-family: var(--font-secondary);
+  font-size: 8px;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+  padding: 4px 36px;
+  transform: rotate(45deg);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+}
+
+/* ---- Legend gold price ---- */
+.plan-currency--gold,
+.plan-amount--gold {
+  background: linear-gradient(135deg, #c9a227, #f0c040);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ---- Mobile ---- */
+@media (max-width: 900px) {
+  .membership { padding: 60px 0; }
+  .membership-title { font-size: 32px; }
+  .membership-cards {
+    grid-template-columns: 1fr;
+    max-width: 380px;
+    margin: 0 auto;
+  }
+  .plan-featured { order: -1; }
+  .plan-card { border-radius: 20px !important; }
+  .plan-features { grid-template-columns: 1fr; }
+}
   position: relative;
   overflow: hidden;
 }
