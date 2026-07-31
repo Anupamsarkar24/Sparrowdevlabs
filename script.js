@@ -3,6 +3,242 @@
    Awwwards-Level Animations & Interactions
    ============================================================ */
 
+/* ============================================================
+   SPARROW DEV LABS - LUXURY LOGO LOADER ANIMATION ENGINE
+   ============================================================ */
+function initPreloaderLogoCanvas() {
+  const canvas = document.getElementById('preloaderLogoCanvas');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+
+  const width = canvas.width;  // 680
+  const height = canvas.height; // 680
+  const cx = width / 2;
+  const cy = height / 2 - 10;
+
+  const scale = 2.2;
+  const ox = cx - 20;
+  const oy = cy - 20;
+
+  const bodySvgD = "M -40,110 L 50,110 C 65,110 75,95 65,75 L 25,-10 C 15,-30 25,-60 45,-75 C 65,-90 60,-115 35,-120 C 10,-125 -25,-105 -35,-80 C -45,-55 -30,-25 -10,0 L 20,45 C 30,60 20,75 5,80 L -35,80 Z";
+  const wingSvgD = "M -110,95 C -60,40 -20,-10 10,-55 C 5,-20 -20,30 -50,65 C -70,85 -95,95 -110,95 Z";
+  const eyeCircle = { x: ox + 32 * scale / 1.5, y: oy - 98 * scale / 1.5, r: 7 * scale / 1.5 };
+
+  const bodyPath = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+  bodyPath.setAttribute('d', bodySvgD);
+  const bodyLen = bodyPath.getTotalLength();
+
+  const wingPath = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+  wingPath.setAttribute('d', wingSvgD);
+  const wingLen = wingPath.getTotalLength();
+
+  function getBodyPoint(len) {
+    const pt = bodyPath.getPointAtLength(Math.min(Math.max(len, 0), bodyLen));
+    return { x: ox + pt.x * (scale / 1.5), y: oy + pt.y * (scale / 1.5) };
+  }
+
+  function getWingPoint(len) {
+    const pt = wingPath.getPointAtLength(Math.min(Math.max(len, 0), wingLen));
+    return { x: ox + pt.x * (scale / 1.5), y: oy + pt.y * (scale / 1.5) };
+  }
+
+  const bodySamples = [];
+  for (let l = 0; l <= bodyLen; l += 2) bodySamples.push(getBodyPoint(l));
+  bodySamples.push(getBodyPoint(bodyLen));
+
+  const wingSamples = [];
+  for (let l = 0; l <= wingLen; l += 2) wingSamples.push(getWingPoint(l));
+  wingSamples.push(getWingPoint(wingLen));
+
+  const particles = [];
+  for (let i = 0; i < 20; i++) {
+    particles.push({
+      x: Math.random() * width,
+      y: Math.random() * height,
+      r: Math.random() * 1.5 + 0.5,
+      alpha: Math.random() * 0.2 + 0.05,
+      vx: (Math.random() - 0.5) * 0.3,
+      vy: (Math.random() - 0.5) * 0.3
+    });
+  }
+
+  function easeInOutCubic(t) {
+    return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+  }
+
+  const DURATION = 2800;
+  let startTime = null;
+
+  function render(timestamp) {
+    if (!document.getElementById('preloaderLogoCanvas')) return;
+    if (!startTime) startTime = timestamp;
+    const elapsed = (timestamp - startTime) % DURATION;
+    const normTime = elapsed / DURATION;
+
+    ctx.fillStyle = '#050505';
+    ctx.fillRect(0, 0, width, height);
+
+    ctx.fillStyle = '#ffffff';
+    particles.forEach(p => {
+      p.x += p.vx; p.y += p.vy;
+      if (p.x < 0) p.x = width; if (p.x > width) p.x = 0;
+      if (p.y < 0) p.y = height; if (p.y > height) p.y = 0;
+      ctx.globalAlpha = p.alpha;
+      ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2); ctx.fill();
+    });
+    ctx.globalAlpha = 1.0;
+
+    let bodyDrawPct = 0, wingDrawPct = 0, logoOpacity = 0, fillOpacity = 0;
+    let MetallicSheen = 0, orbitPct = 0, orbitAlpha = 0, bloomPulse = 0;
+
+    if (normTime <= 0.65) {
+      const drawProgress = normTime / 0.65;
+      const easedProgress = easeInOutCubic(drawProgress);
+      bodyDrawPct = Math.min(easedProgress * 1.1, 1.0);
+      wingDrawPct = Math.max(0, (easedProgress - 0.25) / 0.75);
+      logoOpacity = Math.min(drawProgress * 1.5, 1.0);
+      fillOpacity = Math.max(0, (drawProgress - 0.4) / 0.25);
+    } else if (normTime <= 0.80) {
+      bodyDrawPct = 1.0; wingDrawPct = 1.0; logoOpacity = 1.0; fillOpacity = 1.0;
+      MetallicSheen = (normTime - 0.65) / 0.15;
+      if (normTime >= 0.72) {
+        const orbTime = (normTime - 0.72) / 0.20;
+        orbitPct = easeInOutCubic(Math.min(orbTime, 1.0));
+        orbitAlpha = Math.sin(orbTime * Math.PI);
+      }
+    } else if (normTime <= 0.92) {
+      bodyDrawPct = 1.0; wingDrawPct = 1.0; logoOpacity = 1.0; fillOpacity = 1.0;
+      const orbTime = (normTime - 0.72) / 0.20;
+      orbitPct = easeInOutCubic(Math.min(orbTime, 1.0));
+      orbitAlpha = Math.sin(orbTime * Math.PI);
+      bloomPulse = Math.sin(((normTime - 0.80) / 0.12) * Math.PI) * 0.4;
+    } else {
+      const reverseProgress = (normTime - 0.92) / 0.08;
+      const unDraw = 1.0 - easeInOutCubic(reverseProgress);
+      bodyDrawPct = unDraw; wingDrawPct = unDraw; logoOpacity = unDraw; fillOpacity = unDraw;
+      orbitAlpha = (1.0 - reverseProgress) * 0.5;
+    }
+
+    if (fillOpacity > 0) {
+      ctx.save();
+      ctx.globalAlpha = fillOpacity * logoOpacity;
+
+      ctx.beginPath();
+      for (let i = 0; i < bodySamples.length; i++) {
+        if (i === 0) ctx.moveTo(bodySamples[i].x, bodySamples[i].y);
+        else ctx.lineTo(bodySamples[i].x, bodySamples[i].y);
+      }
+      ctx.closePath();
+
+      const bodyGrad = ctx.createLinearGradient(cx - 100, cy - 100, cx + 100, cy + 100);
+      bodyGrad.addColorStop(0, '#ffffff'); bodyGrad.addColorStop(0.6, '#e2e8f0'); bodyGrad.addColorStop(1, '#cbd5e1');
+      ctx.fillStyle = bodyGrad;
+      ctx.shadowColor = 'rgba(255, 255, 255, ' + (0.15 + bloomPulse) + ')';
+      ctx.shadowBlur = 20;
+      ctx.fill();
+
+      ctx.beginPath();
+      ctx.arc(eyeCircle.x, eyeCircle.y, eyeCircle.r, 0, Math.PI * 2);
+      ctx.fillStyle = '#050505'; ctx.fill();
+
+      ctx.beginPath();
+      for (let i = 0; i < wingSamples.length; i++) {
+        if (i === 0) ctx.moveTo(wingSamples[i].x, wingSamples[i].y);
+        else ctx.lineTo(wingSamples[i].x, wingSamples[i].y);
+      }
+      ctx.closePath();
+
+      const wingGrad = ctx.createLinearGradient(cx - 120, cy + 80, cx - 20, cy - 40);
+      wingGrad.addColorStop(0, '#0284c7'); wingGrad.addColorStop(0.5, '#38bdf8'); wingGrad.addColorStop(1, '#93c5fd');
+      ctx.fillStyle = wingGrad;
+      ctx.shadowColor = 'rgba(56, 189, 248, ' + (0.3 + bloomPulse) + ')';
+      ctx.shadowBlur = 25;
+      ctx.fill();
+
+      if (MetallicSheen > 0 && MetallicSheen < 1) {
+        const sheenX = cx - 200 + MetallicSheen * 400;
+        const sheenGrad = ctx.createLinearGradient(sheenX - 40, cy - 100, sheenX + 40, cy + 100);
+        sheenGrad.addColorStop(0, 'rgba(255,255,255,0)'); sheenGrad.addColorStop(0.5, 'rgba(255,255,255,0.4)'); sheenGrad.addColorStop(1, 'rgba(255,255,255,0)');
+        ctx.globalCompositeOperation = 'source-atop';
+        ctx.fillStyle = sheenGrad;
+        ctx.fillRect(cx - 200, cy - 200, 400, 400);
+        ctx.globalCompositeOperation = 'source-over';
+      }
+      ctx.restore();
+    }
+
+    ctx.save();
+    if (bodyDrawPct > 0) {
+      const drawCount = Math.floor(bodySamples.length * bodyDrawPct);
+      if (drawCount > 1) {
+        ctx.beginPath();
+        for (let i = 0; i < drawCount; i++) {
+          if (i === 0) ctx.moveTo(bodySamples[i].x, bodySamples[i].y);
+          else ctx.lineTo(bodySamples[i].x, bodySamples[i].y);
+        }
+        ctx.strokeStyle = '#ffffff'; ctx.lineWidth = 3; ctx.lineCap = 'round'; ctx.lineJoin = 'round';
+        ctx.shadowColor = 'rgba(56, 189, 248, 0.8)'; ctx.shadowBlur = 12; ctx.stroke();
+        drawSparkHead(ctx, bodySamples[drawCount - 1].x, bodySamples[drawCount - 1].y, '#ffffff', '#38bdf8', 1.0);
+      }
+    }
+
+    if (wingDrawPct > 0) {
+      const drawCount = Math.floor(wingSamples.length * wingDrawPct);
+      if (drawCount > 1) {
+        ctx.beginPath();
+        for (let i = 0; i < drawCount; i++) {
+          if (i === 0) ctx.moveTo(wingSamples[i].x, wingSamples[i].y);
+          else ctx.lineTo(wingSamples[i].x, wingSamples[i].y);
+        }
+        ctx.strokeStyle = '#38bdf8'; ctx.lineWidth = 2.5; ctx.lineCap = 'round'; ctx.lineJoin = 'round';
+        ctx.shadowColor = 'rgba(56, 189, 248, 1.0)'; ctx.shadowBlur = 15; ctx.stroke();
+        drawSparkHead(ctx, wingSamples[drawCount - 1].x, wingSamples[drawCount - 1].y, '#93c5fd', '#38bdf8', 0.8);
+      }
+    }
+
+    if (orbitAlpha > 0.01) {
+      ctx.save();
+      ctx.globalAlpha = orbitAlpha;
+      const rx = 150, ry = 130;
+      const orbitAngle = orbitPct * Math.PI * 2 - Math.PI / 2;
+      ctx.beginPath(); ctx.ellipse(cx, cy, rx, ry, -0.1, 0, Math.PI * 2);
+      ctx.strokeStyle = 'rgba(56, 189, 248, ' + (orbitAlpha * 0.4) + ')'; ctx.lineWidth = 1.5;
+      ctx.shadowColor = '#38bdf8'; ctx.shadowBlur = 15; ctx.stroke();
+      drawSparkHead(ctx, cx + Math.cos(orbitAngle) * rx, cy + Math.sin(orbitAngle) * ry, '#ffffff', '#38bdf8', orbitAlpha);
+      ctx.restore();
+    }
+
+    if (normTime <= 0.05 || normTime >= 0.95) {
+      const birthAlpha = normTime <= 0.05 ? normTime / 0.05 : (1.0 - normTime) / 0.05;
+      drawSparkHead(ctx, bodySamples[0].x, bodySamples[0].y, '#ffffff', '#38bdf8', birthAlpha);
+    }
+
+    ctx.restore();
+    requestAnimationFrame(render);
+  }
+
+  function drawSparkHead(context, x, y, coreColor, glowColor, alpha) {
+    context.save(); context.globalAlpha = alpha;
+    const glowGrad = context.createRadialGradient(x, y, 0, x, y, 22);
+    glowGrad.addColorStop(0, glowColor); glowGrad.addColorStop(0.4, 'rgba(56, 189, 248, 0.4)'); glowGrad.addColorStop(1, 'rgba(56, 189, 248, 0)');
+    context.fillStyle = glowGrad; context.beginPath(); context.arc(x, y, 22, 0, Math.PI * 2); context.fill();
+
+    const coreGrad = context.createRadialGradient(x, y, 0, x, y, 6);
+    coreGrad.addColorStop(0, '#ffffff'); coreGrad.addColorStop(0.7, coreColor); coreGrad.addColorStop(1, glowColor);
+    context.fillStyle = coreGrad; context.beginPath(); context.arc(x, y, 6, 0, Math.PI * 2); context.fill();
+    context.restore();
+  }
+
+  requestAnimationFrame(render);
+}
+
+// Start Logo Preloader Canvas Immediately
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initPreloaderLogoCanvas);
+} else {
+  initPreloaderLogoCanvas();
+}
+
 const removePreloader = () => {
   const preloader = document.getElementById('site-preloader');
   if (preloader && !preloader.classList.contains('fade-out')) {

@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sparrow Dev Labs - Premium Logo Loading Animation</title>
+  <style>
+    /* ============================================================
+       SPARROW DEV LABS - LUXURY LOGO LOADER (STRICT SPECIFICATION)
+       Background: #050505
+       Font: Thin Modern Sans-Serif
+       ============================================================ */
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400&display=swap');
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html, body {
+      width: 100%;
+      height: 100%;
+      background-color: #050505;
+      color: #ffffff;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    .loader-container {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      max-width: 600px;
+      max-height: 600px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .canvas-wrapper {
+      position: relative;
+      width: 340px;
+      height: 340px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    canvas {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
+    .brand-text {
+      position: absolute;
+      bottom: 80px;
+      font-family: 'Inter', sans-serif;
+      font-weight: 200;
+      font-size: 13px;
+      color: #ffffff;
+      opacity: 0.4;
+      letter-spacing: 0.4em;
+      text-transform: lowercase;
+      user-select: none;
+      pointer-events: none;
+      transition: opacity 0.5s ease;
+    }
+
+    /* Ambient background radial glow */
+    .bg-glow {
+      position: absolute;
+      width: 500px;
+      height: 500px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(56, 189, 248, 0.04) 0%, rgba(124, 58, 237, 0.02) 40%, transparent 70%);
+      pointer-events: none;
+      z-index: 0;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="bg-glow"></div>
+
+  <div class="loader-container">
+    <div class="canvas-wrapper">
+      <canvas id="loaderCanvas" width="680" height="680"></canvas>
+    </div>
+    <div class="brand-text">sparrow-dev-labs</div>
+  </div>
+
+  <script>
+    /**
+     * SPARROW DEV LABS - CINEMATIC LOGO ANIMATION (60 FPS GPU ACCELERATED)
+     * Total Duration: 2.8 seconds
+     * Loop: Infinite Seamless
+     */
+    (function () {
+      const canvas = document.getElementById('loaderCanvas');
+      const ctx = canvas.getContext('2d');
+
+      const width = canvas.width;  // 680
+      const height = canvas.height; // 680
+      const cx = width / 2;
+      const cy = height / 2 - 10; // slightly offset for visual optical center
+
+      // -------------------------------------------------------------
+      // SVG PATH CONVERSION FOR SPARROW LOGO (BIRD SILHOUETTE & WING)
+      // -------------------------------------------------------------
+      // Scale: normalized coordinates mapped to canvas space
+      const scale = 2.2;
+      const ox = cx - 20;
+      const oy = cy - 20;
+
+      // SVG Path definitions for Bird Body & Feather Wing
+      const bodySvgD = "M -40,110 L 50,110 C 65,110 75,95 65,75 L 25,-10 C 15,-30 25,-60 45,-75 C 65,-90 60,-115 35,-120 C 10,-125 -25,-105 -35,-80 C -45,-55 -30,-25 -10,0 L 20,45 C 30,60 20,75 5,80 L -35,80 Z";
+      const wingSvgD = "M -110,95 C -60,40 -20,-10 10,-55 C 5,-20 -20,30 -50,65 C -70,85 -95,95 -110,95 Z";
+
+      // SVG Eye Circle: cx: 32, cy: -98, r: 7
+      const eyeCircle = { x: ox + 32 * scale / 1.5, y: oy - 98 * scale / 1.5, r: 7 * scale / 1.5 };
+
+      // Helper SVG Path Measurer
+      const bodyPath = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+      bodyPath.setAttribute('d', bodySvgD);
+      const bodyLen = bodyPath.getTotalLength();
+
+      const wingPath = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+      wingPath.setAttribute('d', wingSvgD);
+      const wingLen = wingPath.getTotalLength();
+
+      // Transform SVG coordinates to Canvas pixels
+      function getBodyPoint(len) {
+        const pt = bodyPath.getPointAtLength(Math.min(Math.max(len, 0), bodyLen));
+        return {
+          x: ox + pt.x * (scale / 1.5),
+          y: oy + pt.y * (scale / 1.5)
+        };
+      }
+
+      function getWingPoint(len) {
+        const pt = wingPath.getPointAtLength(Math.min(Math.max(len, 0), wingLen));
+        return {
+          x: ox + pt.x * (scale / 1.5),
+          y: oy + pt.y * (scale / 1.5)
+        };
+      }
+
+      // Pre-sampled points for ultra-fast rendering & gradient strokes
+      const bodySamples = [];
+      const bodyStep = 2;
+      for (let l = 0; l <= bodyLen; l += bodyStep) {
+        bodySamples.push(getBodyPoint(l));
+      }
+      bodySamples.push(getBodyPoint(bodyLen));
+
+      const wingSamples = [];
+      const wingStep = 2;
+      for (let l = 0; l <= wingLen; l += wingStep) {
+        wingSamples.push(getWingPoint(l));
+      }
+      wingSamples.push(getWingPoint(wingLen));
+
+      // Ambient Floating Dust Particles (subtle depth)
+      const particles = [];
+      const particleCount = 20;
+      for (let i = 0; i < particleCount; i++) {
+        particles.push({
+          x: Math.random() * width,
+          y: Math.random() * height,
+          r: Math.random() * 1.5 + 0.5,
+          alpha: Math.random() * 0.2 + 0.05,
+          vx: (Math.random() - 0.5) * 0.3,
+          vy: (Math.random() - 0.5) * 0.3
+        });
+      }
+
+      // Easing Functions
+      function easeInOutCubic(t) {
+        return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+      }
+      function easeOutQuad(t) {
+        return 1 - (1 - t) * (1 - t);
+      }
+      function easeInQuad(t) {
+        return t * t;
+      }
+
+      // Animation Timing Setup
+      const DURATION = 2800; // 2.8s total loop
+      let startTime = null;
+
+      // -------------------------------------------------------------
+      // MAIN RENDER LOOP (60 FPS)
+      // -------------------------------------------------------------
+      function render(timestamp) {
+        if (!startTime) startTime = timestamp;
+        const elapsed = (timestamp - startTime) % DURATION;
+        const normTime = elapsed / DURATION; // 0.0 -> 1.0
+
+        // Clear Canvas with #050505
+        ctx.fillStyle = '#050505';
+        ctx.fillRect(0, 0, width, height);
+
+        // Render ambient subtle dust particles
+        ctx.fillStyle = '#ffffff';
+        particles.forEach(p => {
+          p.x += p.vx;
+          p.y += p.vy;
+          if (p.x < 0) p.x = width;
+          if (p.x > width) p.x = 0;
+          if (p.y < 0) p.y = height;
+          if (p.y > height) p.y = 0;
+
+          ctx.globalAlpha = p.alpha;
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+          ctx.fill();
+        });
+        ctx.globalAlpha = 1.0;
+
+        // ---------------------------------------------------------
+        // 8-FRAME TIMELINE INTERPOLATION LOGIC
+        // ---------------------------------------------------------
+        // Frame 1 (0%): Tiny glowing light birth
+        // Frame 2 (12%): Stroke begins (~15%)
+        // Frame 3 (25%): Shape takes form (~35%)
+        // Frame 4 (45%): More revealed (~60%)
+        // Frame 5 (65%): Logo 85% - 100% complete
+        // Frame 6 (80%): Orbit around logo
+        // Frame 7 (92%): Energy ring & subtle bloom pulse
+        // Frame 8 (100%): Seamless reverse & return to Frame 1
+
+        let bodyDrawPct = 0;
+        let wingDrawPct = 0;
+        let logoOpacity = 0;
+        let fillOpacity = 0;
+        let MetallicSheen = 0;
+        let orbitPct = 0;
+        let orbitAlpha = 0;
+        let bloomPulse = 0;
+
+        if (normTime <= 0.65) {
+          // Drawing Phase (0% -> 65%)
+          const drawProgress = normTime / 0.65; // 0 -> 1
+          const easedProgress = easeInOutCubic(drawProgress);
+
+          bodyDrawPct = Math.min(easedProgress * 1.1, 1.0);
+          wingDrawPct = Math.max(0, (easedProgress - 0.25) / 0.75);
+          logoOpacity = Math.min(drawProgress * 1.5, 1.0);
+          fillOpacity = Math.max(0, (drawProgress - 0.4) / 0.25);
+        } else if (normTime <= 0.80) {
+          // Fully Complete & Sheen Phase (65% -> 80%)
+          bodyDrawPct = 1.0;
+          wingDrawPct = 1.0;
+          logoOpacity = 1.0;
+          fillOpacity = 1.0;
+
+          const sheenProgress = (normTime - 0.65) / 0.15;
+          MetallicSheen = sheenProgress;
+
+          // Orbit starts around 0.75
+          if (normTime >= 0.72) {
+            const orbTime = (normTime - 0.72) / 0.20; // 0 -> 1 up to 0.92
+            orbitPct = easeInOutCubic(Math.min(orbTime, 1.0));
+            orbitAlpha = Math.sin(orbTime * Math.PI);
+          }
+        } else if (normTime <= 0.92) {
+          // Orbit & Energy Ring Pulse Phase (80% -> 92%)
+          bodyDrawPct = 1.0;
+          wingDrawPct = 1.0;
+          logoOpacity = 1.0;
+          fillOpacity = 1.0;
+
+          const orbTime = (normTime - 0.72) / 0.20;
+          orbitPct = easeInOutCubic(Math.min(orbTime, 1.0));
+          orbitAlpha = Math.sin(orbTime * Math.PI);
+
+          const pulseTime = (normTime - 0.80) / 0.12;
+          bloomPulse = Math.sin(pulseTime * Math.PI) * 0.4;
+        } else {
+          // Dissolve & Reverse to Frame 1 (92% -> 100%)
+          const reverseProgress = (normTime - 0.92) / 0.08; // 0 -> 1
+          const unDraw = 1.0 - easeInOutCubic(reverseProgress);
+
+          bodyDrawPct = unDraw;
+          wingDrawPct = unDraw;
+          logoOpacity = unDraw;
+          fillOpacity = unDraw;
+          orbitAlpha = (1.0 - reverseProgress) * 0.5;
+        }
+
+        // ---------------------------------------------------------
+        // RENDER LOGO FILL (White Body + Cyan Metallic Feather)
+        // ---------------------------------------------------------
+        if (fillOpacity > 0) {
+          ctx.save();
+          ctx.globalAlpha = fillOpacity * logoOpacity;
+
+          // 1. Draw Body Fill (White to Platinum gradient)
+          ctx.beginPath();
+          for (let i = 0; i < bodySamples.length; i++) {
+            if (i === 0) ctx.moveTo(bodySamples[i].x, bodySamples[i].y);
+            else ctx.lineTo(bodySamples[i].x, bodySamples[i].y);
+          }
+          ctx.closePath();
+
+          const bodyGrad = ctx.createLinearGradient(cx - 100, cy - 100, cx + 100, cy + 100);
+          bodyGrad.addColorStop(0, '#ffffff');
+          bodyGrad.addColorStop(0.6, '#e2e8f0');
+          bodyGrad.addColorStop(1, '#cbd5e1');
+          ctx.fillStyle = bodyGrad;
+          ctx.shadowColor = 'rgba(255, 255, 255, ' + (0.15 + bloomPulse) + ')';
+          ctx.shadowBlur = 20;
+          ctx.fill();
+
+          // Eye Circle Fill
+          ctx.beginPath();
+          ctx.arc(eyeCircle.x, eyeCircle.y, eyeCircle.r, 0, Math.PI * 2);
+          ctx.fillStyle = '#050505';
+          ctx.fill();
+
+          // 2. Draw Wing Fill (Cyan Energy Metallic Gradient)
+          ctx.beginPath();
+          for (let i = 0; i < wingSamples.length; i++) {
+            if (i === 0) ctx.moveTo(wingSamples[i].x, wingSamples[i].y);
+            else ctx.lineTo(wingSamples[i].x, wingSamples[i].y);
+          }
+          ctx.closePath();
+
+          const wingGrad = ctx.createLinearGradient(cx - 120, cy + 80, cx - 20, cy - 40);
+          wingGrad.addColorStop(0, '#0284c7');
+          wingGrad.addColorStop(0.5, '#38bdf8');
+          wingGrad.addColorStop(1, '#93c5fd');
+          ctx.fillStyle = wingGrad;
+          ctx.shadowColor = 'rgba(56, 189, 248, ' + (0.3 + bloomPulse) + ')';
+          ctx.shadowBlur = 25;
+          ctx.fill();
+
+          // 3. Metallic Light Sheen Sweep (Frame 5 / 6)
+          if (MetallicSheen > 0 && MetallicSheen < 1) {
+            const sheenX = cx - 200 + MetallicSheen * 400;
+            const sheenGrad = ctx.createLinearGradient(sheenX - 40, cy - 100, sheenX + 40, cy + 100);
+            sheenGrad.addColorStop(0, 'rgba(255,255,255,0)');
+            sheenGrad.addColorStop(0.5, 'rgba(255,255,255,0.4)');
+            sheenGrad.addColorStop(1, 'rgba(255,255,255,0)');
+
+            ctx.globalCompositeOperation = 'source-atop';
+            ctx.fillStyle = sheenGrad;
+            ctx.fillRect(cx - 200, cy - 200, 400, 400);
+            ctx.globalCompositeOperation = 'source-over';
+          }
+
+          ctx.restore();
+        }
+
+        // ---------------------------------------------------------
+        // RENDER ENERGY STROKES & MOVING LIGHT HEAD
+        // ---------------------------------------------------------
+        ctx.save();
+
+        // A. Body Stroke Drawing
+        if (bodyDrawPct > 0) {
+          const drawCount = Math.floor(bodySamples.length * bodyDrawPct);
+          if (drawCount > 1) {
+            ctx.beginPath();
+            for (let i = 0; i < drawCount; i++) {
+              if (i === 0) ctx.moveTo(bodySamples[i].x, bodySamples[i].y);
+              else ctx.lineTo(bodySamples[i].x, bodySamples[i].y);
+            }
+
+            ctx.strokeStyle = '#ffffff';
+            ctx.lineWidth = 3;
+            ctx.lineCap = 'round';
+            ctx.lineJoin = 'round';
+            ctx.shadowColor = 'rgba(56, 189, 248, 0.8)';
+            ctx.shadowBlur = 12;
+            ctx.stroke();
+
+            // Leading Light Spark Head
+            const headPt = bodySamples[drawCount - 1];
+            drawSparkHead(ctx, headPt.x, headPt.y, '#ffffff', '#38bdf8', 1.0);
+          }
+        }
+
+        // B. Wing Stroke Drawing
+        if (wingDrawPct > 0) {
+          const drawCount = Math.floor(wingSamples.length * wingDrawPct);
+          if (drawCount > 1) {
+            ctx.beginPath();
+            for (let i = 0; i < drawCount; i++) {
+              if (i === 0) ctx.moveTo(wingSamples[i].x, wingSamples[i].y);
+              else ctx.lineTo(wingSamples[i].x, wingSamples[i].y);
+            }
+
+            ctx.strokeStyle = '#38bdf8';
+            ctx.lineWidth = 2.5;
+            ctx.lineCap = 'round';
+            ctx.lineJoin = 'round';
+            ctx.shadowColor = 'rgba(56, 189, 248, 1.0)';
+            ctx.shadowBlur = 15;
+            ctx.stroke();
+
+            // Wing Leading Spark
+            const headPt = wingSamples[drawCount - 1];
+            drawSparkHead(ctx, headPt.x, headPt.y, '#93c5fd', '#38bdf8', 0.8);
+          }
+        }
+
+        // ---------------------------------------------------------
+        // RENDER ELEGANT ORBIT & ENERGY RING (Frame 6 / 7)
+        // ---------------------------------------------------------
+        if (orbitAlpha > 0.01) {
+          ctx.save();
+          ctx.globalAlpha = orbitAlpha;
+
+          const rx = 150;
+          const ry = 130;
+          const orbitAngle = orbitPct * Math.PI * 2 - Math.PI / 2;
+
+          // Draw Soft Energy Ring
+          ctx.beginPath();
+          ctx.ellipse(cx, cy, rx, ry, -0.1, 0, Math.PI * 2);
+          ctx.strokeStyle = 'rgba(56, 189, 248, ' + (orbitAlpha * 0.4) + ')';
+          ctx.lineWidth = 1.5;
+          ctx.shadowColor = '#38bdf8';
+          ctx.shadowBlur = 15;
+          ctx.stroke();
+
+          // Orbiting Light Spark
+          const oxPos = cx + Math.cos(orbitAngle) * rx;
+          const oyPos = cy + Math.sin(orbitAngle) * ry;
+          drawSparkHead(ctx, oxPos, oyPos, '#ffffff', '#38bdf8', orbitAlpha);
+
+          ctx.restore();
+        }
+
+        // Frame 1 Birth Spark (0% / 100% origin match)
+        if (normTime <= 0.05 || normTime >= 0.95) {
+          const birthPt = bodySamples[0];
+          const birthAlpha = normTime <= 0.05 ? normTime / 0.05 : (1.0 - normTime) / 0.05;
+          drawSparkHead(ctx, birthPt.x, birthPt.y, '#ffffff', '#38bdf8', birthAlpha);
+        }
+
+        ctx.restore();
+
+        // Loop animation at 60 FPS
+        requestAnimationFrame(render);
+      }
+
+      // Helper: Draw Glowing Light Spark Head
+      function drawSparkHead(context, x, y, coreColor, glowColor, alpha) {
+        context.save();
+        context.globalAlpha = alpha;
+
+        // Outer Glow Flare
+        const glowGrad = context.createRadialGradient(x, y, 0, x, y, 22);
+        glowGrad.addColorStop(0, glowColor);
+        glowGrad.addColorStop(0.4, 'rgba(56, 189, 248, 0.4)');
+        glowGrad.addColorStop(1, 'rgba(56, 189, 248, 0)');
+        context.fillStyle = glowGrad;
+        context.beginPath();
+        context.arc(x, y, 22, 0, Math.PI * 2);
+        context.fill();
+
+        // Intense Core Light
+        const coreGrad = context.createRadialGradient(x, y, 0, x, y, 6);
+        coreGrad.addColorStop(0, '#ffffff');
+        coreGrad.addColorStop(0.7, coreColor);
+        coreGrad.addColorStop(1, glowColor);
+        context.fillStyle = coreGrad;
+        context.beginPath();
+        context.arc(x, y, 6, 0, Math.PI * 2);
+        context.fill();
+
+        context.restore();
+      }
+
+      // Start 60 FPS Render Loop
+      requestAnimationFrame(render);
+    })();
+  </script>
+</body>
+</html>

@@ -231,13 +231,18 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="style.css?v=39" />
+  <link rel="stylesheet" href="style.css?v=40" />
 </head>
 <body class="loading">
 
   <!-- ===================== PRELOADER ===================== -->
   <div id="site-preloader" class="site-preloader">
-    <div class="spinner"></div>
+    <div class="preloader-content">
+      <div class="preloader-canvas-wrapper">
+        <canvas id="preloaderLogoCanvas" width="680" height="680"></canvas>
+      </div>
+      <div class="preloader-brand-text">sparrow-dev-labs</div>
+    </div>
   </div>
 
   <!-- NOISE OVERLAY -->
