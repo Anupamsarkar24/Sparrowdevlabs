@@ -2600,9 +2600,6 @@ body.loading { overflow: hidden; }
   border: 1px solid rgba(255, 255, 255, 0.15) !important;
   border-top-color: rgba(255, 255, 255, 0.3) !important;
   box-shadow: 
-    0 12px 32px rgba(0, 0, 0, 0.5), 
-    inset 0 1px 2px rgba(255, 255, 255, 0.2), 
-    inset 0 -1px 2px rgba(0, 0, 0, 0.8) !important;
 }
 
 /* ============================================================
@@ -2610,129 +2607,122 @@ body.loading { overflow: hidden; }
    ============================================================ */
 .membership {
   background: #F5F3EE;
-  padding: 120px 0 80px;
+  padding: 72px 0;
   position: relative;
   overflow: hidden;
 }
 
+/* Two-column: left heading | right cards */
 .membership-inner {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
-  gap: 60px;
+  gap: 56px;
 }
 
+/* Left column */
 .membership-header {
-  text-align: center;
-  max-width: 600px;
+  flex: 0 0 300px;
+  max-width: 300px;
 }
 
 .membership-title {
   font-family: var(--font-primary);
-  font-size: 56px;
+  font-size: 38px;
   font-weight: 900;
-  letter-spacing: -2px;
+  letter-spacing: -1.5px;
   line-height: 1.05;
   color: #111;
-  margin-bottom: 16px;
+  margin-bottom: 12px;
 }
 
 .membership-subtitle {
   font-family: var(--font-secondary);
-  font-size: 16px;
+  font-size: 13px;
   color: #666;
   line-height: 1.6;
 }
 
-/* Grid of 3 cards */
+/* Right column: 3 compact cards */
 .membership-cards {
+  flex: 1;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 24px;
-  width: 100%;
-  align-items: start;
+  gap: 14px;
+  align-items: stretch;
 }
 
-/* ---- Base plan card ---- */
+/* ---- Base plan card (compact) ---- */
 .plan-card {
   position: relative;
   background: #fff;
-  border-radius: 28px;
-  padding: 36px 32px;
+  border-radius: 20px;
+  padding: 22px 20px;
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 12px;
   border: 1.5px solid rgba(0,0,0,0.07);
-  box-shadow: 0 4px 24px rgba(0,0,0,0.06);
+  box-shadow: 0 2px 12px rgba(0,0,0,0.05);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   overflow: hidden;
 }
 
 .plan-card:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 16px 48px rgba(0,0,0,0.12);
+  transform: translateY(-4px);
+  box-shadow: 0 10px 32px rgba(0,0,0,0.1);
 }
 
-/* ---- Badge (Beginner / Pro / Legend) ---- */
+/* ---- Icon (hidden for compactness) ---- */
+.plan-icon { display: none; }
+
+/* ---- Badge ---- */
 .plan-badge {
   font-family: var(--font-primary);
-  font-size: 11px;
+  font-size: 10px;
   font-weight: 800;
   letter-spacing: 3px;
   color: #888;
   text-transform: uppercase;
 }
 
-/* ---- Icon ---- */
-.plan-icon {
-  width: 56px;
-  height: 56px;
-  border-radius: 16px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: rgba(91,138,49,0.08);
-  color: #5B8A31;
-}
-
 /* ---- Price ---- */
 .plan-price {
   display: flex;
   align-items: baseline;
-  gap: 4px;
+  gap: 2px;
+  line-height: 1;
 }
 
 .plan-currency {
   font-family: var(--font-primary);
-  font-size: 22px;
+  font-size: 16px;
   font-weight: 700;
   color: #111;
 }
 
 .plan-amount {
   font-family: var(--font-primary);
-  font-size: 48px;
+  font-size: 32px;
   font-weight: 900;
-  letter-spacing: -2px;
+  letter-spacing: -1.5px;
   color: #111;
   line-height: 1;
 }
 
 .plan-period {
   font-family: var(--font-secondary);
-  font-size: 15px;
+  font-size: 12px;
   color: #999;
-  font-weight: 400;
 }
 
 /* ---- Tagline ---- */
 .plan-tagline {
   font-family: var(--font-secondary);
-  font-size: 13px;
+  font-size: 11px;
   color: #777;
-  line-height: 1.5;
-  margin-top: -8px;
-  padding-bottom: 16px;
+  line-height: 1.4;
+  margin-top: -4px;
+  padding-bottom: 12px;
   border-bottom: 1px solid rgba(0,0,0,0.07);
 }
 
@@ -2743,62 +2733,62 @@ body.loading { overflow: hidden; }
   margin: 0;
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 6px;
   flex: 1;
 }
 
 .plan-features li {
   font-family: var(--font-secondary);
-  font-size: 14px;
+  font-size: 11.5px;
   color: #444;
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 7px;
 }
 
 .plan-check {
-  width: 20px;
-  height: 20px;
+  width: 16px;
+  height: 16px;
   border-radius: 50%;
   background: rgba(91,138,49,0.12);
   color: #5B8A31;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  font-size: 11px;
+  font-size: 9px;
   font-weight: 700;
   flex-shrink: 0;
 }
 
 .plan-cross {
-  width: 20px;
-  height: 20px;
+  width: 16px;
+  height: 16px;
   border-radius: 50%;
   background: rgba(0,0,0,0.05);
   color: #bbb;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  font-size: 11px;
+  font-size: 9px;
   font-weight: 700;
   flex-shrink: 0;
 }
 
 .plan-features li:has(.plan-cross) {
-  opacity: 0.5;
+  opacity: 0.45;
 }
 
 /* ---- CTA Buttons ---- */
 .plan-cta {
-  margin-top: 8px;
+  margin-top: 4px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 8px;
-  padding: 14px 24px;
+  gap: 6px;
+  padding: 10px 16px;
   border-radius: 100px;
   font-family: var(--font-secondary);
-  font-size: 13px;
+  font-size: 11px;
   font-weight: 700;
   letter-spacing: 1px;
   text-decoration: none;
@@ -2815,7 +2805,6 @@ body.loading { overflow: hidden; }
   border-color: #5B8A31;
   color: #5B8A31;
   background: rgba(91,138,49,0.05);
-  transform: translateX(4px);
 }
 
 .plan-cta--solid {
@@ -2827,77 +2816,45 @@ body.loading { overflow: hidden; }
 .plan-cta--solid:hover {
   background: #5B8A31;
   border-color: #5B8A31;
-  transform: translateX(4px);
 }
 
-/* ---- PRO (Featured) card ---- */
+/* ---- PRO (Featured) dark card ---- */
 .plan-featured {
   background: #141414;
   border-color: #141414;
-  box-shadow: 0 20px 60px rgba(0,0,0,0.25);
-  transform: scale(1.04);
+  box-shadow: 0 12px 40px rgba(0,0,0,0.22);
 }
 
-.plan-featured:hover {
-  transform: scale(1.04) translateY(-6px);
-}
-
-.plan-featured .plan-badge {
-  color: rgba(255,255,255,0.5);
-}
-
-.plan-featured .plan-icon {
-  background: rgba(91,138,49,0.2);
-  color: #7ab840;
-}
-
+.plan-featured .plan-badge  { color: rgba(255,255,255,0.4); }
 .plan-featured .plan-currency,
-.plan-featured .plan-amount {
-  color: #fff;
-}
-
-.plan-featured .plan-period {
-  color: rgba(255,255,255,0.5);
-}
-
+.plan-featured .plan-amount { color: #fff; }
+.plan-featured .plan-period { color: rgba(255,255,255,0.45); }
 .plan-featured .plan-tagline {
-  color: rgba(255,255,255,0.5);
+  color: rgba(255,255,255,0.45);
   border-bottom-color: rgba(255,255,255,0.1);
 }
-
-.plan-featured .plan-features li {
-  color: rgba(255,255,255,0.8);
-}
-
+.plan-featured .plan-features li { color: rgba(255,255,255,0.8); }
 .plan-featured .plan-cross {
   background: rgba(255,255,255,0.07);
-  color: rgba(255,255,255,0.3);
+  color: rgba(255,255,255,0.25);
 }
 
 /* ---- Most Popular ribbon ---- */
 .plan-popular-badge {
   position: absolute;
-  top: 20px;
-  right: -28px;
+  top: 14px;
+  right: -26px;
   background: #5B8A31;
   color: #fff;
   font-family: var(--font-secondary);
-  font-size: 10px;
+  font-size: 8px;
   font-weight: 700;
   letter-spacing: 2px;
-  padding: 5px 36px;
+  padding: 4px 32px;
   transform: rotate(45deg);
-  transform-origin: center;
-  right: -30px;
-  top: 20px;
 }
 
-/* ---- Legend card gold accent ---- */
-.plan-legend .plan-icon {
-  background: rgba(212,175,55,0.1);
-  color: #c9a227;
-}
-
+/* ---- Legend gold accent ---- */
 .plan-legend .plan-amount,
 .plan-legend .plan-currency {
   background: linear-gradient(135deg, #c9a227, #f0d060);
@@ -2906,25 +2863,37 @@ body.loading { overflow: hidden; }
   background-clip: text;
 }
 
-/* ---- Mobile Responsive ---- */
+/* ---- Mobile: stack vertically ---- */
 @media (max-width: 900px) {
   .membership {
-    padding: 80px 0 60px;
+    padding: 60px 0;
+  }
+  .membership-inner {
+    flex-direction: column;
+    gap: 32px;
+  }
+  .membership-header {
+    flex: none;
+    max-width: 100%;
+    width: 100%;
   }
   .membership-title {
-    font-size: 38px;
+    font-size: 32px;
   }
   .membership-cards {
     grid-template-columns: 1fr;
-    max-width: 400px;
+    width: 100%;
+    max-width: 360px;
     margin: 0 auto;
+  }
+  .plan-card {
+    border-radius: 20px !important;
   }
   .plan-featured {
     transform: scale(1);
     order: -1;
   }
   .plan-featured:hover {
-    transform: translateY(-6px);
   }
   .plan-card {
     border-radius: 24px !important;
