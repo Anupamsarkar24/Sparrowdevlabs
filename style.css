@@ -1558,22 +1558,22 @@ body {
 .footer-brand-desc {
   font-family: var(--font-secondary);
   font-size: 13px;
-  line-height: 1.75;
-  color: #555;
-  margin-bottom: 28px;
+  line-height: 0;
+  position: relative;
+  z-index: 2;
+}
+.testimonials-transition svg {
+  width: 100%;
+  height: 200px;
+  display: block;
 }
 
-.footer-social {
-  display: flex;
-  gap: 12px;
-}
-.social-icon {
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
-  border: 1px solid rgba(255,255,255,0.08);
-  display: flex;
-  align-items: center;
+/* ============================================================
+   NEWSLETTER
+   ============================================================ */
+.newsletter {
+  position: relative;
+  background: var(--bg-primary);
   padding: 80px 0 80px;
   overflow: hidden;
   min-height: 380px;
@@ -1751,7 +1751,7 @@ body {
 }
 
 .footer-brand-desc {
-  font-family: var(--font-secondary);
+font-family: var(--font-secondary);
   font-size: 13px;
   line-height: 1.75;
   color: #555;
@@ -1760,20 +1760,25 @@ body {
 
 .footer-social {
   display: flex;
+  align-items: center;
   gap: 12px;
 }
+
 .social-icon {
-  width: 36px;
-  height: 36px;
+  width: 38px;
+  height: 38px;
   border-radius: 50%;
-  border: 1px solid rgba(255,255,255,0.08);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(255, 255, 255, 0.03);
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #555;
+  color: #a1a1aa;
   text-decoration: none;
-  transition: border-color 0.3s ease, color 0.3s ease, transform 0.3s ease;
+  transition: border-color 0.3s ease, color 0.3s ease, transform 0.3s ease, background 0.3s ease;
+  flex-shrink: 0;
 }
+
 .social-icon:hover {
   border-color: rgba(255,255,255,0.25);
   color: var(--white);
