@@ -3,10 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Sparrow Dev Labs - Premium Logo Loading Animation</title>
+  <title>Sparrow Dev Labs - Premium Logo Reveal Animation</title>
   <style>
     /* ============================================================
-       SPARROW DEV LABS - LUXURY LOGO LOADER (STRICT SPECIFICATION)
+       SPARROW DEV LABS - LUXURY LOGO REVEAL (3.0s 60FPS SPECIFICATION)
        Background: #050505
        Font: Thin Modern Sans-Serif
        ============================================================ */
@@ -47,8 +47,8 @@
 
     .canvas-wrapper {
       position: relative;
-      width: 340px;
-      height: 340px;
+      width: 360px;
+      height: 360px;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -62,7 +62,7 @@
 
     .brand-text {
       position: absolute;
-      bottom: 80px;
+      bottom: 75px;
       font-family: 'Inter', sans-serif;
       font-weight: 200;
       font-size: 13px;
@@ -72,16 +72,15 @@
       text-transform: lowercase;
       user-select: none;
       pointer-events: none;
-      transition: opacity 0.5s ease;
     }
 
-    /* Ambient background radial glow */
+    /* Ambient soft background radial glow */
     .bg-glow {
       position: absolute;
-      width: 500px;
-      height: 500px;
+      width: 550px;
+      height: 550px;
       border-radius: 50%;
-      background: radial-gradient(circle, rgba(56, 189, 248, 0.04) 0%, rgba(124, 58, 237, 0.02) 40%, transparent 70%);
+      background: radial-gradient(circle, rgba(56, 189, 248, 0.05) 0%, rgba(14, 165, 233, 0.02) 45%, transparent 70%);
       pointer-events: none;
       z-index: 0;
     }
@@ -93,31 +92,28 @@
 
   <div class="loader-container">
     <div class="canvas-wrapper">
-      <canvas id="loaderCanvas" width="680" height="680"></canvas>
+      <canvas id="loaderCanvas" width="720" height="720"></canvas>
     </div>
     <div class="brand-text">sparrow-dev-labs</div>
   </div>
 
   <script>
     /**
-     * SPARROW DEV LABS - CINEMATIC LOGO ANIMATION (60 FPS GPU ACCELERATED)
-     * Total Duration: 2.8 seconds
-     * Loop: Infinite Seamless
+     * SPARROW DEV LABS - CINEMATIC LOGO REVEAL (3.0s / 60 FPS GPU ACCELERATED)
+     * Continuous Single-Particle Flow Architecture
+     * Seamless Infinite Loop (Frame 1 === Frame 100)
      */
     (function () {
       const canvas = document.getElementById('loaderCanvas');
       const ctx = canvas.getContext('2d');
 
-      const width = canvas.width;  // 680
-      const height = canvas.height; // 680
+      const width = canvas.width;   // 720
+      const height = canvas.height;  // 720
       const cx = width / 2;
-      const cy = height / 2 - 10; // slightly offset for visual optical center
+      const cy = height / 2 - 10;
 
-      // -------------------------------------------------------------
-      // SVG PATH CONVERSION FOR SPARROW LOGO (BIRD SILHOUETTE & WING)
-      // -------------------------------------------------------------
-      // Scale: normalized coordinates mapped to canvas space
-      const scale = 2.2;
+      // Scale & Center Mapping for Logo
+      const scale = 2.3;
       const ox = cx - 20;
       const oy = cy - 20;
 
@@ -125,10 +121,10 @@
       const bodySvgD = "M -40,110 L 50,110 C 65,110 75,95 65,75 L 25,-10 C 15,-30 25,-60 45,-75 C 65,-90 60,-115 35,-120 C 10,-125 -25,-105 -35,-80 C -45,-55 -30,-25 -10,0 L 20,45 C 30,60 20,75 5,80 L -35,80 Z";
       const wingSvgD = "M -110,95 C -60,40 -20,-10 10,-55 C 5,-20 -20,30 -50,65 C -70,85 -95,95 -110,95 Z";
 
-      // SVG Eye Circle: cx: 32, cy: -98, r: 7
+      // Eye Circle: cx: 32, cy: -98, r: 7
       const eyeCircle = { x: ox + 32 * scale / 1.5, y: oy - 98 * scale / 1.5, r: 7 * scale / 1.5 };
 
-      // Helper SVG Path Measurer
+      // SVG Measurers
       const bodyPath = document.createElementNS('http://www.w3.org/2000/svg', 'path');
       bodyPath.setAttribute('d', bodySvgD);
       const bodyLen = bodyPath.getTotalLength();
@@ -137,175 +133,192 @@
       wingPath.setAttribute('d', wingSvgD);
       const wingLen = wingPath.getTotalLength();
 
-      // Transform SVG coordinates to Canvas pixels
       function getBodyPoint(len) {
         const pt = bodyPath.getPointAtLength(Math.min(Math.max(len, 0), bodyLen));
-        return {
-          x: ox + pt.x * (scale / 1.5),
-          y: oy + pt.y * (scale / 1.5)
-        };
+        return { x: ox + pt.x * (scale / 1.5), y: oy + pt.y * (scale / 1.5) };
       }
 
       function getWingPoint(len) {
         const pt = wingPath.getPointAtLength(Math.min(Math.max(len, 0), wingLen));
-        return {
-          x: ox + pt.x * (scale / 1.5),
-          y: oy + pt.y * (scale / 1.5)
-        };
+        return { x: ox + pt.x * (scale / 1.5), y: oy + pt.y * (scale / 1.5) };
       }
 
-      // Pre-sampled points for ultra-fast rendering & gradient strokes
+      // Pre-sample Path Coordinates
       const bodySamples = [];
-      const bodyStep = 2;
-      for (let l = 0; l <= bodyLen; l += bodyStep) {
-        bodySamples.push(getBodyPoint(l));
-      }
+      for (let l = 0; l <= bodyLen; l += 1.5) bodySamples.push(getBodyPoint(l));
       bodySamples.push(getBodyPoint(bodyLen));
 
       const wingSamples = [];
-      const wingStep = 2;
-      for (let l = 0; l <= wingLen; l += wingStep) {
-        wingSamples.push(getWingPoint(l));
-      }
+      for (let l = 0; l <= wingLen; l += 1.5) wingSamples.push(getWingPoint(l));
       wingSamples.push(getWingPoint(wingLen));
 
-      // Ambient Floating Dust Particles (subtle depth)
+      // Ambient Dust Particles
       const particles = [];
-      const particleCount = 20;
-      for (let i = 0; i < particleCount; i++) {
+      for (let i = 0; i < 18; i++) {
         particles.push({
           x: Math.random() * width,
           y: Math.random() * height,
-          r: Math.random() * 1.5 + 0.5,
-          alpha: Math.random() * 0.2 + 0.05,
-          vx: (Math.random() - 0.5) * 0.3,
-          vy: (Math.random() - 0.5) * 0.3
+          r: Math.random() * 1.2 + 0.4,
+          alpha: Math.random() * 0.15 + 0.05,
+          vx: (Math.random() - 0.5) * 0.2,
+          vy: (Math.random() - 0.5) * 0.2
         });
       }
 
-      // Easing Functions
+      // Smooth Easing Functions
       function easeInOutCubic(t) {
         return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
       }
-      function easeOutQuad(t) {
-        return 1 - (1 - t) * (1 - t);
+      function easeOutCubic(t) {
+        return 1 - Math.pow(1 - t, 3);
       }
-      function easeInQuad(t) {
-        return t * t;
+      function easeInCubic(t) {
+        return t * t * t;
       }
 
-      // Animation Timing Setup
-      const DURATION = 2800; // 2.8s total loop
+      // Duration: 3.0 Seconds Total
+      const DURATION = 3000;
       let startTime = null;
 
       // -------------------------------------------------------------
-      // MAIN RENDER LOOP (60 FPS)
+      // MAIN 60 FPS GPU-ACCELERATED RENDER LOOP
       // -------------------------------------------------------------
       function render(timestamp) {
         if (!startTime) startTime = timestamp;
         const elapsed = (timestamp - startTime) % DURATION;
-        const normTime = elapsed / DURATION; // 0.0 -> 1.0
+        const seconds = elapsed / 1000.0; // 0.0s -> 3.0s
 
-        // Clear Canvas with #050505
+        // 1. Clear Frame with #050505
         ctx.fillStyle = '#050505';
         ctx.fillRect(0, 0, width, height);
 
-        // Render ambient subtle dust particles
+        // 2. Render Ambient Particles
         ctx.fillStyle = '#ffffff';
         particles.forEach(p => {
-          p.x += p.vx;
-          p.y += p.vy;
-          if (p.x < 0) p.x = width;
-          if (p.x > width) p.x = 0;
-          if (p.y < 0) p.y = height;
-          if (p.y > height) p.y = 0;
-
+          p.x += p.vx; p.y += p.vy;
+          if (p.x < 0) p.x = width; if (p.x > width) p.x = 0;
+          if (p.y < 0) p.y = height; if (p.y > height) p.y = 0;
           ctx.globalAlpha = p.alpha;
-          ctx.beginPath();
-          ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-          ctx.fill();
+          ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2); ctx.fill();
         });
         ctx.globalAlpha = 1.0;
 
         // ---------------------------------------------------------
-        // 8-FRAME TIMELINE INTERPOLATION LOGIC
+        // STAGE TIMING & MOTION CALCULATIONS (0.0s -> 3.0s)
         // ---------------------------------------------------------
-        // Frame 1 (0%): Tiny glowing light birth
-        // Frame 2 (12%): Stroke begins (~15%)
-        // Frame 3 (25%): Shape takes form (~35%)
-        // Frame 4 (45%): More revealed (~60%)
-        // Frame 5 (65%): Logo 85% - 100% complete
-        // Frame 6 (80%): Orbit around logo
-        // Frame 7 (92%): Energy ring & subtle bloom pulse
-        // Frame 8 (100%): Seamless reverse & return to Frame 1
-
         let bodyDrawPct = 0;
         let wingDrawPct = 0;
-        let logoOpacity = 0;
         let fillOpacity = 0;
-        let MetallicSheen = 0;
-        let orbitPct = 0;
-        let orbitAlpha = 0;
-        let bloomPulse = 0;
+        let particlePos = { x: bodySamples[0].x, y: bodySamples[0].y };
+        let particleAlpha = 0;
+        let ringAlpha = 0;
+        let ringOrbitAngle = 0;
+        let breathingGlow = 0;
+        let isReversing = false;
 
-        if (normTime <= 0.65) {
-          // Drawing Phase (0% -> 65%)
-          const drawProgress = normTime / 0.65; // 0 -> 1
-          const easedProgress = easeInOutCubic(drawProgress);
+        // STAGE 01 — Birth (0.0s - 0.3s)
+        if (seconds < 0.3) {
+          const t = seconds / 0.3;
+          particleAlpha = easeOutCubic(t);
+          // Particle starts accelerating near bottom-left
+          const pIdx = Math.floor(easeInCubic(t) * (bodySamples.length * 0.08));
+          particlePos = bodySamples[Math.min(pIdx, bodySamples.length - 1)];
+        }
+        // STAGE 02 & STAGE 03 — Drawing Begins & Shape Formation (0.3s - 1.2s)
+        else if (seconds < 1.2) {
+          const t = (seconds - 0.3) / 0.9; // 0 -> 1
+          const easedT = easeInOutCubic(t);
+          bodyDrawPct = Math.min(easedT * 1.08, 1.0);
+          wingDrawPct = Math.max(0, (easedT - 0.2) / 0.8);
+          fillOpacity = Math.max(0, (t - 0.45) / 0.45);
+          particleAlpha = 1.0;
 
-          bodyDrawPct = Math.min(easedProgress * 1.1, 1.0);
-          wingDrawPct = Math.max(0, (easedProgress - 0.25) / 0.75);
-          logoOpacity = Math.min(drawProgress * 1.5, 1.0);
-          fillOpacity = Math.max(0, (drawProgress - 0.4) / 0.25);
-        } else if (normTime <= 0.80) {
-          // Fully Complete & Sheen Phase (65% -> 80%)
+          const pIdx = Math.floor(bodyDrawPct * (bodySamples.length - 1));
+          particlePos = bodySamples[Math.min(pIdx, bodySamples.length - 1)];
+        }
+        // STAGE 04 — Logo Completion & Comet Pass (1.2s - 1.7s)
+        else if (seconds < 1.7) {
+          const t = (seconds - 1.2) / 0.5;
           bodyDrawPct = 1.0;
           wingDrawPct = 1.0;
-          logoOpacity = 1.0;
           fillOpacity = 1.0;
+          particleAlpha = 1.0;
 
-          const sheenProgress = (normTime - 0.65) / 0.15;
-          MetallicSheen = sheenProgress;
-
-          // Orbit starts around 0.75
-          if (normTime >= 0.72) {
-            const orbTime = (normTime - 0.72) / 0.20; // 0 -> 1 up to 0.92
-            orbitPct = easeInOutCubic(Math.min(orbTime, 1.0));
-            orbitAlpha = Math.sin(orbTime * Math.PI);
-          }
-        } else if (normTime <= 0.92) {
-          // Orbit & Energy Ring Pulse Phase (80% -> 92%)
+          // Comet motion continuing smoothly past logo top into orbit entry
+          const passAngle = (t * Math.PI * 0.4) - Math.PI / 4;
+          const rx = 160, ry = 140;
+          particlePos = {
+            x: cx + Math.cos(passAngle) * rx,
+            y: cy + Math.sin(passAngle) * ry
+          };
+        }
+        // STAGE 05 — Orbit (1.7s - 2.1s)
+        else if (seconds < 2.1) {
+          const t = (seconds - 1.7) / 0.4;
           bodyDrawPct = 1.0;
           wingDrawPct = 1.0;
-          logoOpacity = 1.0;
           fillOpacity = 1.0;
+          particleAlpha = 1.0;
+          ringAlpha = Math.min(t * 1.5, 0.8);
 
-          const orbTime = (normTime - 0.72) / 0.20;
-          orbitPct = easeInOutCubic(Math.min(orbTime, 1.0));
-          orbitAlpha = Math.sin(orbTime * Math.PI);
+          ringOrbitAngle = (Math.PI * 0.15) + (easeInOutCubic(t) * Math.PI * 1.6);
+          const rx = 165, ry = 145;
+          particlePos = {
+            x: cx + Math.cos(ringOrbitAngle) * rx,
+            y: cy + Math.sin(ringOrbitAngle) * ry
+          };
+        }
+        // STAGE 06 — Energy Ring & Breathing Glow (2.1s - 2.5s)
+        else if (seconds < 2.5) {
+          const t = (seconds - 2.1) / 0.4;
+          bodyDrawPct = 1.0;
+          wingDrawPct = 1.0;
+          fillOpacity = 1.0;
+          particleAlpha = 1.0;
+          ringAlpha = 0.8 * (1.0 - t * 0.5);
 
-          const pulseTime = (normTime - 0.80) / 0.12;
-          bloomPulse = Math.sin(pulseTime * Math.PI) * 0.4;
-        } else {
-          // Dissolve & Reverse to Frame 1 (92% -> 100%)
-          const reverseProgress = (normTime - 0.92) / 0.08; // 0 -> 1
-          const unDraw = 1.0 - easeInOutCubic(reverseProgress);
+          // Soft breathing glow pulse
+          breathingGlow = Math.sin(t * Math.PI) * 0.35;
 
+          // Orbit continuation heading towards reverse entry point
+          ringOrbitAngle = (Math.PI * 1.75) + (t * Math.PI * 0.5);
+          const rx = 165, ry = 145;
+          particlePos = {
+            x: cx + Math.cos(ringOrbitAngle) * rx,
+            y: cy + Math.sin(ringOrbitAngle) * ry
+          };
+        }
+        // STAGE 07 — Dissolve / Reverse Collection (2.5s - 2.8s)
+        else if (seconds < 2.8) {
+          const t = (seconds - 2.5) / 0.3; // 0 -> 1
+          const unDraw = 1.0 - easeInOutCubic(t);
           bodyDrawPct = unDraw;
           wingDrawPct = unDraw;
-          logoOpacity = unDraw;
           fillOpacity = unDraw;
-          orbitAlpha = (1.0 - reverseProgress) * 0.5;
+          particleAlpha = Math.max(0.4, 1.0 - t * 0.4);
+          ringAlpha = (1.0 - t) * 0.3;
+          isReversing = true;
+
+          // Particle travels back along the path, "collecting" the logo stroke
+          const pIdx = Math.floor(unDraw * (bodySamples.length - 1));
+          particlePos = bodySamples[Math.max(0, Math.min(pIdx, bodySamples.length - 1))];
+        }
+        // STAGE 08 — Seamless Loop Return (2.8s - 3.0s)
+        else {
+          const t = (seconds - 2.8) / 0.2; // 0 -> 1
+          particleAlpha = 1.0 - t; // Smoothly fades to initial birth state
+          // Particle settles back to initial birth position at bodySamples[0]
+          particlePos = bodySamples[0];
         }
 
         // ---------------------------------------------------------
-        // RENDER LOGO FILL (White Body + Cyan Metallic Feather)
+        // RENDER LOGO BODY & WING FILL (WITH METALLIC SHEEN)
         // ---------------------------------------------------------
-        if (fillOpacity > 0) {
+        if (fillOpacity > 0.01) {
           ctx.save();
-          ctx.globalAlpha = fillOpacity * logoOpacity;
+          ctx.globalAlpha = fillOpacity;
 
-          // 1. Draw Body Fill (White to Platinum gradient)
+          // Body Platinum Fill
           ctx.beginPath();
           for (let i = 0; i < bodySamples.length; i++) {
             if (i === 0) ctx.moveTo(bodySamples[i].x, bodySamples[i].y);
@@ -315,20 +328,20 @@
 
           const bodyGrad = ctx.createLinearGradient(cx - 100, cy - 100, cx + 100, cy + 100);
           bodyGrad.addColorStop(0, '#ffffff');
-          bodyGrad.addColorStop(0.6, '#e2e8f0');
+          bodyGrad.addColorStop(0.65, '#e2e8f0');
           bodyGrad.addColorStop(1, '#cbd5e1');
           ctx.fillStyle = bodyGrad;
-          ctx.shadowColor = 'rgba(255, 255, 255, ' + (0.15 + bloomPulse) + ')';
-          ctx.shadowBlur = 20;
+          ctx.shadowColor = 'rgba(255, 255, 255, ' + (0.15 + breathingGlow) + ')';
+          ctx.shadowBlur = 22;
           ctx.fill();
 
-          // Eye Circle Fill
+          // Eye Circle
           ctx.beginPath();
           ctx.arc(eyeCircle.x, eyeCircle.y, eyeCircle.r, 0, Math.PI * 2);
           ctx.fillStyle = '#050505';
           ctx.fill();
 
-          // 2. Draw Wing Fill (Cyan Energy Metallic Gradient)
+          // Wing Cyan Gradient Fill
           ctx.beginPath();
           for (let i = 0; i < wingSamples.length; i++) {
             if (i === 0) ctx.moveTo(wingSamples[i].x, wingSamples[i].y);
@@ -341,34 +354,19 @@
           wingGrad.addColorStop(0.5, '#38bdf8');
           wingGrad.addColorStop(1, '#93c5fd');
           ctx.fillStyle = wingGrad;
-          ctx.shadowColor = 'rgba(56, 189, 248, ' + (0.3 + bloomPulse) + ')';
-          ctx.shadowBlur = 25;
+          ctx.shadowColor = 'rgba(56, 189, 248, ' + (0.3 + breathingGlow) + ')';
+          ctx.shadowBlur = 28;
           ctx.fill();
-
-          // 3. Metallic Light Sheen Sweep (Frame 5 / 6)
-          if (MetallicSheen > 0 && MetallicSheen < 1) {
-            const sheenX = cx - 200 + MetallicSheen * 400;
-            const sheenGrad = ctx.createLinearGradient(sheenX - 40, cy - 100, sheenX + 40, cy + 100);
-            sheenGrad.addColorStop(0, 'rgba(255,255,255,0)');
-            sheenGrad.addColorStop(0.5, 'rgba(255,255,255,0.4)');
-            sheenGrad.addColorStop(1, 'rgba(255,255,255,0)');
-
-            ctx.globalCompositeOperation = 'source-atop';
-            ctx.fillStyle = sheenGrad;
-            ctx.fillRect(cx - 200, cy - 200, 400, 400);
-            ctx.globalCompositeOperation = 'source-over';
-          }
 
           ctx.restore();
         }
 
         // ---------------------------------------------------------
-        // RENDER ENERGY STROKES & MOVING LIGHT HEAD
+        // RENDER LOGO DRAWING & REVERSE COLLECTION STROKES
         // ---------------------------------------------------------
         ctx.save();
 
-        // A. Body Stroke Drawing
-        if (bodyDrawPct > 0) {
+        if (bodyDrawPct > 0.01) {
           const drawCount = Math.floor(bodySamples.length * bodyDrawPct);
           if (drawCount > 1) {
             ctx.beginPath();
@@ -376,23 +374,17 @@
               if (i === 0) ctx.moveTo(bodySamples[i].x, bodySamples[i].y);
               else ctx.lineTo(bodySamples[i].x, bodySamples[i].y);
             }
-
             ctx.strokeStyle = '#ffffff';
-            ctx.lineWidth = 3;
+            ctx.lineWidth = isReversing ? 2.0 : 3.0;
             ctx.lineCap = 'round';
             ctx.lineJoin = 'round';
             ctx.shadowColor = 'rgba(56, 189, 248, 0.8)';
-            ctx.shadowBlur = 12;
+            ctx.shadowBlur = 14;
             ctx.stroke();
-
-            // Leading Light Spark Head
-            const headPt = bodySamples[drawCount - 1];
-            drawSparkHead(ctx, headPt.x, headPt.y, '#ffffff', '#38bdf8', 1.0);
           }
         }
 
-        // B. Wing Stroke Drawing
-        if (wingDrawPct > 0) {
+        if (wingDrawPct > 0.01) {
           const drawCount = Math.floor(wingSamples.length * wingDrawPct);
           if (drawCount > 1) {
             ctx.beginPath();
@@ -400,91 +392,74 @@
               if (i === 0) ctx.moveTo(wingSamples[i].x, wingSamples[i].y);
               else ctx.lineTo(wingSamples[i].x, wingSamples[i].y);
             }
-
             ctx.strokeStyle = '#38bdf8';
-            ctx.lineWidth = 2.5;
+            ctx.lineWidth = isReversing ? 1.8 : 2.5;
             ctx.lineCap = 'round';
             ctx.lineJoin = 'round';
             ctx.shadowColor = 'rgba(56, 189, 248, 1.0)';
-            ctx.shadowBlur = 15;
+            ctx.shadowBlur = 16;
             ctx.stroke();
-
-            // Wing Leading Spark
-            const headPt = wingSamples[drawCount - 1];
-            drawSparkHead(ctx, headPt.x, headPt.y, '#93c5fd', '#38bdf8', 0.8);
           }
         }
 
         // ---------------------------------------------------------
-        // RENDER ELEGANT ORBIT & ENERGY RING (Frame 6 / 7)
+        // RENDER GLOWING ORBIT RING (STAGE 05 & 06)
         // ---------------------------------------------------------
-        if (orbitAlpha > 0.01) {
+        if (ringAlpha > 0.01) {
           ctx.save();
-          ctx.globalAlpha = orbitAlpha;
-
-          const rx = 150;
-          const ry = 130;
-          const orbitAngle = orbitPct * Math.PI * 2 - Math.PI / 2;
-
-          // Draw Soft Energy Ring
+          ctx.globalAlpha = ringAlpha;
           ctx.beginPath();
-          ctx.ellipse(cx, cy, rx, ry, -0.1, 0, Math.PI * 2);
-          ctx.strokeStyle = 'rgba(56, 189, 248, ' + (orbitAlpha * 0.4) + ')';
+          ctx.ellipse(cx, cy, 165, 145, -0.1, 0, Math.PI * 2);
+          ctx.strokeStyle = 'rgba(56, 189, 248, ' + (ringAlpha * 0.5) + ')';
           ctx.lineWidth = 1.5;
           ctx.shadowColor = '#38bdf8';
-          ctx.shadowBlur = 15;
+          ctx.shadowBlur = 16;
           ctx.stroke();
-
-          // Orbiting Light Spark
-          const oxPos = cx + Math.cos(orbitAngle) * rx;
-          const oyPos = cy + Math.sin(orbitAngle) * ry;
-          drawSparkHead(ctx, oxPos, oyPos, '#ffffff', '#38bdf8', orbitAlpha);
-
           ctx.restore();
         }
 
-        // Frame 1 Birth Spark (0% / 100% origin match)
-        if (normTime <= 0.05 || normTime >= 0.95) {
-          const birthPt = bodySamples[0];
-          const birthAlpha = normTime <= 0.05 ? normTime / 0.05 : (1.0 - normTime) / 0.05;
-          drawSparkHead(ctx, birthPt.x, birthPt.y, '#ffffff', '#38bdf8', birthAlpha);
+        // ---------------------------------------------------------
+        // RENDER SINGLE CONTINUOUS ENERGY PARTICLE (NEVER TELEPORTS)
+        // ---------------------------------------------------------
+        if (particleAlpha > 0.01) {
+          drawEnergyParticle(ctx, particlePos.x, particlePos.y, particleAlpha);
         }
 
         ctx.restore();
 
-        // Loop animation at 60 FPS
+        // Continuous 60 FPS Render Loop
         requestAnimationFrame(render);
       }
 
-      // Helper: Draw Glowing Light Spark Head
-      function drawSparkHead(context, x, y, coreColor, glowColor, alpha) {
+      // Helper: Draw Glowing Blue-White Energy Particle Brush
+      function drawEnergyParticle(context, x, y, alpha) {
         context.save();
         context.globalAlpha = alpha;
 
-        // Outer Glow Flare
-        const glowGrad = context.createRadialGradient(x, y, 0, x, y, 22);
-        glowGrad.addColorStop(0, glowColor);
-        glowGrad.addColorStop(0.4, 'rgba(56, 189, 248, 0.4)');
-        glowGrad.addColorStop(1, 'rgba(56, 189, 248, 0)');
-        context.fillStyle = glowGrad;
+        // Outer Flare
+        const outerGrad = context.createRadialGradient(x, y, 0, x, y, 26);
+        outerGrad.addColorStop(0, 'rgba(56, 189, 248, 0.9)');
+        outerGrad.addColorStop(0.35, 'rgba(56, 189, 248, 0.4)');
+        outerGrad.addColorStop(1, 'rgba(56, 189, 248, 0)');
+        context.fillStyle = outerGrad;
         context.beginPath();
-        context.arc(x, y, 22, 0, Math.PI * 2);
+        context.arc(x, y, 26, 0, Math.PI * 2);
         context.fill();
 
-        // Intense Core Light
-        const coreGrad = context.createRadialGradient(x, y, 0, x, y, 6);
+        // Intense White Spark Core
+        const coreGrad = context.createRadialGradient(x, y, 0, x, y, 7);
         coreGrad.addColorStop(0, '#ffffff');
-        coreGrad.addColorStop(0.7, coreColor);
-        coreGrad.addColorStop(1, glowColor);
+        coreGrad.addColorStop(0.6, '#93c5fd');
+        coreGrad.addColorStop(1, '#38bdf8');
         context.fillStyle = coreGrad;
         context.beginPath();
-        context.arc(x, y, 6, 0, Math.PI * 2);
+        context.arc(x, y, 7, 0, Math.PI * 2);
         context.fill();
 
         context.restore();
       }
 
-      // Start 60 FPS Render Loop
+      // Start 60 FPS Loop
       requestAnimationFrame(render);
     })();
   </script>

@@ -4,19 +4,19 @@
    ============================================================ */
 
 /* ============================================================
-   SPARROW DEV LABS - LUXURY LOGO LOADER ANIMATION ENGINE
+   SPARROW DEV LABS - LUXURY LOGO REVEAL ENGINE (3.0s / 60 FPS)
    ============================================================ */
 function initPreloaderLogoCanvas() {
   const canvas = document.getElementById('preloaderLogoCanvas');
   if (!canvas) return;
   const ctx = canvas.getContext('2d');
 
-  const width = canvas.width;  // 680
-  const height = canvas.height; // 680
+  const width = canvas.width;   // 680 or 720
+  const height = canvas.height;
   const cx = width / 2;
   const cy = height / 2 - 10;
 
-  const scale = 2.2;
+  const scale = 2.3;
   const ox = cx - 20;
   const oy = cy - 20;
 
@@ -43,37 +43,37 @@ function initPreloaderLogoCanvas() {
   }
 
   const bodySamples = [];
-  for (let l = 0; l <= bodyLen; l += 2) bodySamples.push(getBodyPoint(l));
+  for (let l = 0; l <= bodyLen; l += 1.5) bodySamples.push(getBodyPoint(l));
   bodySamples.push(getBodyPoint(bodyLen));
 
   const wingSamples = [];
-  for (let l = 0; l <= wingLen; l += 2) wingSamples.push(getWingPoint(l));
+  for (let l = 0; l <= wingLen; l += 1.5) wingSamples.push(getWingPoint(l));
   wingSamples.push(getWingPoint(wingLen));
 
   const particles = [];
-  for (let i = 0; i < 20; i++) {
+  for (let i = 0; i < 18; i++) {
     particles.push({
       x: Math.random() * width,
       y: Math.random() * height,
-      r: Math.random() * 1.5 + 0.5,
-      alpha: Math.random() * 0.2 + 0.05,
-      vx: (Math.random() - 0.5) * 0.3,
-      vy: (Math.random() - 0.5) * 0.3
+      r: Math.random() * 1.2 + 0.4,
+      alpha: Math.random() * 0.15 + 0.05,
+      vx: (Math.random() - 0.5) * 0.2,
+      vy: (Math.random() - 0.5) * 0.2
     });
   }
 
-  function easeInOutCubic(t) {
-    return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
-  }
+  function easeInOutCubic(t) { return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2; }
+  function easeOutCubic(t) { return 1 - Math.pow(1 - t, 3); }
+  function easeInCubic(t) { return t * t * t; }
 
-  const DURATION = 2800;
+  const DURATION = 3000;
   let startTime = null;
 
   function render(timestamp) {
     if (!document.getElementById('preloaderLogoCanvas')) return;
     if (!startTime) startTime = timestamp;
     const elapsed = (timestamp - startTime) % DURATION;
-    const normTime = elapsed / DURATION;
+    const seconds = elapsed / 1000.0;
 
     ctx.fillStyle = '#050505';
     ctx.fillRect(0, 0, width, height);
@@ -88,40 +88,73 @@ function initPreloaderLogoCanvas() {
     });
     ctx.globalAlpha = 1.0;
 
-    let bodyDrawPct = 0, wingDrawPct = 0, logoOpacity = 0, fillOpacity = 0;
-    let MetallicSheen = 0, orbitPct = 0, orbitAlpha = 0, bloomPulse = 0;
+    let bodyDrawPct = 0, wingDrawPct = 0, fillOpacity = 0;
+    let particlePos = { x: bodySamples[0].x, y: bodySamples[0].y };
+    let particleAlpha = 0, ringAlpha = 0, ringOrbitAngle = 0, breathingGlow = 0, isReversing = false;
 
-    if (normTime <= 0.65) {
-      const drawProgress = normTime / 0.65;
-      const easedProgress = easeInOutCubic(drawProgress);
-      bodyDrawPct = Math.min(easedProgress * 1.1, 1.0);
-      wingDrawPct = Math.max(0, (easedProgress - 0.25) / 0.75);
-      logoOpacity = Math.min(drawProgress * 1.5, 1.0);
-      fillOpacity = Math.max(0, (drawProgress - 0.4) / 0.25);
-    } else if (normTime <= 0.80) {
-      bodyDrawPct = 1.0; wingDrawPct = 1.0; logoOpacity = 1.0; fillOpacity = 1.0;
-      MetallicSheen = (normTime - 0.65) / 0.15;
-      if (normTime >= 0.72) {
-        const orbTime = (normTime - 0.72) / 0.20;
-        orbitPct = easeInOutCubic(Math.min(orbTime, 1.0));
-        orbitAlpha = Math.sin(orbTime * Math.PI);
-      }
-    } else if (normTime <= 0.92) {
-      bodyDrawPct = 1.0; wingDrawPct = 1.0; logoOpacity = 1.0; fillOpacity = 1.0;
-      const orbTime = (normTime - 0.72) / 0.20;
-      orbitPct = easeInOutCubic(Math.min(orbTime, 1.0));
-      orbitAlpha = Math.sin(orbTime * Math.PI);
-      bloomPulse = Math.sin(((normTime - 0.80) / 0.12) * Math.PI) * 0.4;
-    } else {
-      const reverseProgress = (normTime - 0.92) / 0.08;
-      const unDraw = 1.0 - easeInOutCubic(reverseProgress);
-      bodyDrawPct = unDraw; wingDrawPct = unDraw; logoOpacity = unDraw; fillOpacity = unDraw;
-      orbitAlpha = (1.0 - reverseProgress) * 0.5;
+    // Stage 01 — Birth (0.0s - 0.3s)
+    if (seconds < 0.3) {
+      const t = seconds / 0.3;
+      particleAlpha = easeOutCubic(t);
+      const pIdx = Math.floor(easeInCubic(t) * (bodySamples.length * 0.08));
+      particlePos = bodySamples[Math.min(pIdx, bodySamples.length - 1)];
+    }
+    // Stage 02 & 03 — Drawing & Shape Formation (0.3s - 1.2s)
+    else if (seconds < 1.2) {
+      const t = (seconds - 0.3) / 0.9;
+      const easedT = easeInOutCubic(t);
+      bodyDrawPct = Math.min(easedT * 1.08, 1.0);
+      wingDrawPct = Math.max(0, (easedT - 0.2) / 0.8);
+      fillOpacity = Math.max(0, (t - 0.45) / 0.45);
+      particleAlpha = 1.0;
+      const pIdx = Math.floor(bodyDrawPct * (bodySamples.length - 1));
+      particlePos = bodySamples[Math.min(pIdx, bodySamples.length - 1)];
+    }
+    // Stage 04 — Completion & Comet Pass (1.2s - 1.7s)
+    else if (seconds < 1.7) {
+      const t = (seconds - 1.2) / 0.5;
+      bodyDrawPct = 1.0; wingDrawPct = 1.0; fillOpacity = 1.0; particleAlpha = 1.0;
+      const passAngle = (t * Math.PI * 0.4) - Math.PI / 4;
+      particlePos = { x: cx + Math.cos(passAngle) * 160, y: cy + Math.sin(passAngle) * 140 };
+    }
+    // Stage 05 — Orbit (1.7s - 2.1s)
+    else if (seconds < 2.1) {
+      const t = (seconds - 1.7) / 0.4;
+      bodyDrawPct = 1.0; wingDrawPct = 1.0; fillOpacity = 1.0; particleAlpha = 1.0;
+      ringAlpha = Math.min(t * 1.5, 0.8);
+      ringOrbitAngle = (Math.PI * 0.15) + (easeInOutCubic(t) * Math.PI * 1.6);
+      particlePos = { x: cx + Math.cos(ringOrbitAngle) * 165, y: cy + Math.sin(ringOrbitAngle) * 145 };
+    }
+    // Stage 06 — Energy Ring & Breathing Glow (2.1s - 2.5s)
+    else if (seconds < 2.5) {
+      const t = (seconds - 2.1) / 0.4;
+      bodyDrawPct = 1.0; wingDrawPct = 1.0; fillOpacity = 1.0; particleAlpha = 1.0;
+      ringAlpha = 0.8 * (1.0 - t * 0.5);
+      breathingGlow = Math.sin(t * Math.PI) * 0.35;
+      ringOrbitAngle = (Math.PI * 1.75) + (t * Math.PI * 0.5);
+      particlePos = { x: cx + Math.cos(ringOrbitAngle) * 165, y: cy + Math.sin(ringOrbitAngle) * 145 };
+    }
+    // Stage 07 — Reverse Collection Dissolve (2.5s - 2.8s)
+    else if (seconds < 2.8) {
+      const t = (seconds - 2.5) / 0.3;
+      const unDraw = 1.0 - easeInOutCubic(t);
+      bodyDrawPct = unDraw; wingDrawPct = unDraw; fillOpacity = unDraw;
+      particleAlpha = Math.max(0.4, 1.0 - t * 0.4);
+      ringAlpha = (1.0 - t) * 0.3;
+      isReversing = true;
+      const pIdx = Math.floor(unDraw * (bodySamples.length - 1));
+      particlePos = bodySamples[Math.max(0, Math.min(pIdx, bodySamples.length - 1))];
+    }
+    // Stage 08 — Seamless Loop Return (2.8s - 3.0s)
+    else {
+      const t = (seconds - 2.8) / 0.2;
+      particleAlpha = 1.0 - t;
+      particlePos = bodySamples[0];
     }
 
-    if (fillOpacity > 0) {
+    if (fillOpacity > 0.01) {
       ctx.save();
-      ctx.globalAlpha = fillOpacity * logoOpacity;
+      ctx.globalAlpha = fillOpacity;
 
       ctx.beginPath();
       for (let i = 0; i < bodySamples.length; i++) {
@@ -131,10 +164,10 @@ function initPreloaderLogoCanvas() {
       ctx.closePath();
 
       const bodyGrad = ctx.createLinearGradient(cx - 100, cy - 100, cx + 100, cy + 100);
-      bodyGrad.addColorStop(0, '#ffffff'); bodyGrad.addColorStop(0.6, '#e2e8f0'); bodyGrad.addColorStop(1, '#cbd5e1');
+      bodyGrad.addColorStop(0, '#ffffff'); bodyGrad.addColorStop(0.65, '#e2e8f0'); bodyGrad.addColorStop(1, '#cbd5e1');
       ctx.fillStyle = bodyGrad;
-      ctx.shadowColor = 'rgba(255, 255, 255, ' + (0.15 + bloomPulse) + ')';
-      ctx.shadowBlur = 20;
+      ctx.shadowColor = 'rgba(255, 255, 255, ' + (0.15 + breathingGlow) + ')';
+      ctx.shadowBlur = 22;
       ctx.fill();
 
       ctx.beginPath();
@@ -151,24 +184,14 @@ function initPreloaderLogoCanvas() {
       const wingGrad = ctx.createLinearGradient(cx - 120, cy + 80, cx - 20, cy - 40);
       wingGrad.addColorStop(0, '#0284c7'); wingGrad.addColorStop(0.5, '#38bdf8'); wingGrad.addColorStop(1, '#93c5fd');
       ctx.fillStyle = wingGrad;
-      ctx.shadowColor = 'rgba(56, 189, 248, ' + (0.3 + bloomPulse) + ')';
-      ctx.shadowBlur = 25;
+      ctx.shadowColor = 'rgba(56, 189, 248, ' + (0.3 + breathingGlow) + ')';
+      ctx.shadowBlur = 28;
       ctx.fill();
-
-      if (MetallicSheen > 0 && MetallicSheen < 1) {
-        const sheenX = cx - 200 + MetallicSheen * 400;
-        const sheenGrad = ctx.createLinearGradient(sheenX - 40, cy - 100, sheenX + 40, cy + 100);
-        sheenGrad.addColorStop(0, 'rgba(255,255,255,0)'); sheenGrad.addColorStop(0.5, 'rgba(255,255,255,0.4)'); sheenGrad.addColorStop(1, 'rgba(255,255,255,0)');
-        ctx.globalCompositeOperation = 'source-atop';
-        ctx.fillStyle = sheenGrad;
-        ctx.fillRect(cx - 200, cy - 200, 400, 400);
-        ctx.globalCompositeOperation = 'source-over';
-      }
       ctx.restore();
     }
 
     ctx.save();
-    if (bodyDrawPct > 0) {
+    if (bodyDrawPct > 0.01) {
       const drawCount = Math.floor(bodySamples.length * bodyDrawPct);
       if (drawCount > 1) {
         ctx.beginPath();
@@ -176,13 +199,13 @@ function initPreloaderLogoCanvas() {
           if (i === 0) ctx.moveTo(bodySamples[i].x, bodySamples[i].y);
           else ctx.lineTo(bodySamples[i].x, bodySamples[i].y);
         }
-        ctx.strokeStyle = '#ffffff'; ctx.lineWidth = 3; ctx.lineCap = 'round'; ctx.lineJoin = 'round';
-        ctx.shadowColor = 'rgba(56, 189, 248, 0.8)'; ctx.shadowBlur = 12; ctx.stroke();
-        drawSparkHead(ctx, bodySamples[drawCount - 1].x, bodySamples[drawCount - 1].y, '#ffffff', '#38bdf8', 1.0);
+        ctx.strokeStyle = '#ffffff'; ctx.lineWidth = isReversing ? 2.0 : 3.0;
+        ctx.lineCap = 'round'; ctx.lineJoin = 'round';
+        ctx.shadowColor = 'rgba(56, 189, 248, 0.8)'; ctx.shadowBlur = 14; ctx.stroke();
       }
     }
 
-    if (wingDrawPct > 0) {
+    if (wingDrawPct > 0.01) {
       const drawCount = Math.floor(wingSamples.length * wingDrawPct);
       if (drawCount > 1) {
         ctx.beginPath();
@@ -190,42 +213,38 @@ function initPreloaderLogoCanvas() {
           if (i === 0) ctx.moveTo(wingSamples[i].x, wingSamples[i].y);
           else ctx.lineTo(wingSamples[i].x, wingSamples[i].y);
         }
-        ctx.strokeStyle = '#38bdf8'; ctx.lineWidth = 2.5; ctx.lineCap = 'round'; ctx.lineJoin = 'round';
-        ctx.shadowColor = 'rgba(56, 189, 248, 1.0)'; ctx.shadowBlur = 15; ctx.stroke();
-        drawSparkHead(ctx, wingSamples[drawCount - 1].x, wingSamples[drawCount - 1].y, '#93c5fd', '#38bdf8', 0.8);
+        ctx.strokeStyle = '#38bdf8'; ctx.lineWidth = isReversing ? 1.8 : 2.5;
+        ctx.lineCap = 'round'; ctx.lineJoin = 'round';
+        ctx.shadowColor = 'rgba(56, 189, 248, 1.0)'; ctx.shadowBlur = 16; ctx.stroke();
       }
     }
 
-    if (orbitAlpha > 0.01) {
+    if (ringAlpha > 0.01) {
       ctx.save();
-      ctx.globalAlpha = orbitAlpha;
-      const rx = 150, ry = 130;
-      const orbitAngle = orbitPct * Math.PI * 2 - Math.PI / 2;
-      ctx.beginPath(); ctx.ellipse(cx, cy, rx, ry, -0.1, 0, Math.PI * 2);
-      ctx.strokeStyle = 'rgba(56, 189, 248, ' + (orbitAlpha * 0.4) + ')'; ctx.lineWidth = 1.5;
-      ctx.shadowColor = '#38bdf8'; ctx.shadowBlur = 15; ctx.stroke();
-      drawSparkHead(ctx, cx + Math.cos(orbitAngle) * rx, cy + Math.sin(orbitAngle) * ry, '#ffffff', '#38bdf8', orbitAlpha);
+      ctx.globalAlpha = ringAlpha;
+      ctx.beginPath(); ctx.ellipse(cx, cy, 165, 145, -0.1, 0, Math.PI * 2);
+      ctx.strokeStyle = 'rgba(56, 189, 248, ' + (ringAlpha * 0.5) + ')'; ctx.lineWidth = 1.5;
+      ctx.shadowColor = '#38bdf8'; ctx.shadowBlur = 16; ctx.stroke();
       ctx.restore();
     }
 
-    if (normTime <= 0.05 || normTime >= 0.95) {
-      const birthAlpha = normTime <= 0.05 ? normTime / 0.05 : (1.0 - normTime) / 0.05;
-      drawSparkHead(ctx, bodySamples[0].x, bodySamples[0].y, '#ffffff', '#38bdf8', birthAlpha);
+    if (particleAlpha > 0.01) {
+      drawEnergyParticle(ctx, particlePos.x, particlePos.y, particleAlpha);
     }
 
     ctx.restore();
     requestAnimationFrame(render);
   }
 
-  function drawSparkHead(context, x, y, coreColor, glowColor, alpha) {
+  function drawEnergyParticle(context, x, y, alpha) {
     context.save(); context.globalAlpha = alpha;
-    const glowGrad = context.createRadialGradient(x, y, 0, x, y, 22);
-    glowGrad.addColorStop(0, glowColor); glowGrad.addColorStop(0.4, 'rgba(56, 189, 248, 0.4)'); glowGrad.addColorStop(1, 'rgba(56, 189, 248, 0)');
-    context.fillStyle = glowGrad; context.beginPath(); context.arc(x, y, 22, 0, Math.PI * 2); context.fill();
+    const outerGrad = context.createRadialGradient(x, y, 0, x, y, 26);
+    outerGrad.addColorStop(0, 'rgba(56, 189, 248, 0.9)'); outerGrad.addColorStop(0.35, 'rgba(56, 189, 248, 0.4)'); outerGrad.addColorStop(1, 'rgba(56, 189, 248, 0)');
+    context.fillStyle = outerGrad; context.beginPath(); context.arc(x, y, 26, 0, Math.PI * 2); context.fill();
 
-    const coreGrad = context.createRadialGradient(x, y, 0, x, y, 6);
-    coreGrad.addColorStop(0, '#ffffff'); coreGrad.addColorStop(0.7, coreColor); coreGrad.addColorStop(1, glowColor);
-    context.fillStyle = coreGrad; context.beginPath(); context.arc(x, y, 6, 0, Math.PI * 2); context.fill();
+    const coreGrad = context.createRadialGradient(x, y, 0, x, y, 7);
+    coreGrad.addColorStop(0, '#ffffff'); coreGrad.addColorStop(0.6, '#93c5fd'); coreGrad.addColorStop(1, '#38bdf8');
+    context.fillStyle = coreGrad; context.beginPath(); context.arc(x, y, 7, 0, Math.PI * 2); context.fill();
     context.restore();
   }
 
