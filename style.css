@@ -2819,27 +2819,25 @@ body.loading { overflow: hidden; }
   color: #333;
 }
 
-/* Gift box image top-right (Absolute 3D Luxury Overlay) */
+/* Gift box image top-right (Big 3D Luxury Presentation) */
 .plan-giftbox {
-  position: absolute;
-  top: -10px;
-  right: -10px;
-  width: 130px;
-  height: 130px;
+  width: 95px;
+  height: 95px;
   object-fit: contain;
-  pointer-events: none;
-  z-index: 2;
-  filter: drop-shadow(0 12px 24px rgba(0, 0, 0, 0.35));
+  margin-top: -6px;
+  margin-right: -4px;
+  flex-shrink: 0;
+  filter: drop-shadow(0 8px 18px rgba(0, 0, 0, 0.25));
   transition: transform 0.3s ease, filter 0.3s ease;
 }
 
 .plan-card:hover .plan-giftbox {
-  transform: scale(1.1);
-  filter: drop-shadow(0 16px 32px rgba(0, 0, 0, 0.45));
+  transform: scale(1.08);
+  filter: drop-shadow(0 12px 24px rgba(0, 0, 0, 0.35));
 }
 
 .plan-giftbox--bright {
-  filter: brightness(1.15) saturate(1.15) drop-shadow(0 14px 28px rgba(124, 58, 237, 0.4));
+  filter: brightness(1.15) saturate(1.15) drop-shadow(0 10px 22px rgba(124, 58, 237, 0.35));
 }
 
 /* ---- Price ---- */
@@ -2905,11 +2903,11 @@ body.loading { overflow: hidden; }
 
 .plan-features li {
   font-family: var(--font-secondary);
-  font-size: 11px;
+  font-size: 11.5px;
   color: #444;
   display: flex;
   align-items: center;
-  gap: 5px;
+  gap: 4px;
 }
 
 /* Coloured check circles */
@@ -2920,8 +2918,8 @@ body.loading { overflow: hidden; }
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  font-size: 8px;
-  font-weight: 700;
+  font-size: 11px;
+  font-weight: 800;
   flex-shrink: 0;
 }
 
@@ -2984,19 +2982,19 @@ body.loading { overflow: hidden; }
 .plan-featured .plan-tagline { color: rgba(255,255,255,0.65); }
 .plan-featured .plan-features li { color: rgba(255,255,255,0.85); }
 
-/* ---- MOST POPULAR diagonal ribbon ---- */
+/* ---- MOST POPULAR badge ---- */
 .plan-popular-ribbon {
   position: absolute;
-  top: 14px;
-  right: -24px;
+  top: 10px;
+  left: 14px;
   background: #fff;
   color: #7c3aed;
   font-family: var(--font-secondary);
-  font-size: 7.5px;
+  font-size: 8.5px;
   font-weight: 800;
   letter-spacing: 1px;
-  padding: 3px 30px;
-  transform: rotate(45deg);
+  padding: 3px 10px;
+  border-radius: 100px;
   box-shadow: 0 2px 6px rgba(0,0,0,0.15);
 }
 
