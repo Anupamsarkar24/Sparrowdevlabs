@@ -2912,3 +2912,191 @@ body.loading { overflow: hidden; }
   .plan-featured { order: -1; }
   .plan-card { border-radius: 18px !important; }
 }
+
+/* ============================================================
+   PAYMENT MODAL & TOAST STYLES
+   ============================================================ */
+.payment-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 10000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.payment-modal.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.payment-modal-backdrop {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.payment-modal-card {
+  position: relative;
+  width: 90%;
+  max-width: 440px;
+  background: #18181b;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 24px;
+  padding: 32px 28px;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.6);
+  z-index: 2;
+  color: #fff;
+  transform: translateY(20px) scale(0.95);
+  transition: transform 0.3s ease;
+}
+
+.payment-modal.active .payment-modal-card {
+  transform: translateY(0) scale(1);
+}
+
+.payment-modal-close {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: rgba(255, 255, 255, 0.08);
+  border: none;
+  color: #a1a1aa;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  font-size: 20px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.payment-modal-close:hover {
+  background: rgba(255, 255, 255, 0.2);
+  color: #fff;
+}
+
+.payment-modal-badge {
+  display: inline-block;
+  font-family: var(--font-primary);
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 2px;
+  color: #a78bfa;
+  background: rgba(167, 139, 250, 0.12);
+  padding: 4px 12px;
+  border-radius: 100px;
+  margin-bottom: 12px;
+}
+
+.payment-modal-title {
+  font-family: var(--font-primary);
+  font-size: 24px;
+  font-weight: 800;
+  color: #fff;
+  margin-bottom: 6px;
+}
+
+.payment-modal-price {
+  font-family: var(--font-primary);
+  font-size: 32px;
+  font-weight: 900;
+  color: #7c3aed;
+  margin-bottom: 24px;
+}
+
+.payment-modal-price .currency { font-size: 20px; font-weight: 700; }
+.payment-modal-price .period { font-size: 13px; color: #a1a1aa; font-weight: 400; }
+
+.payment-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.payment-field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.payment-field label {
+  font-family: var(--font-secondary);
+  font-size: 12px;
+  font-weight: 600;
+  color: #d4d4d8;
+  letter-spacing: 0.5px;
+}
+
+.payment-field input {
+  width: 100%;
+  background: #27272a;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 12px;
+  padding: 12px 16px;
+  font-family: var(--font-secondary);
+  font-size: 14px;
+  color: #fff;
+  outline: none;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.payment-field input:focus {
+  border-color: #7c3aed;
+  box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.25);
+}
+
+.payment-field-help {
+  font-family: var(--font-secondary);
+  font-size: 11px;
+  color: #a1a1aa;
+}
+
+.payment-submit-btn {
+  background: #7c3aed;
+  color: #fff;
+  border: none;
+  border-radius: 100px;
+  padding: 14px 24px;
+  font-family: var(--font-secondary);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: all 0.2s ease;
+  box-shadow: 0 8px 24px rgba(124, 58, 237, 0.4);
+}
+
+.payment-submit-btn:hover {
+  background: #6d28d9;
+  transform: translateY(-2px);
+  box-shadow: 0 12px 30px rgba(124, 58, 237, 0.5);
+}
+
+.payment-modal-footer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  margin-top: 20px;
+  font-family: var(--font-secondary);
+  font-size: 11px;
+  color: #71717a;
+}

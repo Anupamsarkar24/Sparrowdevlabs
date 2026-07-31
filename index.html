@@ -231,7 +231,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="style.css?v=20" />
+  <link rel="stylesheet" href="style.css?v=21" />
 </head>
 <body class="loading">
 
@@ -997,12 +997,43 @@
           by SparrowDevLabs
         </p>
       </div>
-    </div>
-  </footer>
-
+  <!-- Razorpay Checkout SDK -->
+  <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
   <script src="script.js?v=2"></script>
   <!-- Toast Notification Container -->
   <div id="toast-container" class="toast-container"></div>
+
+  <!-- ===================== PAYMENT MODAL ===================== -->
+  <div id="payment-modal" class="payment-modal" aria-hidden="true">
+    <div class="payment-modal-backdrop" id="payment-modal-backdrop"></div>
+    <div class="payment-modal-card">
+      <button class="payment-modal-close" id="payment-modal-close" aria-label="Close modal">&times;</button>
+      
+      <div class="payment-modal-header">
+        <div class="payment-modal-badge" id="modal-plan-badge">PRO PLAN</div>
+        <h3 class="payment-modal-title">Subscribe to <span id="modal-plan-name">Pro</span></h3>
+        <p class="payment-modal-price"><span class="currency">₹</span><span id="modal-plan-price">12,999</span><span class="period">/month</span></p>
+      </div>
+
+      <form id="payment-form" class="payment-form">
+        <div class="payment-field">
+          <label for="payment-email">Your Gmail Address</label>
+          <input type="email" id="payment-email" placeholder="name@gmail.com" required autocomplete="email" />
+          <small class="payment-field-help">Your membership &amp; receipt will be linked to this email.</small>
+        </div>
+
+        <button type="submit" id="payment-submit-btn" class="payment-submit-btn">
+          <span>PROCEED TO PAY</span>
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+      </form>
+
+      <div class="payment-modal-footer">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>
+        <span>256-bit SSL Encrypted • Powered by Razorpay</span>
+      </div>
+    </div>
+  </div>
 </body>
 </html>
 

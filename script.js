@@ -994,3 +994,149 @@ function initMobileMenu() {
 }
 
 document.addEventListener('DOMContentLoaded', initMobileMenu);
+
+/* ============================================================
+   MEMBERSHIP PAYMENT & RAZORPAY INTEGRATION
+   ============================================================ */
+let selectedPlan = { name: 'PRO', amount: 1299900, priceFormatted: '12,999' };
+
+document.addEventListener('DOMContentLoaded', () => {
+  const modal = document.getElementById('payment-modal');
+  const modalBackdrop = document.getElementById('payment-modal-backdrop');
+  const modalClose = document.getElementById('payment-modal-close');
+  const paymentForm = document.getElementById('payment-form');
+
+  const planButtons = [
+    { id: 'plan-beginner', name: 'BEGINNER', amount: 499900, price: '4,999' },
+    { id: 'plan-pro', name: 'PRO', amount: 1299900, price: '12,999' },
+    { id: 'plan-legend', name: 'LEGEND', amount: 2999900, price: '29,999' }
+  ];
+
+  // Wire Get Started buttons
+  planButtons.forEach(plan => {
+    const card = document.getElementById(plan.id);
+    if (card) {
+      const btn = card.querySelector('.plan-cta');
+      if (btn) {
+        btn.addEventListener('click', (e) => {
+          e.preventDefault();
+          openPaymentModal(plan);
+        });
+      }
+    }
+  });
+
+  function openPaymentModal(plan) {
+    selectedPlan = plan;
+    document.getElementById('modal-plan-badge').textContent = ${plan.name} PLAN;
+    document.getElementById('modal-plan-name').textContent = plan.name;
+    document.getElementById('modal-plan-price').textContent = plan.price;
+    modal.classList.add('active');
+    modal.setAttribute('aria-hidden', 'false');
+  }
+
+  function closePaymentModal() {
+    modal.classList.remove('active');
+    modal.setAttribute('aria-hidden', 'true');
+  }
+
+  if (modalClose) modalClose.addEventListener('click', closePaymentModal);
+  if (modalBackdrop) modalBackdrop.addEventListener('click', closePaymentModal);
+
+  // Form submit -> Initiate Razorpay Payment
+  if (paymentForm) {
+    paymentForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const emailInput = document.getElementById('payment-email');
+      const email = emailInput.value.trim();
+
+      if (!email) return;
+
+      const submitBtn = document.getElementById('payment-submit-btn');
+      const originalText = submitBtn.innerHTML;
+      submitBtn.disabled = true;
+      submitBtn.innerHTML = '<span>Processing...</span>';
+
+      try {
+        // Step 1: Call /api/create-order
+        const orderRes = await fetch('/api/create-order', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            amount: selectedPlan.amount,
+            currency: 'INR',
+            receipt: cpt_
+          })
+        });
+
+        const orderData = await orderRes.json();
+
+        if (!orderRes.ok || !orderData.order_id) {
+          throw new Error(orderData.error || 'Failed to create order');
+        }
+
+        closePaymentModal();
+
+        // Step 2: Open Razorpay Standard Checkout Modal
+        const options = {
+          key: orderData.key_id || 'rzp_test_TK6UJsQdNoMty1',
+          amount: orderData.amount,
+          currency: orderData.currency || 'INR',
+          name: 'SparrowDevLabs',
+          description: ${selectedPlan.name} Membership Plan,
+          image: 'assets/images/logo.png',
+          order_id: orderData.order_id,
+          prefill: {
+            email: email
+          },
+          theme: {
+            color: '#7c3aed'
+          },
+          handler: async function (response) {
+            // Step 3: Verify Payment Signature
+            try {
+              const verifyRes = await fetch('/api/verify-payment', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                  razorpay_order_id: response.razorpay_order_id,
+                  razorpay_payment_id: response.razorpay_payment_id,
+                  razorpay_signature: response.razorpay_signature,
+                  plan: selectedPlan.name,
+                  email: email
+                })
+              });
+
+              const verifyData = await verifyRes.json();
+
+              if (verifyRes.ok && verifyData.success) {
+                alert(🎉 PAYMENT SUCCESSFUL!\n\nThank you! Your  membership has been activated.\nReceipt & details sent to: );
+              } else {
+                alert(⚠️ Payment verification failed: );
+              }
+            } catch (err) {
+              alert(Error verifying payment: );
+            }
+          },
+          modal: {
+            ondismiss: function () {
+              console.log('Razorpay Checkout modal dismissed by user');
+            }
+          }
+        };
+
+        const rzp = new Razorpay(options);
+        rzp.on('payment.failed', function (response) {
+          alert(❌ Payment Failed: );
+        });
+        rzp.open();
+
+      } catch (err) {
+        alert(Payment Initialization Error: );
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = originalText;
+      }
+    });
+  }
+});
