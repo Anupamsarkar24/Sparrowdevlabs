@@ -1181,19 +1181,20 @@ document.addEventListener('DOMContentLoaded', () => {
             const expiryDate = expiry.toISOString().split('T')[0];
 
             try {
+              const params = new URLSearchParams();
+              params.append('action', 'add_subscription');
+              params.append('email', email);
+              params.append('plan', `${selectedPlan.name} (${selectedPlan.isYearly ? 'YEARLY' : 'MONTHLY'})`);
+              params.append('startDate', startDate);
+              params.append('expiryDate', expiryDate);
+              params.append('paymentId', response.razorpay_payment_id || 'N/A');
+              params.append('orderId', response.razorpay_order_id || 'N/A');
+              params.append('status', 'ACTIVE');
+
               await fetch(sheetUrl, {
                 method: 'POST',
                 mode: 'no-cors',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                  action: 'add_subscription',
-                  email: email,
-                  plan: `${selectedPlan.name} (${selectedPlan.isYearly ? 'YEARLY' : 'MONTHLY'})`,
-                  startDate: startDate,
-                  expiryDate: expiryDate,
-                  paymentId: response.razorpay_payment_id || 'test_pmt',
-                  status: 'ACTIVE'
-                })
+                body: params
               });
             } catch (sheetErr) {
               console.warn('Google Sheet log warning:', sheetErr.message);
