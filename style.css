@@ -3100,3 +3100,69 @@ body.loading { overflow: hidden; }
   font-size: 11px;
   color: #71717a;
 }
+
+/* ============================================================
+   BILLING TOGGLE SWITCH (MONTHLY / YEARLY)
+   ============================================================ */
+.billing-toggle-container {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 16px;
+  background: rgba(0, 0, 0, 0.04);
+  padding: 6px 14px;
+  border-radius: 100px;
+  border: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+.billing-label {
+  font-family: var(--font-secondary);
+  font-size: 13px;
+  font-weight: 600;
+  color: #71717a;
+  transition: color 0.3s ease;
+  user-select: none;
+}
+
+.billing-label--active {
+  color: #111;
+  font-weight: 700;
+}
+
+.billing-toggle-btn {
+  position: relative;
+  width: 44px;
+  height: 24px;
+  background: #7c3aed;
+  border-radius: 100px;
+  border: none;
+  cursor: pointer;
+  padding: 2px;
+  transition: background 0.3s ease;
+}
+
+.billing-toggle-slider {
+  display: block;
+  width: 20px;
+  height: 20px;
+  background: #fff;
+  border-radius: 50%;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transform: translateX(0);
+}
+
+.billing-toggle-btn.yearly .billing-toggle-slider {
+  transform: translateX(20px);
+}
+
+.billing-discount-badge {
+  font-family: var(--font-primary);
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  color: #16a34a;
+  background: rgba(22, 163, 74, 0.12);
+  padding: 3px 8px;
+  border-radius: 100px;
+}

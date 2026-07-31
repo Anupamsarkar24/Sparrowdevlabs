@@ -231,7 +231,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="style.css?v=21" />
+  <link rel="stylesheet" href="style.css?v=22" />
 </head>
 <body class="loading">
 
@@ -809,7 +809,7 @@
   <section class="membership" id="membership" aria-label="Membership plans">
     <div class="membership-inner max-w">
 
-      <!-- Left Column: Section Header -->
+      <!-- Left Column: Section Header & Billing Toggle -->
       <div class="membership-header">
         <div class="section-label section-label--green" style="margin-bottom: 12px;">
           <span>OUR PLANS</span>
@@ -817,13 +817,23 @@
         </div>
         <h2 class="membership-title uppercase">CHOOSE YOUR<br/>MEMBERSHIP</h2>
         <p class="membership-subtitle">Simple, transparent pricing. Pick the plan that fits your goals.</p>
+
+        <!-- Monthly / Yearly Billing Toggle -->
+        <div class="billing-toggle-container">
+          <span class="billing-label billing-label--active" id="billing-monthly-label">Monthly</span>
+          <button type="button" class="billing-toggle-btn" id="billing-toggle-btn" aria-label="Toggle Monthly or Yearly Billing">
+            <span class="billing-toggle-slider"></span>
+          </button>
+          <span class="billing-label" id="billing-yearly-label">Yearly</span>
+          <span class="billing-discount-badge">SAVE 25%</span>
+        </div>
       </div>
 
       <!-- Cards -->
       <div class="membership-cards">
 
         <!-- BEGINNER -->
-        <article class="plan-card plan-beginner" id="plan-beginner">
+        <article class="plan-card plan-beginner" id="plan-beginner" data-plan="BEGINNER" data-monthly-price="1,199" data-monthly-amount="119900" data-yearly-price="899" data-yearly-amount="1078800">
           <!-- Top area: plan name + gift image -->
           <div class="plan-top">
             <div class="plan-top-left">
@@ -837,8 +847,8 @@
           <!-- Price -->
           <div class="plan-price">
             <span class="plan-currency">₹</span>
-            <span class="plan-amount">4,999</span>
-            <span class="plan-period">/mo</span>
+            <span class="plan-amount" id="price-beginner">1,199</span>
+            <span class="plan-period" id="period-beginner">/mo</span>
           </div>
           <p class="plan-tagline">Perfect for startups &amp; personal projects</p>
           <hr class="plan-divider"/>
@@ -857,7 +867,7 @@
         </article>
 
         <!-- PRO (Featured) -->
-        <article class="plan-card plan-pro plan-featured" id="plan-pro">
+        <article class="plan-card plan-pro plan-featured" id="plan-pro" data-plan="PRO" data-monthly-price="2,999" data-monthly-amount="299900" data-yearly-price="2,199" data-yearly-amount="2638800">
           <div class="plan-popular-ribbon">MOST POPULAR</div>
           <!-- Top area -->
           <div class="plan-top">
@@ -872,8 +882,8 @@
           <!-- Price -->
           <div class="plan-price">
             <span class="plan-currency">₹</span>
-            <span class="plan-amount">12,999</span>
-            <span class="plan-period">/mo</span>
+            <span class="plan-amount" id="price-pro">2,999</span>
+            <span class="plan-period" id="period-pro">/mo</span>
           </div>
           <p class="plan-tagline">For growing businesses that need more</p>
           <hr class="plan-divider plan-divider--light"/>
@@ -892,7 +902,7 @@
         </article>
 
         <!-- LEGEND -->
-        <article class="plan-card plan-legend" id="plan-legend">
+        <article class="plan-card plan-legend" id="plan-legend" data-plan="LEGEND" data-monthly-price="6,999" data-monthly-amount="699900" data-yearly-price="5,199" data-yearly-amount="6238800">
           <!-- Top area -->
           <div class="plan-top">
             <div class="plan-top-left">
@@ -906,8 +916,8 @@
           <!-- Price -->
           <div class="plan-price">
             <span class="plan-currency plan-currency--gold">₹</span>
-            <span class="plan-amount plan-amount--gold">29,999</span>
-            <span class="plan-period">/mo</span>
+            <span class="plan-amount plan-amount--gold" id="price-legend">6,999</span>
+            <span class="plan-period" id="period-legend">/mo</span>
           </div>
           <p class="plan-tagline">Full-scale digital dominance, no limits</p>
           <hr class="plan-divider"/>

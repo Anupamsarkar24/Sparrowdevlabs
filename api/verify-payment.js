@@ -19,7 +19,7 @@ module.exports = async function handler(req, res) {
   }
 
   try {
-    const { razorpay_order_id, razorpay_payment_id, razorpay_signature, plan = 'PRO', email } = req.body || {};
+    const { razorpay_order_id, razorpay_payment_id, razorpay_signature, plan = 'PRO', email, isYearly } = req.body || {};
 
     // Validate required fields
     if (!razorpay_order_id || !razorpay_payment_id || !razorpay_signature) {
@@ -46,12 +46,15 @@ module.exports = async function handler(req, res) {
     const startDate = now.toISOString().split('T')[0]; // YYYY-MM-DD
     
     const expiry = new Date(now);
-    expiry.setDate(expiry.getDate() + 30); // 30 days expiry
+    const daysToAdd = isYearly ? 365 : 30; // 365 days for annual, 30 days for monthly
+    expiry.setDate(expiry.getDate() + daysToAdd);
     const expiryDate = expiry.toISOString().split('T')[0];
+
+    const planLabel = `${plan.toUpperCase()}${isYearly ? ' (YEARLY)' : ' (MONTHLY)'}`;
 
     const payload = {
       email: email || 'subscriber@example.com',
-      plan: plan.toUpperCase(),
+      plan: planLabel,
       startDate: startDate,
       expiryDate: expiryDate,
       paymentId: razorpay_payment_id,

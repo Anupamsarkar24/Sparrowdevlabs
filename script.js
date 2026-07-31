@@ -996,9 +996,10 @@ function initMobileMenu() {
 document.addEventListener('DOMContentLoaded', initMobileMenu);
 
 /* ============================================================
-   MEMBERSHIP PAYMENT & RAZORPAY INTEGRATION
+   MEMBERSHIP PAYMENT & RAZORPAY INTEGRATION WITH BILLING TOGGLE
    ============================================================ */
-let selectedPlan = { name: 'PRO', amount: 1299900, priceFormatted: '12,999' };
+let isYearlyBilling = false;
+let selectedPlan = { name: 'PRO', amount: 299900, priceFormatted: '2,999', isYearly: false };
 
 document.addEventListener('DOMContentLoaded', () => {
   const modal = document.getElementById('payment-modal');
@@ -1006,21 +1007,72 @@ document.addEventListener('DOMContentLoaded', () => {
   const modalClose = document.getElementById('payment-modal-close');
   const paymentForm = document.getElementById('payment-form');
 
-  const planButtons = [
-    { id: 'plan-beginner', name: 'BEGINNER', amount: 499900, price: '4,999' },
-    { id: 'plan-pro', name: 'PRO', amount: 1299900, price: '12,999' },
-    { id: 'plan-legend', name: 'LEGEND', amount: 2999900, price: '29,999' }
+  const toggleBtn = document.getElementById('billing-toggle-btn');
+  const monthlyLabel = document.getElementById('billing-monthly-label');
+  const yearlyLabel = document.getElementById('billing-yearly-label');
+
+  const planCards = [
+    { id: 'plan-beginner', name: 'BEGINNER', priceId: 'price-beginner', periodId: 'period-beginner' },
+    { id: 'plan-pro', name: 'PRO', priceId: 'price-pro', periodId: 'period-pro' },
+    { id: 'plan-legend', name: 'LEGEND', priceId: 'price-legend', periodId: 'period-legend' }
   ];
 
-  // Wire Get Started buttons
-  planButtons.forEach(plan => {
-    const card = document.getElementById(plan.id);
-    if (card) {
-      const btn = card.querySelector('.plan-cta');
+  // Billing Toggle Switch Event
+  if (toggleBtn) {
+    toggleBtn.addEventListener('click', () => {
+      isYearlyBilling = !isYearlyBilling;
+
+      if (isYearlyBilling) {
+        toggleBtn.classList.add('yearly');
+        monthlyLabel.classList.remove('billing-label--active');
+        yearlyLabel.classList.add('billing-label--active');
+      } else {
+        toggleBtn.classList.remove('yearly');
+        monthlyLabel.classList.add('billing-label--active');
+        yearlyLabel.classList.remove('billing-label--active');
+      }
+
+      // Update Card Displays
+      planCards.forEach(cardInfo => {
+        const cardEl = document.getElementById(cardInfo.id);
+        const priceEl = document.getElementById(cardInfo.priceId);
+        const periodEl = document.getElementById(cardInfo.periodId);
+
+        if (cardEl && priceEl && periodEl) {
+          if (isYearlyBilling) {
+            priceEl.textContent = cardEl.getAttribute('data-yearly-price');
+            periodEl.textContent = '/mo (billed annually)';
+          } else {
+            priceEl.textContent = cardEl.getAttribute('data-monthly-price');
+            periodEl.textContent = '/mo';
+          }
+        }
+      });
+    });
+  }
+
+  // Wire Get Started Buttons
+  planCards.forEach(cardInfo => {
+    const cardEl = document.getElementById(cardInfo.id);
+    if (cardEl) {
+      const btn = cardEl.querySelector('.plan-cta');
       if (btn) {
         btn.addEventListener('click', (e) => {
           e.preventDefault();
-          openPaymentModal(plan);
+          const name = cardEl.getAttribute('data-plan');
+          const amount = isYearlyBilling 
+            ? Number(cardEl.getAttribute('data-yearly-amount')) 
+            : Number(cardEl.getAttribute('data-monthly-amount'));
+          const price = isYearlyBilling 
+            ? cardEl.getAttribute('data-yearly-price') 
+            : cardEl.getAttribute('data-monthly-price');
+
+          openPaymentModal({
+            name: name,
+            amount: amount,
+            price: price,
+            isYearly: isYearlyBilling
+          });
         });
       }
     }
@@ -1028,7 +1080,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function openPaymentModal(plan) {
     selectedPlan = plan;
-    document.getElementById('modal-plan-badge').textContent = ${plan.name} PLAN;
+    document.getElementById('modal-plan-badge').textContent = `${plan.name} PLAN (${plan.isYearly ? 'YEARLY' : 'MONTHLY'})`;
     document.getElementById('modal-plan-name').textContent = plan.name;
     document.getElementById('modal-plan-price').textContent = plan.price;
     modal.classList.add('active');
@@ -1043,7 +1095,7 @@ document.addEventListener('DOMContentLoaded', () => {
   if (modalClose) modalClose.addEventListener('click', closePaymentModal);
   if (modalBackdrop) modalBackdrop.addEventListener('click', closePaymentModal);
 
-  // Form submit -> Initiate Razorpay Payment
+  // Form Submit -> Initiate Razorpay Payment
   if (paymentForm) {
     paymentForm.addEventListener('submit', async (e) => {
       e.preventDefault();
@@ -1065,7 +1117,7 @@ document.addEventListener('DOMContentLoaded', () => {
           body: JSON.stringify({
             amount: selectedPlan.amount,
             currency: 'INR',
-            receipt: cpt_
+            receipt: `rcpt_${Date.now()}`
           })
         });
 
@@ -1083,7 +1135,7 @@ document.addEventListener('DOMContentLoaded', () => {
           amount: orderData.amount,
           currency: orderData.currency || 'INR',
           name: 'SparrowDevLabs',
-          description: ${selectedPlan.name} Membership Plan,
+          description: `${selectedPlan.name} (${selectedPlan.isYearly ? 'Yearly' : 'Monthly'}) Membership`,
           image: 'assets/images/logo.png',
           order_id: orderData.order_id,
           prefill: {
@@ -1103,19 +1155,20 @@ document.addEventListener('DOMContentLoaded', () => {
                   razorpay_payment_id: response.razorpay_payment_id,
                   razorpay_signature: response.razorpay_signature,
                   plan: selectedPlan.name,
-                  email: email
+                  email: email,
+                  isYearly: selectedPlan.isYearly
                 })
               });
 
               const verifyData = await verifyRes.json();
 
               if (verifyRes.ok && verifyData.success) {
-                alert(🎉 PAYMENT SUCCESSFUL!\n\nThank you! Your  membership has been activated.\nReceipt & details sent to: );
+                alert(`🎉 PAYMENT SUCCESSFUL!\n\nThank you! Your ${selectedPlan.name} (${selectedPlan.isYearly ? 'Yearly' : 'Monthly'}) membership has been activated.\nExpiry Date: ${verifyData.subscription ? verifyData.subscription.expiryDate : 'Calculated'}\nReceipt & details sent to: ${email}`);
               } else {
-                alert(⚠️ Payment verification failed: );
+                alert(`⚠️ Payment verification failed: ${verifyData.error || 'Invalid signature'}`);
               }
             } catch (err) {
-              alert(Error verifying payment: );
+              alert(`Error verifying payment: ${err.message}`);
             }
           },
           modal: {
@@ -1127,12 +1180,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const rzp = new Razorpay(options);
         rzp.on('payment.failed', function (response) {
-          alert(❌ Payment Failed: );
+          alert(`❌ Payment Failed: ${response.error.description || 'Transaction cancelled'}`);
         });
         rzp.open();
 
       } catch (err) {
-        alert(Payment Initialization Error: );
+        alert(`Payment Initialization Error: ${err.message}`);
       } finally {
         submitBtn.disabled = false;
         submitBtn.innerHTML = originalText;
