@@ -62,8 +62,8 @@ module.exports = async function handler(req, res) {
       status: 'ACTIVE'
     };
 
-    // Forward to Google Apps Script Webhook (if URL configured)
-    const googleSheetWebhook = process.env.GOOGLE_SHEET_WEBHOOK_URL;
+    // Forward to Google Apps Script Webhook
+    const googleSheetWebhook = process.env.GOOGLE_SHEET_WEBHOOK_URL || 'https://script.google.com/macros/s/AKfycbxsxS1i1xrBdL_RQqeGG_fmTwLwvC-UFtRbHeQJtvGfl38BTPApljhlbIe0DjWNmN-C-Q/exec';
     if (googleSheetWebhook) {
       try {
         await fetch(googleSheetWebhook, {

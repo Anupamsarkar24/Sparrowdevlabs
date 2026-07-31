@@ -26,7 +26,7 @@ module.exports = async function handler(req, res) {
     let membershipTier = 'FREE USER';
 
     // Query Google Apps Script Webhook to check if this email has an active subscription
-    const googleSheetWebhook = process.env.GOOGLE_SHEET_WEBHOOK_URL;
+    const googleSheetWebhook = process.env.GOOGLE_SHEET_WEBHOOK_URL || 'https://script.google.com/macros/s/AKfycbxsxS1i1xrBdL_RQqeGG_fmTwLwvC-UFtRbHeQJtvGfl38BTPApljhlbIe0DjWNmN-C-Q/exec';
     if (googleSheetWebhook) {
       try {
         const checkRes = await fetch(`${googleSheetWebhook}?action=check_membership&email=${encodeURIComponent(email)}`);
