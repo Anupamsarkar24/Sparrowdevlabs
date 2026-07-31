@@ -1168,9 +1168,17 @@ document.addEventListener('DOMContentLoaded', () => {
             email: email
           },
           theme: {
-            color: '#7c3aed',
-            backdrop_color: 'rgba(15, 23, 42, 0.88)',
+            color: '#6d28d9',
+            backdrop_color: 'rgba(10, 10, 18, 0.92)',
             hide_topbar: false
+          },
+          config: {
+            display: {
+              sequence: ['block.upi', 'block.card', 'block.netbanking'],
+              preferences: {
+                show_default_blocks: true
+              }
+            }
           },
           handler: async function (response) {
             // Payment Success -> Web Toast
