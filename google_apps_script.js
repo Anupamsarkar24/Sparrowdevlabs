@@ -55,10 +55,10 @@ function sendSubscriptionConfirmationEmail(email, plan, startDate, expiryDate, p
   const dayName = getDayOfWeek(startDate);
   const purchaseDisplay = startDate + (dayName ? ` (${dayName})` : '');
   
-  let priceDisplay = '₹1 / month';
-  if (plan.includes('PRO')) priceDisplay = plan.includes('YEARLY') ? '₹108 / year' : '₹10 / month';
-  if (plan.includes('LEGEND')) priceDisplay = plan.includes('YEARLY') ? '₹315 / year' : '₹29 / month';
-  if (plan.includes('BEGINNER')) priceDisplay = plan.includes('YEARLY') ? '₹11 / year' : '₹1 / month';
+  let priceDisplay = '₹10 / month';
+  if (plan.includes('PRO')) priceDisplay = plan.includes('YEARLY') ? '₹1,080 / year' : '₹120 / month';
+  if (plan.includes('LEGEND')) priceDisplay = plan.includes('YEARLY') ? '₹3,150 / year' : '₹350 / month';
+  if (plan.includes('BEGINNER')) priceDisplay = plan.includes('YEARLY') ? '₹90 / year' : '₹10 / month';
 
   const subject = "🎉 Welcome to SparrowDevLabs - Subscription Confirmed!";
   const htmlBody = `
@@ -282,10 +282,10 @@ function doGet(e) {
         
         if (rowEmail === email && rowStatus === 'ACTIVE') {
           if (!rowExpiry || rowExpiry >= today) {
-            let planPrice = '₹1 / month';
-            if (rowPlan.includes('PRO')) planPrice = rowPlan.includes('YEARLY') ? '₹108 / year' : '₹10 / month';
-            if (rowPlan.includes('LEGEND')) planPrice = rowPlan.includes('YEARLY') ? '₹315 / year' : '₹29 / month';
-            if (rowPlan.includes('BEGINNER')) planPrice = rowPlan.includes('YEARLY') ? '₹11 / year' : '₹1 / month';
+            let planPrice = '₹10 / month';
+            if (rowPlan.includes('PRO')) planPrice = rowPlan.includes('YEARLY') ? '₹1,080 / year' : '₹120 / month';
+            if (rowPlan.includes('LEGEND')) planPrice = rowPlan.includes('YEARLY') ? '₹3,150 / year' : '₹350 / month';
+            if (rowPlan.includes('BEGINNER')) planPrice = rowPlan.includes('YEARLY') ? '₹90 / year' : '₹10 / month';
 
             activeSub = {
               email: rowEmail,
