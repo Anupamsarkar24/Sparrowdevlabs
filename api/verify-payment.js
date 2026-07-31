@@ -33,7 +33,7 @@ module.exports = async function handler(req, res) {
       return res.status(400).json({ error: 'Missing required payment verification fields' });
     }
 
-    const key_secret = process.env.RAZORPAY_KEY_SECRET || 'nuDuDjliQKO2rheq4J0UOUV4';
+    const key_secret = process.env.RAZORPAY_KEY_SECRET || 'q42Ct46fa0Lrs2G64Mv5MKZy';
 
     // Verify HMAC SHA256 Signature: HMAC-SHA256(order_id + "|" + payment_id, KEY_SECRET)
     const generated_signature = crypto
