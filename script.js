@@ -834,7 +834,7 @@ function initHeroMask() {
   const overlay = document.querySelector('.hero-image-overlay');
   if (!hero || !overlay) return;
   const vid = hero.querySelector('video');
-  if(vid) { vid.play().catch(e=>console.log(e)); }
+  if (vid) { vid.play().catch(e => console.log(e)); }
   
   const resetMask = "radial-gradient(circle at -9999px -9999px, transparent 0%, transparent 150px, black 300px)";
   overlay.style.webkitMaskImage = resetMask;
@@ -855,11 +855,8 @@ function initHeroMask() {
   });
 }
 
-
-
-
 /* ============================================================
-   Telegram Contact Form Integration
+   Telegram Contact Form Integration & Membership Lookup
    ============================================================ */
 function initContactForm() {
   const form = document.getElementById('contact-form');
@@ -879,26 +876,43 @@ function initContactForm() {
       return;
     }
 
-    // Telegram Bot Setup
-    const BOT_TOKEN = '8673149889:AAH6Md9MPqmz6UigMpcRuVxb480vDKgZ9kI';
-    const CHAT_ID = '7833318325'; // IMPORTANT: Add your Chat ID here!
-
-    const telegramMessage = `
-<b>📬 New Contact Request</b>
-
-<b>Category:</b> ${category}
-<b>Email:</b> ${email}
-
-<b>Message:</b>
-<i>${message}</i>
-    `.trim();
-
     const originalText = submitBtn.innerText;
     submitBtn.innerText = 'SENDING...';
     submitBtn.style.opacity = '0.7';
     submitBtn.disabled = true;
 
+    // Telegram Bot Setup & Google Sheet Webhook
+    const BOT_TOKEN = '8673149889:AAH6Md9MPqmz6UigMpcRuVxb480vDKgZ9kI';
+    const CHAT_ID = '7833318325';
+    const sheetUrl = 'https://script.google.com/macros/s/AKfycbxsxS1i1xrBdL_RQqeGG_fmTwLwvC-UFtRbHeQJtvGfl38BTPApljhlbIe0DjWNmN-C-Q/exec';
+
     try {
+      let membershipPlan = 'FREE USER';
+
+      // Step 1: Query Google Sheet Database for active subscription matching this Gmail
+      try {
+        const checkRes = await fetch(`${sheetUrl}?action=check_membership&email=${encodeURIComponent(email)}`);
+        const checkData = await checkRes.json();
+        if (checkData && checkData.plan && checkData.plan !== 'NONE') {
+          membershipPlan = checkData.plan.toUpperCase();
+        }
+      } catch (checkErr) {
+        console.warn('Membership lookup notice:', checkErr.message);
+      }
+
+      // Step 2: Format rich Telegram alert with Category, Email, Membership Plan, and Message
+      const telegramMessage = `
+<b>📬 NEW CONTACT MESSAGE</b>
+
+<b>📧 Email:</b> ${email}
+<b>⭐ Membership Plan:</b> <code>[${membershipPlan}]</code>
+<b>📌 Category:</b> ${category}
+
+<b>💬 Message:</b>
+<i>${message}</i>
+      `.trim();
+
+      // Step 3: Send alert to Telegram Bot
       const response = await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -911,11 +925,10 @@ function initContactForm() {
 
       const data = await response.json();
       if (data.ok) {
-        showToast('Message sent successfully!', 'success');
+        showToast(`Message sent! (Membership: ${membershipPlan})`, 'success');
         form.reset();
       } else {
         showToast('Error sending message. Please try again.', 'error');
-        console.error(data);
       }
     } catch (error) {
       console.error('Error:', error);
@@ -927,8 +940,6 @@ function initContactForm() {
     }
   });
 }
-
-
 
 /* ============================================================
    Toast UI Helper

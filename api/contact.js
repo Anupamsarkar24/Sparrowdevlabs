@@ -17,10 +17,17 @@ module.exports = async function handler(req, res) {
   }
 
   try {
-    const { name, email, message } = req.body || {};
+    let body = req.body;
+    if (typeof body === 'string') {
+      try { body = JSON.parse(body); } catch (e) { body = {}; }
+    }
+    body = body || {};
 
-    if (!name || !email || !message) {
-      return res.status(400).json({ error: 'Missing required contact fields (name, email, message)' });
+    const { name, email, category, service, message } = body;
+    const userCategory = category || service || 'General Inquiry';
+
+    if (!email || !message) {
+      return res.status(400).json({ error: 'Missing required fields (email, message)' });
     }
 
     let membershipTier = 'FREE USER';
@@ -31,7 +38,7 @@ module.exports = async function handler(req, res) {
       try {
         const checkRes = await fetch(`${googleSheetWebhook}?action=check_membership&email=${encodeURIComponent(email)}`);
         const checkData = await checkRes.json();
-        if (checkData && checkData.plan) {
+        if (checkData && checkData.plan && checkData.plan !== 'NONE') {
           membershipTier = checkData.plan.toUpperCase();
         }
       } catch (err) {
@@ -40,11 +47,11 @@ module.exports = async function handler(req, res) {
     }
 
     // Send Telegram Notification to owners
-    const telegramToken = process.env.TELEGRAM_BOT_TOKEN;
-    const telegramChatId = process.env.TELEGRAM_CHAT_ID;
+    const telegramToken = process.env.TELEGRAM_BOT_TOKEN || '8673149889:AAH6Md9MPqmz6UigMpcRuVxb480vDKgZ9kI';
+    const telegramChatId = process.env.TELEGRAM_CHAT_ID || '7833318325';
 
     if (telegramToken && telegramChatId) {
-      const tgMsg = `📩 *NEW WEBSITE MESSAGE*\n\n👤 *Name:* ${name}\n📧 *Email:* ${email}\n🎖️ *Membership:* \`[${membershipTier}]\`\n\n💬 *Message:*\n${message}`;
+      const tgMsg = `<b>📬 NEW CONTACT MESSAGE</b>\n\n${name ? `<b>👤 Name:</b> ${name}\n` : ''}<b>📧 Email:</b> ${email}\n<b>⭐ Membership:</b> <code>[${membershipTier}]</code>\n<b>📌 Category:</b> ${userCategory}\n\n<b>💬 Message:</b>\n<i>${message}</i>`;
 
       await fetch(`https://api.telegram.org/bot${telegramToken}/sendMessage`, {
         method: 'POST',
@@ -52,7 +59,7 @@ module.exports = async function handler(req, res) {
         body: JSON.stringify({
           chat_id: telegramChatId,
           text: tgMsg,
-          parse_mode: 'Markdown'
+          parse_mode: 'HTML'
         })
       });
     }
