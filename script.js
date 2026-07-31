@@ -1040,11 +1040,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (cardEl && priceEl && periodEl) {
           if (isYearlyBilling) {
-            priceEl.textContent = cardEl.getAttribute('data-yearly-price');
-            periodEl.textContent = '/mo (billed annually)';
+            priceEl.textContent = cardEl.getAttribute('data-yearly-display');
+            periodEl.textContent = cardEl.getAttribute('data-yearly-period');
           } else {
-            priceEl.textContent = cardEl.getAttribute('data-monthly-price');
-            periodEl.textContent = '/mo';
+            priceEl.textContent = cardEl.getAttribute('data-monthly-display');
+            periodEl.textContent = cardEl.getAttribute('data-monthly-period');
           }
         }
       });
@@ -1064,8 +1064,8 @@ document.addEventListener('DOMContentLoaded', () => {
             ? Number(cardEl.getAttribute('data-yearly-amount')) 
             : Number(cardEl.getAttribute('data-monthly-amount'));
           const price = isYearlyBilling 
-            ? cardEl.getAttribute('data-yearly-price') 
-            : cardEl.getAttribute('data-monthly-price');
+            ? cardEl.getAttribute('data-yearly-display') 
+            : cardEl.getAttribute('data-monthly-display');
 
           openPaymentModal({
             name: name,
@@ -1080,9 +1080,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function openPaymentModal(plan) {
     selectedPlan = plan;
-    document.getElementById('modal-plan-badge').textContent = `${plan.name} PLAN (${plan.isYearly ? 'YEARLY' : 'MONTHLY'})`;
+    document.getElementById('modal-plan-badge').textContent = `${plan.name} PLAN (${plan.isYearly ? 'YEARLY (1 YEAR)' : 'MONTHLY (1 MONTH)'})`;
     document.getElementById('modal-plan-name').textContent = plan.name;
     document.getElementById('modal-plan-price').textContent = plan.price;
+    
+    const modalPeriod = modal.querySelector('.payment-modal-price .period');
+    if (modalPeriod) {
+      modalPeriod.textContent = plan.isYearly ? '/year' : '/month';
+    }
+
     modal.classList.add('active');
     modal.setAttribute('aria-hidden', 'false');
   }
