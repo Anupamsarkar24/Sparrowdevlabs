@@ -4,7 +4,7 @@
    ============================================================ */
 
 /* ============================================================
-   SPARROW DEV LABS - AUTHENTIC LOGO REVEAL ENGINE (3.0s / 60 FPS)
+   SPARROW DEV LABS - AUTHENTIC LOGO REVEAL ENGINE (NO GLARE / 3.0s)
    ============================================================ */
 function initPreloaderLogoCanvas() {
   const canvas = document.getElementById('preloaderLogoCanvas');
@@ -52,12 +52,12 @@ function initPreloaderLogoCanvas() {
   }
 
   const dust = [];
-  for (let i = 0; i < 20; i++) {
+  for (let i = 0; i < 18; i++) {
     dust.push({
       x: Math.random() * W,
       y: Math.random() * H,
       r: Math.random() * 1.2 + 0.4,
-      alpha: Math.random() * 0.15 + 0.05,
+      alpha: Math.random() * 0.12 + 0.04,
       vx: (Math.random() - 0.5) * 0.2,
       vy: (Math.random() - 0.5) * 0.2
     });
@@ -90,7 +90,7 @@ function initPreloaderLogoCanvas() {
 
     let drawPct = 0, fillOpacity = 0;
     let activeParticlePos = getContourPoint(0);
-    let particleAlpha = 0, ringAlpha = 0, ringAngle = 0, breathingGlow = 0, sheenPos = -1;
+    let particleAlpha = 0, ringAlpha = 0, ringAngle = 0, breathingGlow = 0;
 
     if (seconds < 0.3) {
       const t = seconds / 0.3;
@@ -108,22 +108,21 @@ function initPreloaderLogoCanvas() {
     else if (seconds < 1.7) {
       const t = (seconds - 1.3) / 0.4;
       drawPct = 1.0; fillOpacity = 1.0; particleAlpha = 1.0;
-      sheenPos = t;
       const passAngle = (t * Math.PI * 0.4) - Math.PI / 4;
       activeParticlePos = { x: cx + Math.cos(passAngle) * 170, y: cy + Math.sin(passAngle) * 150 };
     }
     else if (seconds < 2.1) {
       const t = (seconds - 1.7) / 0.4;
       drawPct = 1.0; fillOpacity = 1.0; particleAlpha = 1.0;
-      ringAlpha = Math.min(t * 1.6, 0.85);
+      ringAlpha = Math.min(t * 1.6, 0.8);
       ringAngle = (Math.PI * 0.15) + (easeInOutCubic(t) * Math.PI * 1.65);
       activeParticlePos = { x: cx + Math.cos(ringAngle) * 175, y: cy + Math.sin(ringAngle) * 155 };
     }
     else if (seconds < 2.5) {
       const t = (seconds - 2.1) / 0.4;
       drawPct = 1.0; fillOpacity = 1.0; particleAlpha = 1.0;
-      ringAlpha = 0.85 * (1.0 - t * 0.5);
-      breathingGlow = Math.sin(t * Math.PI) * 0.35;
+      ringAlpha = 0.8 * (1.0 - t * 0.5);
+      breathingGlow = Math.sin(t * Math.PI) * 0.25;
       ringAngle = (Math.PI * 1.8) + (t * Math.PI * 0.4);
       activeParticlePos = { x: cx + Math.cos(ringAngle) * 175, y: cy + Math.sin(ringAngle) * 155 };
     }
@@ -144,8 +143,8 @@ function initPreloaderLogoCanvas() {
     if (logoLoaded && fillOpacity > 0.01) {
       ctx.save();
       ctx.globalAlpha = fillOpacity;
-      ctx.shadowColor = 'rgba(56, 189, 248, ' + (0.3 + breathingGlow * 0.3) + ')';
-      ctx.shadowBlur = 20 + breathingGlow * 12;
+      ctx.shadowColor = 'rgba(56, 189, 248, ' + (0.2 + breathingGlow * 0.2) + ')';
+      ctx.shadowBlur = 15 + breathingGlow * 8;
 
       if (drawPct < 0.99) {
         const clipRadius = drawPct * (imgW * 1.4);
@@ -155,18 +154,6 @@ function initPreloaderLogoCanvas() {
       }
 
       ctx.drawImage(logoImg, imgX, imgY, imgW, imgH);
-
-      if (sheenPos > 0 && sheenPos < 1) {
-        const sx = imgX - 100 + sheenPos * (imgW + 200);
-        const sheenGrad = ctx.createLinearGradient(sx - 30, imgY, sx + 30, imgY + imgH);
-        sheenGrad.addColorStop(0, 'rgba(255,255,255,0)');
-        sheenGrad.addColorStop(0.5, 'rgba(255,255,255,0.4)');
-        sheenGrad.addColorStop(1, 'rgba(255,255,255,0)');
-        ctx.globalCompositeOperation = 'source-atop';
-        ctx.fillStyle = sheenGrad;
-        ctx.fillRect(imgX, imgY, imgW, imgH);
-        ctx.globalCompositeOperation = 'source-over';
-      }
       ctx.restore();
     }
 
@@ -174,8 +161,8 @@ function initPreloaderLogoCanvas() {
       ctx.save();
       ctx.globalAlpha = ringAlpha;
       ctx.beginPath(); ctx.ellipse(cx, cy, 175, 155, -0.08, 0, Math.PI * 2);
-      ctx.strokeStyle = 'rgba(56, 189, 248, ' + (ringAlpha * 0.55) + ')';
-      ctx.lineWidth = 1.6; ctx.shadowColor = '#38bdf8'; ctx.shadowBlur = 14; ctx.stroke();
+      ctx.strokeStyle = 'rgba(56, 189, 248, ' + (ringAlpha * 0.5) + ')';
+      ctx.lineWidth = 1.5; ctx.shadowColor = '#38bdf8'; ctx.shadowBlur = 12; ctx.stroke();
       ctx.restore();
     }
 
@@ -188,13 +175,13 @@ function initPreloaderLogoCanvas() {
 
   function drawEnergyOrb(context, x, y, alpha) {
     context.save(); context.globalAlpha = alpha;
-    const glowGrad = context.createRadialGradient(x, y, 0, x, y, 26);
-    glowGrad.addColorStop(0, '#38bdf8'); glowGrad.addColorStop(0.4, 'rgba(56, 189, 248, 0.4)'); glowGrad.addColorStop(1, 'rgba(56, 189, 248, 0)');
-    context.fillStyle = glowGrad; context.beginPath(); context.arc(x, y, 26, 0, Math.PI * 2); context.fill();
+    const glowGrad = context.createRadialGradient(x, y, 0, x, y, 24);
+    glowGrad.addColorStop(0, '#38bdf8'); glowGrad.addColorStop(0.4, 'rgba(56, 189, 248, 0.35)'); glowGrad.addColorStop(1, 'rgba(56, 189, 248, 0)');
+    context.fillStyle = glowGrad; context.beginPath(); context.arc(x, y, 24, 0, Math.PI * 2); context.fill();
 
-    const coreGrad = context.createRadialGradient(x, y, 0, x, y, 6.5);
+    const coreGrad = context.createRadialGradient(x, y, 0, x, y, 6);
     coreGrad.addColorStop(0, '#FFFFFF'); coreGrad.addColorStop(0.6, '#93c5fd'); coreGrad.addColorStop(1, '#38bdf8');
-    context.fillStyle = coreGrad; context.beginPath(); context.arc(x, y, 6.5, 0, Math.PI * 2); context.fill();
+    context.fillStyle = coreGrad; context.beginPath(); context.arc(x, y, 6, 0, Math.PI * 2); context.fill();
     context.restore();
   }
 

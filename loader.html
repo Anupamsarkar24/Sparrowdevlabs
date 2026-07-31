@@ -6,9 +6,9 @@
   <title>Sparrow Dev Labs - Premium Logo Reveal</title>
   <style>
     /* ============================================================
-       SPARROW DEV LABS - LUXURY LOGO REVEAL (CLEAN & ELEGANT)
+       SPARROW DEV LABS - LUXURY LOGO REVEAL (NO GLARE)
        Background: #050505
-       Pure logo.png image reveal with clean energy orb & orbit ring
+       Clean logo.png image reveal with clean energy orb & orbit ring
        ============================================================ */
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400&display=swap');
 
@@ -79,7 +79,7 @@
       width: 500px;
       height: 500px;
       border-radius: 50%;
-      background: radial-gradient(circle, rgba(56, 189, 248, 0.05) 0%, rgba(14, 165, 233, 0.015) 45%, transparent 75%);
+      background: radial-gradient(circle, rgba(56, 189, 248, 0.04) 0%, rgba(14, 165, 233, 0.01) 45%, transparent 75%);
       pointer-events: none;
       z-index: 0;
     }
@@ -98,9 +98,8 @@
 
   <script>
     /**
-     * SPARROW DEV LABS - CINEMATIC CLEAN LOGO REVEAL (3.0s / 60 FPS)
-     * Renders exact logo.png source image with clean clip mask reveal & orbit ring.
-     * No overlapping messy strokes.
+     * SPARROW DEV LABS - CINEMATIC CLEAN LOGO REVEAL (NO GLARE / 3.0s / 60 FPS)
+     * Pure logo.png reveal without light glare sweep.
      */
     (function () {
       const canvas = document.getElementById('loaderCanvas');
@@ -123,9 +122,9 @@
       const imgX = cx - imgW / 2;
       const imgY = cy - imgH / 2;
 
-      // Outer Contour Motion Points for Particle Brush (Bottom-left -> Upward -> Head -> Base)
+      // Outer Contour Motion Points for Particle Brush
       const contourPoints = [
-        { x: imgX + 25,  y: imgY + 250 }, // 0: Wing tip (bottom-left)
+        { x: imgX + 25,  y: imgY + 250 }, // 0: Wing tip
         { x: imgX + 80,  y: imgY + 180 }, // 1: Feather wing edge
         { x: imgX + 135, y: imgY + 120 }, // 2: Wing top
         { x: imgX + 175, y: imgY + 120 }, // 3: Neck mid
@@ -151,12 +150,12 @@
 
       // Background Ambient Dust
       const dust = [];
-      for (let i = 0; i < 20; i++) {
+      for (let i = 0; i < 18; i++) {
         dust.push({
           x: Math.random() * W,
           y: Math.random() * H,
           r: Math.random() * 1.2 + 0.4,
-          alpha: Math.random() * 0.15 + 0.05,
+          alpha: Math.random() * 0.12 + 0.04,
           vx: (Math.random() - 0.5) * 0.2,
           vy: (Math.random() - 0.5) * 0.2
         });
@@ -198,7 +197,6 @@
         let ringAlpha = 0;
         let ringAngle = 0;
         let breathingGlow = 0;
-        let sheenPos = -1;
 
         // Stage 01 — Birth (0.0s - 0.3s)
         if (seconds < 0.3) {
@@ -215,13 +213,12 @@
           particleAlpha = 1.0;
           activeParticlePos = getContourPoint(drawPct);
         }
-        // Stage 04 — Logo Completion & Metallic Sheen Pass (1.3s - 1.7s)
+        // Stage 04 — Logo Completion (1.3s - 1.7s) - Clean, No Glare
         else if (seconds < 1.7) {
           const t = (seconds - 1.3) / 0.4;
           drawPct = 1.0;
           fillOpacity = 1.0;
           particleAlpha = 1.0;
-          sheenPos = t;
           const passAngle = (t * Math.PI * 0.4) - Math.PI / 4;
           activeParticlePos = { x: cx + Math.cos(passAngle) * 170, y: cy + Math.sin(passAngle) * 150 };
         }
@@ -229,7 +226,7 @@
         else if (seconds < 2.1) {
           const t = (seconds - 1.7) / 0.4;
           drawPct = 1.0; fillOpacity = 1.0; particleAlpha = 1.0;
-          ringAlpha = Math.min(t * 1.6, 0.85);
+          ringAlpha = Math.min(t * 1.6, 0.8);
           ringAngle = (Math.PI * 0.15) + (easeInOutCubic(t) * Math.PI * 1.65);
           activeParticlePos = { x: cx + Math.cos(ringAngle) * 175, y: cy + Math.sin(ringAngle) * 155 };
         }
@@ -237,8 +234,8 @@
         else if (seconds < 2.5) {
           const t = (seconds - 2.1) / 0.4;
           drawPct = 1.0; fillOpacity = 1.0; particleAlpha = 1.0;
-          ringAlpha = 0.85 * (1.0 - t * 0.5);
-          breathingGlow = Math.sin(t * Math.PI) * 0.35;
+          ringAlpha = 0.8 * (1.0 - t * 0.5);
+          breathingGlow = Math.sin(t * Math.PI) * 0.25;
           ringAngle = (Math.PI * 1.8) + (t * Math.PI * 0.4);
           activeParticlePos = { x: cx + Math.cos(ringAngle) * 175, y: cy + Math.sin(ringAngle) * 155 };
         }
@@ -260,15 +257,15 @@
         }
 
         // ---------------------------------------------------------
-        // RENDER 100% AUTHENTIC LOGO.PNG SOURCE IMAGE
+        // RENDER PURE LOGO.PNG SOURCE IMAGE (NO GLARE / SHEEN)
         // ---------------------------------------------------------
         if (logoLoaded && fillOpacity > 0.01) {
           ctx.save();
           ctx.globalAlpha = fillOpacity;
 
-          // Subtle Blue Outer Ambient Glow
-          ctx.shadowColor = 'rgba(56, 189, 248, ' + (0.3 + breathingGlow * 0.3) + ')';
-          ctx.shadowBlur = 20 + breathingGlow * 12;
+          // Soft Subtle Ambient Glow
+          ctx.shadowColor = 'rgba(56, 189, 248, ' + (0.2 + breathingGlow * 0.2) + ')';
+          ctx.shadowBlur = 15 + breathingGlow * 8;
 
           // Clip Mask Reveal following particle motion
           if (drawPct < 0.99) {
@@ -278,22 +275,8 @@
             ctx.clip();
           }
 
-          // Draw Pure logo.png
+          // Draw Pure logo.png directly
           ctx.drawImage(logoImg, imgX, imgY, imgW, imgH);
-
-          // Metallic Sheen Highlight Sweep (Stage 04)
-          if (sheenPos > 0 && sheenPos < 1) {
-            const sx = imgX - 100 + sheenPos * (imgW + 200);
-            const sheenGrad = ctx.createLinearGradient(sx - 30, imgY, sx + 30, imgY + imgH);
-            sheenGrad.addColorStop(0, 'rgba(255,255,255,0)');
-            sheenGrad.addColorStop(0.5, 'rgba(255,255,255,0.4)');
-            sheenGrad.addColorStop(1, 'rgba(255,255,255,0)');
-
-            ctx.globalCompositeOperation = 'source-atop';
-            ctx.fillStyle = sheenGrad;
-            ctx.fillRect(imgX, imgY, imgW, imgH);
-            ctx.globalCompositeOperation = 'source-over';
-          }
 
           ctx.restore();
         }
@@ -306,10 +289,10 @@
           ctx.globalAlpha = ringAlpha;
           ctx.beginPath();
           ctx.ellipse(cx, cy, 175, 155, -0.08, 0, Math.PI * 2);
-          ctx.strokeStyle = 'rgba(56, 189, 248, ' + (ringAlpha * 0.55) + ')';
-          ctx.lineWidth = 1.6;
+          ctx.strokeStyle = 'rgba(56, 189, 248, ' + (ringAlpha * 0.5) + ')';
+          ctx.lineWidth = 1.5;
           ctx.shadowColor = '#38bdf8';
-          ctx.shadowBlur = 14;
+          ctx.shadowBlur = 12;
           ctx.stroke();
           ctx.restore();
         }
@@ -329,19 +312,19 @@
         context.save();
         context.globalAlpha = alpha;
 
-        const glowGrad = context.createRadialGradient(x, y, 0, x, y, 26);
+        const glowGrad = context.createRadialGradient(x, y, 0, x, y, 24);
         glowGrad.addColorStop(0, '#38bdf8');
-        glowGrad.addColorStop(0.4, 'rgba(56, 189, 248, 0.4)');
+        glowGrad.addColorStop(0.4, 'rgba(56, 189, 248, 0.35)');
         glowGrad.addColorStop(1, 'rgba(56, 189, 248, 0)');
         context.fillStyle = glowGrad;
-        context.beginPath(); context.arc(x, y, 26, 0, Math.PI * 2); context.fill();
+        context.beginPath(); context.arc(x, y, 24, 0, Math.PI * 2); context.fill();
 
-        const coreGrad = context.createRadialGradient(x, y, 0, x, y, 6.5);
+        const coreGrad = context.createRadialGradient(x, y, 0, x, y, 6);
         coreGrad.addColorStop(0, '#FFFFFF');
         coreGrad.addColorStop(0.6, '#93c5fd');
         coreGrad.addColorStop(1, '#38bdf8');
         context.fillStyle = coreGrad;
-        context.beginPath(); context.arc(x, y, 6.5, 0, Math.PI * 2); context.fill();
+        context.beginPath(); context.arc(x, y, 6, 0, Math.PI * 2); context.fill();
 
         context.restore();
       }
