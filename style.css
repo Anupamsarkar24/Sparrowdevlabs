@@ -2879,6 +2879,26 @@ body.loading { overflow: hidden; }
   margin-top: -4px;
 }
 
+.yearly-bonus-tag {
+  font-family: var(--font-secondary);
+  font-size: 10.5px;
+  font-weight: 700;
+  color: #059669;
+  background: rgba(16, 185, 129, 0.12);
+  border: 1px solid rgba(16, 185, 129, 0.25);
+  padding: 4px 8px;
+  border-radius: 6px;
+  margin-top: 2px;
+  text-align: center;
+  line-height: 1.3;
+}
+
+.plan-featured .yearly-bonus-tag {
+  color: #6ee7b7;
+  background: rgba(255, 255, 255, 0.15);
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
 /* ---- Divider ---- */
 .plan-divider {
   border: none;

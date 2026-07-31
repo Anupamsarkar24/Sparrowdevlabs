@@ -1254,12 +1254,15 @@ document.addEventListener('DOMContentLoaded', () => {
         const periodEl = document.getElementById(cardInfo.periodId);
 
         if (cardEl && priceEl && periodEl) {
+          const bonusTag = cardEl.querySelector('.yearly-bonus-tag');
           if (isYearlyBilling) {
             priceEl.textContent = cardEl.getAttribute('data-yearly-display');
             periodEl.textContent = cardEl.getAttribute('data-yearly-period');
+            if (bonusTag) bonusTag.style.display = 'block';
           } else {
             priceEl.textContent = cardEl.getAttribute('data-monthly-display');
             periodEl.textContent = cardEl.getAttribute('data-monthly-period');
+            if (bonusTag) bonusTag.style.display = 'none';
           }
         }
       });
