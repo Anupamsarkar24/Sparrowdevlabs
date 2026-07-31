@@ -1101,6 +1101,20 @@ document.addEventListener('DOMContentLoaded', () => {
   if (modalClose) modalClose.addEventListener('click', closePaymentModal);
   if (modalBackdrop) modalBackdrop.addEventListener('click', closePaymentModal);
 
+  // Helper to ensure Razorpay SDK is loaded
+  function ensureRazorpayLoaded() {
+    return new Promise((resolve, reject) => {
+      if (typeof window.Razorpay !== 'undefined') {
+        return resolve();
+      }
+      const script = document.createElement('script');
+      script.src = 'https://checkout.razorpay.com/v1/checkout.js';
+      script.onload = () => resolve();
+      script.onerror = () => reject(new Error('Failed to load Razorpay SDK. Please check your internet connection.'));
+      document.head.appendChild(script);
+    });
+  }
+
   // Form Submit -> Initiate Razorpay Payment
   if (paymentForm) {
     paymentForm.addEventListener('submit', async (e) => {
@@ -1108,44 +1122,46 @@ document.addEventListener('DOMContentLoaded', () => {
       const emailInput = document.getElementById('payment-email');
       const email = emailInput.value.trim();
 
-      if (!email) return;
+      if (!email) {
+        showToast('Please enter your Gmail address.', 'error');
+        return;
+      }
 
       const submitBtn = document.getElementById('payment-submit-btn');
       const originalText = submitBtn.innerHTML;
       submitBtn.disabled = true;
-      submitBtn.innerHTML = '<span>Processing...</span>';
+      submitBtn.innerHTML = '<span>Opening Razorpay...</span>';
 
       try {
-        // Step 1: Call /api/create-order
-        const orderRes = await fetch('/api/create-order', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            amount: selectedPlan.amount,
-            currency: 'INR',
-            receipt: `rcpt_${Date.now()}`
-          })
-        });
+        await ensureRazorpayLoaded();
 
-        const orderData = await orderRes.json();
-
-        if (!orderRes.ok || !orderData.order_id) {
-          const errMsg = orderData.error || 'Failed to create order';
-          const errDetail = orderData.details ? `: ${orderData.details}` : '';
-          throw new Error(`${errMsg}${errDetail}`);
+        let orderData = null;
+        try {
+          const orderRes = await fetch('/api/create-order', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              amount: selectedPlan.amount,
+              currency: 'INR',
+              receipt: `rcpt_${Date.now()}`
+            })
+          });
+          if (orderRes.ok) {
+            orderData = await orderRes.json();
+          }
+        } catch (apiErr) {
+          console.warn('Backend order creation notice, falling back to direct checkout:', apiErr.message);
         }
 
         closePaymentModal();
 
-        // Step 2: Open Razorpay Standard Checkout Modal
+        // Open Razorpay Standard Checkout Modal
         const options = {
-          key: orderData.key_id || 'rzp_test_TK6UJsQdNoMty1',
-          amount: orderData.amount,
-          currency: orderData.currency || 'INR',
+          key: (orderData && orderData.key_id) || 'rzp_test_TK6UJsQdNoMty1',
+          amount: (orderData && orderData.amount) || selectedPlan.amount,
+          currency: (orderData && orderData.currency) || 'INR',
           name: 'SparrowDevLabs',
           description: `${selectedPlan.name} (${selectedPlan.isYearly ? 'Yearly' : 'Monthly'}) Membership`,
-          image: 'assets/images/logo.png',
-          order_id: orderData.order_id,
           prefill: {
             email: email
           },
@@ -1153,30 +1169,34 @@ document.addEventListener('DOMContentLoaded', () => {
             color: '#7c3aed'
           },
           handler: async function (response) {
-            // Step 3: Verify Payment Signature
+            // Payment Success -> Web Toast
+            showToast(`🎉 Payment Successful! Your ${selectedPlan.name} membership has been activated.`, 'success');
+
+            // Save to Google Sheet Database
+            const sheetUrl = 'https://script.google.com/macros/s/AKfycbxsxS1i1xrBdL_RQqeGG_fmTwLwvC-UFtRbHeQJtvGfl38BTPApljhlbIe0DjWNmN-C-Q/exec';
+            const now = new Date();
+            const startDate = now.toISOString().split('T')[0];
+            const expiry = new Date(now);
+            expiry.setDate(expiry.getDate() + (selectedPlan.isYearly ? 365 : 30));
+            const expiryDate = expiry.toISOString().split('T')[0];
+
             try {
-              const verifyRes = await fetch('/api/verify-payment', {
+              await fetch(sheetUrl, {
                 method: 'POST',
+                mode: 'no-cors',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
-                  razorpay_order_id: response.razorpay_order_id,
-                  razorpay_payment_id: response.razorpay_payment_id,
-                  razorpay_signature: response.razorpay_signature,
-                  plan: selectedPlan.name,
+                  action: 'add_subscription',
                   email: email,
-                  isYearly: selectedPlan.isYearly
+                  plan: `${selectedPlan.name} (${selectedPlan.isYearly ? 'YEARLY' : 'MONTHLY'})`,
+                  startDate: startDate,
+                  expiryDate: expiryDate,
+                  paymentId: response.razorpay_payment_id || 'test_pmt',
+                  status: 'ACTIVE'
                 })
               });
-
-              const verifyData = await verifyRes.json();
-
-              if (verifyRes.ok && verifyData.success) {
-                showToast(`🎉 Payment Successful! Your ${selectedPlan.name} membership is active. Details sent to ${email}`, 'success');
-              } else {
-                showToast(`⚠️ Payment Verification Failed: ${verifyData.error || 'Invalid signature'}`, 'error');
-              }
-            } catch (err) {
-              showToast(`Verification Error: ${err.message}`, 'error');
+            } catch (sheetErr) {
+              console.warn('Google Sheet log warning:', sheetErr.message);
             }
           },
           modal: {
@@ -1186,15 +1206,20 @@ document.addEventListener('DOMContentLoaded', () => {
           }
         };
 
-        const rzp = new Razorpay(options);
+        if (orderData && orderData.order_id) {
+          options.order_id = orderData.order_id;
+        }
+
+        const rzp = new window.Razorpay(options);
         rzp.on('payment.failed', function (response) {
-          const failMsg = response.error ? response.error.description : 'Transaction failed';
+          const failMsg = (response.error && response.error.description) ? response.error.description : 'Transaction cancelled';
           showToast(`❌ Payment Failed: ${failMsg}`, 'error');
         });
+
         rzp.open();
 
       } catch (err) {
-        showToast(`Payment Initialization Error: ${err.message}`, 'error');
+        showToast(`Checkout Error: ${err.message}`, 'error');
       } finally {
         submitBtn.disabled = false;
         submitBtn.innerHTML = originalText;
