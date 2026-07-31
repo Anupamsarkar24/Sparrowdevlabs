@@ -1157,7 +1157,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Open Razorpay Standard Checkout Modal
         const options = {
-          key: (orderData && orderData.key_id) || 'rzp_test_TK97Aen9m0TRCm',
+          key: (orderData && orderData.key_id) || 'rzp_test_TK98ktrTGelu02',
           amount: (orderData && orderData.amount) || selectedPlan.amount,
           currency: (orderData && orderData.currency) || 'INR',
           name: 'SparrowDevLabs',
