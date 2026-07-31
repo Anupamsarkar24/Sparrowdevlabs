@@ -4,58 +4,57 @@
    ============================================================ */
 
 /* ============================================================
-   SPARROW DEV LABS - LUXURY LOGO REVEAL ENGINE (3.0s / 60 FPS)
+   SPARROW DEV LABS - MATHEMATICAL LOGO REVEAL ENGINE (1000x1000)
    ============================================================ */
 function initPreloaderLogoCanvas() {
   const canvas = document.getElementById('preloaderLogoCanvas');
   if (!canvas) return;
   const ctx = canvas.getContext('2d');
 
-  const width = canvas.width;   // 680 or 720
-  const height = canvas.height;
-  const cx = width / 2;
-  const cy = height / 2 - 10;
+  const W = canvas.width;  // 1000
+  const H = canvas.height; // 1000
 
-  const scale = 2.3;
-  const ox = cx - 20;
-  const oy = cy - 20;
-
-  const bodySvgD = "M -40,110 L 50,110 C 65,110 75,95 65,75 L 25,-10 C 15,-30 25,-60 45,-75 C 65,-90 60,-115 35,-120 C 10,-125 -25,-105 -35,-80 C -45,-55 -30,-25 -10,0 L 20,45 C 30,60 20,75 5,80 L -35,80 Z";
-  const wingSvgD = "M -110,95 C -60,40 -20,-10 10,-55 C 5,-20 -20,30 -50,65 C -70,85 -95,95 -110,95 Z";
-  const eyeCircle = { x: ox + 32 * scale / 1.5, y: oy - 98 * scale / 1.5, r: 7 * scale / 1.5 };
-
-  const bodyPath = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-  bodyPath.setAttribute('d', bodySvgD);
-  const bodyLen = bodyPath.getTotalLength();
+  const wingOutlineSvg = "M 210,640 C 250,540 330,420 430,340 C 400,430 350,520 330,590 C 300,610 250,630 210,640 Z";
+  const wingFeatherSvg = "M 408,362 C 360,430 310,500 270,550";
+  const bodyOutlineSvg = "M 330,590 C 390,570 435,510 445,450 C 455,390 485,340 495,290 C 490,230 465,190 490,144 C 520,90 580,110 587,160 L 615,151 L 580,188 C 565,240 545,300 525,380 L 510,530 L 618,530 L 584,564 L 460,564 L 450,470 Z";
+  const eyeCenter = { x: 535, y: 152, r: 3.5 };
 
   const wingPath = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-  wingPath.setAttribute('d', wingSvgD);
+  wingPath.setAttribute('d', wingOutlineSvg);
   const wingLen = wingPath.getTotalLength();
 
-  function getBodyPoint(len) {
-    const pt = bodyPath.getPointAtLength(Math.min(Math.max(len, 0), bodyLen));
-    return { x: ox + pt.x * (scale / 1.5), y: oy + pt.y * (scale / 1.5) };
+  const featherPath = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+  featherPath.setAttribute('d', wingFeatherSvg);
+  const featherLen = featherPath.getTotalLength();
+
+  const bodyPath = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+  bodyPath.setAttribute('d', bodyOutlineSvg);
+  const bodyLen = bodyPath.getTotalLength();
+
+  const wingSamples = [];
+  for (let l = 0; l <= wingLen; l += 2) {
+    const pt = wingPath.getPointAtLength(l);
+    wingSamples.push({ x: pt.x, y: pt.y });
   }
 
-  function getWingPoint(len) {
-    const pt = wingPath.getPointAtLength(Math.min(Math.max(len, 0), wingLen));
-    return { x: ox + pt.x * (scale / 1.5), y: oy + pt.y * (scale / 1.5) };
+  const featherSamples = [];
+  for (let l = 0; l <= featherLen; l += 2) {
+    const pt = featherPath.getPointAtLength(l);
+    featherSamples.push({ x: pt.x, y: pt.y });
   }
 
   const bodySamples = [];
-  for (let l = 0; l <= bodyLen; l += 1.5) bodySamples.push(getBodyPoint(l));
-  bodySamples.push(getBodyPoint(bodyLen));
+  for (let l = 0; l <= bodyLen; l += 2) {
+    const pt = bodyPath.getPointAtLength(l);
+    bodySamples.push({ x: pt.x, y: pt.y });
+  }
 
-  const wingSamples = [];
-  for (let l = 0; l <= wingLen; l += 1.5) wingSamples.push(getWingPoint(l));
-  wingSamples.push(getWingPoint(wingLen));
-
-  const particles = [];
-  for (let i = 0; i < 18; i++) {
-    particles.push({
-      x: Math.random() * width,
-      y: Math.random() * height,
-      r: Math.random() * 1.2 + 0.4,
+  const dust = [];
+  for (let i = 0; i < 24; i++) {
+    dust.push({
+      x: Math.random() * W,
+      y: Math.random() * H,
+      r: Math.random() * 1.5 + 0.5,
       alpha: Math.random() * 0.15 + 0.05,
       vx: (Math.random() - 0.5) * 0.2,
       vy: (Math.random() - 0.5) * 0.2
@@ -64,7 +63,6 @@ function initPreloaderLogoCanvas() {
 
   function easeInOutCubic(t) { return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2; }
   function easeOutCubic(t) { return 1 - Math.pow(1 - t, 3); }
-  function easeInCubic(t) { return t * t * t; }
 
   const DURATION = 3000;
   let startTime = null;
@@ -76,80 +74,80 @@ function initPreloaderLogoCanvas() {
     const seconds = elapsed / 1000.0;
 
     ctx.fillStyle = '#050505';
-    ctx.fillRect(0, 0, width, height);
+    ctx.fillRect(0, 0, W, H);
 
     ctx.fillStyle = '#ffffff';
-    particles.forEach(p => {
+    dust.forEach(p => {
       p.x += p.vx; p.y += p.vy;
-      if (p.x < 0) p.x = width; if (p.x > width) p.x = 0;
-      if (p.y < 0) p.y = height; if (p.y > height) p.y = 0;
+      if (p.x < 0) p.x = W; if (p.x > W) p.x = 0;
+      if (p.y < 0) p.y = H; if (p.y > H) p.y = 0;
       ctx.globalAlpha = p.alpha;
       ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2); ctx.fill();
     });
     ctx.globalAlpha = 1.0;
 
-    let bodyDrawPct = 0, wingDrawPct = 0, fillOpacity = 0;
-    let particlePos = { x: bodySamples[0].x, y: bodySamples[0].y };
-    let particleAlpha = 0, ringAlpha = 0, ringOrbitAngle = 0, breathingGlow = 0, isReversing = false;
+    let wingDrawPct = 0, bodyDrawPct = 0, featherDrawPct = 0, fillOpacity = 0;
+    let activeParticlePos = wingSamples[0];
+    let particleAlpha = 0, ringAlpha = 0, ringAngle = 0, breathingGlow = 0, isReversing = false;
 
-    // Stage 01 — Birth (0.0s - 0.3s)
     if (seconds < 0.3) {
       const t = seconds / 0.3;
       particleAlpha = easeOutCubic(t);
-      const pIdx = Math.floor(easeInCubic(t) * (bodySamples.length * 0.08));
-      particlePos = bodySamples[Math.min(pIdx, bodySamples.length - 1)];
+      activeParticlePos = wingSamples[0];
     }
-    // Stage 02 & 03 — Drawing & Shape Formation (0.3s - 1.2s)
-    else if (seconds < 1.2) {
-      const t = (seconds - 0.3) / 0.9;
+    else if (seconds < 0.7) {
+      const t = (seconds - 0.3) / 0.4;
       const easedT = easeInOutCubic(t);
-      bodyDrawPct = Math.min(easedT * 1.08, 1.0);
-      wingDrawPct = Math.max(0, (easedT - 0.2) / 0.8);
-      fillOpacity = Math.max(0, (t - 0.45) / 0.45);
+      wingDrawPct = easedT;
+      featherDrawPct = Math.max(0, (t - 0.2) / 0.8);
       particleAlpha = 1.0;
-      const pIdx = Math.floor(bodyDrawPct * (bodySamples.length - 1));
-      particlePos = bodySamples[Math.min(pIdx, bodySamples.length - 1)];
+      const idx = Math.floor(wingDrawPct * (wingSamples.length - 1));
+      activeParticlePos = wingSamples[idx];
     }
-    // Stage 04 — Completion & Comet Pass (1.2s - 1.7s)
-    else if (seconds < 1.7) {
-      const t = (seconds - 1.2) / 0.5;
-      bodyDrawPct = 1.0; wingDrawPct = 1.0; fillOpacity = 1.0; particleAlpha = 1.0;
+    else if (seconds < 1.4) {
+      const t = (seconds - 0.7) / 0.7;
+      const easedT = easeInOutCubic(t);
+      wingDrawPct = 1.0; featherDrawPct = 1.0; bodyDrawPct = easedT;
+      fillOpacity = Math.max(0, (t - 0.4) / 0.6);
+      particleAlpha = 1.0;
+      const idx = Math.floor(bodyDrawPct * (bodySamples.length - 1));
+      activeParticlePos = bodySamples[idx];
+    }
+    else if (seconds < 1.8) {
+      const t = (seconds - 1.4) / 0.4;
+      wingDrawPct = 1.0; featherDrawPct = 1.0; bodyDrawPct = 1.0; fillOpacity = 1.0; particleAlpha = 1.0;
       const passAngle = (t * Math.PI * 0.4) - Math.PI / 4;
-      particlePos = { x: cx + Math.cos(passAngle) * 160, y: cy + Math.sin(passAngle) * 140 };
+      activeParticlePos = { x: 500 + Math.cos(passAngle) * 220, y: 360 + Math.sin(passAngle) * 200 };
     }
-    // Stage 05 — Orbit (1.7s - 2.1s)
-    else if (seconds < 2.1) {
-      const t = (seconds - 1.7) / 0.4;
-      bodyDrawPct = 1.0; wingDrawPct = 1.0; fillOpacity = 1.0; particleAlpha = 1.0;
-      ringAlpha = Math.min(t * 1.5, 0.8);
-      ringOrbitAngle = (Math.PI * 0.15) + (easeInOutCubic(t) * Math.PI * 1.6);
-      particlePos = { x: cx + Math.cos(ringOrbitAngle) * 165, y: cy + Math.sin(ringOrbitAngle) * 145 };
+    else if (seconds < 2.2) {
+      const t = (seconds - 1.8) / 0.4;
+      wingDrawPct = 1.0; featherDrawPct = 1.0; bodyDrawPct = 1.0; fillOpacity = 1.0; particleAlpha = 1.0;
+      ringAlpha = Math.min(t * 1.6, 0.85);
+      ringAngle = (Math.PI * 0.15) + (easeInOutCubic(t) * Math.PI * 1.65);
+      activeParticlePos = { x: 500 + Math.cos(ringAngle) * 230, y: 360 + Math.sin(ringAngle) * 210 };
     }
-    // Stage 06 — Energy Ring & Breathing Glow (2.1s - 2.5s)
     else if (seconds < 2.5) {
-      const t = (seconds - 2.1) / 0.4;
-      bodyDrawPct = 1.0; wingDrawPct = 1.0; fillOpacity = 1.0; particleAlpha = 1.0;
-      ringAlpha = 0.8 * (1.0 - t * 0.5);
+      const t = (seconds - 2.2) / 0.3;
+      wingDrawPct = 1.0; featherDrawPct = 1.0; bodyDrawPct = 1.0; fillOpacity = 1.0; particleAlpha = 1.0;
+      ringAlpha = 0.85 * (1.0 - t * 0.5);
       breathingGlow = Math.sin(t * Math.PI) * 0.35;
-      ringOrbitAngle = (Math.PI * 1.75) + (t * Math.PI * 0.5);
-      particlePos = { x: cx + Math.cos(ringOrbitAngle) * 165, y: cy + Math.sin(ringOrbitAngle) * 145 };
+      ringAngle = (Math.PI * 1.8) + (t * Math.PI * 0.4);
+      activeParticlePos = { x: 500 + Math.cos(ringAngle) * 230, y: 360 + Math.sin(ringAngle) * 210 };
     }
-    // Stage 07 — Reverse Collection Dissolve (2.5s - 2.8s)
     else if (seconds < 2.8) {
       const t = (seconds - 2.5) / 0.3;
       const unDraw = 1.0 - easeInOutCubic(t);
-      bodyDrawPct = unDraw; wingDrawPct = unDraw; fillOpacity = unDraw;
+      wingDrawPct = unDraw; featherDrawPct = unDraw; bodyDrawPct = unDraw; fillOpacity = unDraw;
       particleAlpha = Math.max(0.4, 1.0 - t * 0.4);
       ringAlpha = (1.0 - t) * 0.3;
       isReversing = true;
-      const pIdx = Math.floor(unDraw * (bodySamples.length - 1));
-      particlePos = bodySamples[Math.max(0, Math.min(pIdx, bodySamples.length - 1))];
+      const idx = Math.floor(unDraw * (wingSamples.length - 1));
+      activeParticlePos = wingSamples[Math.max(0, idx)];
     }
-    // Stage 08 — Seamless Loop Return (2.8s - 3.0s)
     else {
       const t = (seconds - 2.8) / 0.2;
       particleAlpha = 1.0 - t;
-      particlePos = bodySamples[0];
+      activeParticlePos = wingSamples[0];
     }
 
     if (fillOpacity > 0.01) {
@@ -163,15 +161,17 @@ function initPreloaderLogoCanvas() {
       }
       ctx.closePath();
 
-      const bodyGrad = ctx.createLinearGradient(cx - 100, cy - 100, cx + 100, cy + 100);
-      bodyGrad.addColorStop(0, '#ffffff'); bodyGrad.addColorStop(0.65, '#e2e8f0'); bodyGrad.addColorStop(1, '#cbd5e1');
+      const bodyGrad = ctx.createLinearGradient(500, 100, 500, 600);
+      bodyGrad.addColorStop(0, '#FFFFFF');
+      bodyGrad.addColorStop(0.3, '#F6F6F6');
+      bodyGrad.addColorStop(1, '#A7A7A7');
       ctx.fillStyle = bodyGrad;
-      ctx.shadowColor = 'rgba(255, 255, 255, ' + (0.15 + breathingGlow) + ')';
-      ctx.shadowBlur = 22;
+      ctx.shadowColor = 'rgba(76, 174, 255, ' + (0.18 + breathingGlow) + ')';
+      ctx.shadowBlur = 18;
       ctx.fill();
 
       ctx.beginPath();
-      ctx.arc(eyeCircle.x, eyeCircle.y, eyeCircle.r, 0, Math.PI * 2);
+      ctx.arc(eyeCenter.x, eyeCenter.y, eyeCenter.r, 0, Math.PI * 2);
       ctx.fillStyle = '#050505'; ctx.fill();
 
       ctx.beginPath();
@@ -181,55 +181,67 @@ function initPreloaderLogoCanvas() {
       }
       ctx.closePath();
 
-      const wingGrad = ctx.createLinearGradient(cx - 120, cy + 80, cx - 20, cy - 40);
-      wingGrad.addColorStop(0, '#0284c7'); wingGrad.addColorStop(0.5, '#38bdf8'); wingGrad.addColorStop(1, '#93c5fd');
+      const wingGrad = ctx.createLinearGradient(430, 340, 210, 640);
+      wingGrad.addColorStop(0, '#DFF3FF');
+      wingGrad.addColorStop(0.5, '#77C8FF');
+      wingGrad.addColorStop(1, '#2B8EFF');
       ctx.fillStyle = wingGrad;
-      ctx.shadowColor = 'rgba(56, 189, 248, ' + (0.3 + breathingGlow) + ')';
-      ctx.shadowBlur = 28;
+      ctx.shadowColor = 'rgba(76, 174, 255, ' + (0.25 + breathingGlow) + ')';
+      ctx.shadowBlur = 24;
       ctx.fill();
+
+      if (featherDrawPct > 0.01) {
+        const fCount = Math.floor(featherSamples.length * featherDrawPct);
+        if (fCount > 1) {
+          ctx.beginPath();
+          for (let i = 0; i < fCount; i++) {
+            if (i === 0) ctx.moveTo(featherSamples[i].x, featherSamples[i].y);
+            else ctx.lineTo(featherSamples[i].x, featherSamples[i].y);
+          }
+          ctx.strokeStyle = '#050505'; ctx.lineWidth = 14; ctx.lineCap = 'round'; ctx.stroke();
+        }
+      }
       ctx.restore();
     }
 
     ctx.save();
-    if (bodyDrawPct > 0.01) {
-      const drawCount = Math.floor(bodySamples.length * bodyDrawPct);
-      if (drawCount > 1) {
-        ctx.beginPath();
-        for (let i = 0; i < drawCount; i++) {
-          if (i === 0) ctx.moveTo(bodySamples[i].x, bodySamples[i].y);
-          else ctx.lineTo(bodySamples[i].x, bodySamples[i].y);
-        }
-        ctx.strokeStyle = '#ffffff'; ctx.lineWidth = isReversing ? 2.0 : 3.0;
-        ctx.lineCap = 'round'; ctx.lineJoin = 'round';
-        ctx.shadowColor = 'rgba(56, 189, 248, 0.8)'; ctx.shadowBlur = 14; ctx.stroke();
-      }
-    }
-
     if (wingDrawPct > 0.01) {
-      const drawCount = Math.floor(wingSamples.length * wingDrawPct);
-      if (drawCount > 1) {
+      const wCount = Math.floor(wingSamples.length * wingDrawPct);
+      if (wCount > 1) {
         ctx.beginPath();
-        for (let i = 0; i < drawCount; i++) {
+        for (let i = 0; i < wCount; i++) {
           if (i === 0) ctx.moveTo(wingSamples[i].x, wingSamples[i].y);
           else ctx.lineTo(wingSamples[i].x, wingSamples[i].y);
         }
-        ctx.strokeStyle = '#38bdf8'; ctx.lineWidth = isReversing ? 1.8 : 2.5;
-        ctx.lineCap = 'round'; ctx.lineJoin = 'round';
-        ctx.shadowColor = 'rgba(56, 189, 248, 1.0)'; ctx.shadowBlur = 16; ctx.stroke();
+        ctx.strokeStyle = '#77C8FF'; ctx.lineWidth = isReversing ? 2.5 : 4.0;
+        ctx.lineCap = 'round'; ctx.shadowColor = '#4CAEFF'; ctx.shadowBlur = 18; ctx.stroke();
+      }
+    }
+
+    if (bodyDrawPct > 0.01) {
+      const bCount = Math.floor(bodySamples.length * bodyDrawPct);
+      if (bCount > 1) {
+        ctx.beginPath();
+        for (let i = 0; i < bCount; i++) {
+          if (i === 0) ctx.moveTo(bodySamples[i].x, bodySamples[i].y);
+          else ctx.lineTo(bodySamples[i].x, bodySamples[i].y);
+        }
+        ctx.strokeStyle = '#FFFFFF'; ctx.lineWidth = isReversing ? 2.5 : 4.0;
+        ctx.lineCap = 'round'; ctx.shadowColor = 'rgba(76, 174, 255, 0.8)'; ctx.shadowBlur = 18; ctx.stroke();
       }
     }
 
     if (ringAlpha > 0.01) {
       ctx.save();
       ctx.globalAlpha = ringAlpha;
-      ctx.beginPath(); ctx.ellipse(cx, cy, 165, 145, -0.1, 0, Math.PI * 2);
-      ctx.strokeStyle = 'rgba(56, 189, 248, ' + (ringAlpha * 0.5) + ')'; ctx.lineWidth = 1.5;
-      ctx.shadowColor = '#38bdf8'; ctx.shadowBlur = 16; ctx.stroke();
+      ctx.beginPath(); ctx.ellipse(500, 360, 230, 210, -0.08, 0, Math.PI * 2);
+      ctx.strokeStyle = 'rgba(76, 174, 255, ' + (ringAlpha * 0.6) + ')';
+      ctx.lineWidth = 2.0; ctx.shadowColor = '#4CAEFF'; ctx.shadowBlur = 18; ctx.stroke();
       ctx.restore();
     }
 
     if (particleAlpha > 0.01) {
-      drawEnergyParticle(ctx, particlePos.x, particlePos.y, particleAlpha);
+      drawEnergyParticle(ctx, activeParticlePos.x, activeParticlePos.y, particleAlpha);
     }
 
     ctx.restore();
@@ -238,13 +250,13 @@ function initPreloaderLogoCanvas() {
 
   function drawEnergyParticle(context, x, y, alpha) {
     context.save(); context.globalAlpha = alpha;
-    const outerGrad = context.createRadialGradient(x, y, 0, x, y, 26);
-    outerGrad.addColorStop(0, 'rgba(56, 189, 248, 0.9)'); outerGrad.addColorStop(0.35, 'rgba(56, 189, 248, 0.4)'); outerGrad.addColorStop(1, 'rgba(56, 189, 248, 0)');
-    context.fillStyle = outerGrad; context.beginPath(); context.arc(x, y, 26, 0, Math.PI * 2); context.fill();
+    const glowGrad = context.createRadialGradient(x, y, 0, x, y, 32);
+    glowGrad.addColorStop(0, '#4CAEFF'); glowGrad.addColorStop(0.4, 'rgba(76, 174, 255, 0.4)'); glowGrad.addColorStop(1, 'rgba(76, 174, 255, 0)');
+    context.fillStyle = glowGrad; context.beginPath(); context.arc(x, y, 32, 0, Math.PI * 2); context.fill();
 
-    const coreGrad = context.createRadialGradient(x, y, 0, x, y, 7);
-    coreGrad.addColorStop(0, '#ffffff'); coreGrad.addColorStop(0.6, '#93c5fd'); coreGrad.addColorStop(1, '#38bdf8');
-    context.fillStyle = coreGrad; context.beginPath(); context.arc(x, y, 7, 0, Math.PI * 2); context.fill();
+    const coreGrad = context.createRadialGradient(x, y, 0, x, y, 8);
+    coreGrad.addColorStop(0, '#FFFFFF'); coreGrad.addColorStop(0.6, '#DFF3FF'); coreGrad.addColorStop(1, '#4CAEFF');
+    context.fillStyle = coreGrad; context.beginPath(); context.arc(x, y, 8, 0, Math.PI * 2); context.fill();
     context.restore();
   }
 
