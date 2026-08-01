@@ -2889,43 +2889,44 @@ body.loading { overflow: hidden; }
 /* ---- Base card — torn paper look ---- */
 .plan-card {
   position: relative;
-  background: transparent;
+  background: #f5f0ea;
   border-radius: 0;
-  padding: 28px 22px 22px;
+  padding: 32px 24px 24px;
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 12px;
   border: none;
-  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.4s ease;
+  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), filter 0.4s ease;
   overflow: visible;
   color: #1a1a2e;
+  filter: drop-shadow(0 12px 30px rgba(0, 0, 0, 0.5));
 }
 
-/* Torn paper background — only THIS gets the filter */
 .plan-card-paper {
-  position: absolute;
-  inset: -6px;
-  pointer-events: none;
-  z-index: 0;
-  background: #f5f0ea;
-  filter: url(#torn-paper-light);
-  box-shadow: 0 8px 40px rgba(0,0,0,0.5);
-}
-
-.plan-card > * {
-  position: relative;
-  z-index: 2;
+  display: none;
 }
 
 .plan-card:hover {
-  transform: translateY(-6px) rotate(-0.5deg);
-  box-shadow: 0 20px 56px rgba(0,0,0,0.65);
+  filter: drop-shadow(0 20px 45px rgba(0, 0, 0, 0.65));
 }
 
-/* Slight random rotations for authenticity */
-.plan-beginner { transform: rotate(-1.5deg); }
+/* Slight random rotations & custom torn edges for authenticity */
+.plan-beginner {
+  transform: rotate(-1.5deg);
+  clip-path: polygon(
+    0% 12px, 3% 2px, 7% 11px, 11% 3px, 15% 10px, 19% 1px, 24% 9px, 28% 3px, 33% 11px, 37% 2px, 42% 10px, 46% 3px, 51% 11px, 55% 1px, 60% 10px, 64% 3px, 69% 11px, 73% 2px, 78% 10px, 82% 1px, 87% 9px, 91% 3px, 96% 10px, 100% 2px,
+    100% calc(100% - 10px), 96% calc(100% - 2px), 92% calc(100% - 11px), 88% calc(100% - 3px), 83% calc(100% - 10px), 79% calc(100% - 1px), 74% calc(100% - 9px), 70% calc(100% - 3px), 65% calc(100% - 11px), 61% calc(100% - 2px), 56% calc(100% - 10px), 52% calc(100% - 1px), 47% calc(100% - 9px), 43% calc(100% - 3px), 38% calc(100% - 11px), 34% calc(100% - 2px), 29% calc(100% - 10px), 25% calc(100% - 1px), 20% calc(100% - 9px), 16% calc(100% - 3px), 11% calc(100% - 11px), 7% calc(100% - 2px), 3% calc(100% - 9px), 0% 100%
+  );
+}
 .plan-beginner:hover { transform: translateY(-6px) rotate(-2deg); }
-.plan-legend { transform: rotate(1.2deg); }
+
+.plan-legend {
+  transform: rotate(1.2deg);
+  clip-path: polygon(
+    0% 2px, 5% 10px, 9% 1px, 14% 9px, 18% 3px, 23% 11px, 27% 2px, 32% 10px, 36% 1px, 41% 9px, 45% 3px, 50% 12px, 54% 2px, 59% 10px, 63% 1px, 68% 11px, 72% 3px, 77% 9px, 81% 2px, 86% 12px, 90% 1px, 95% 10px, 100% 3px,
+    100% calc(100% - 2px), 95% calc(100% - 10px), 91% calc(100% - 1px), 86% calc(100% - 9px), 82% calc(100% - 3px), 77% calc(100% - 11px), 73% calc(100% - 2px), 68% calc(100% - 10px), 64% calc(100% - 1px), 59% calc(100% - 9px), 55% calc(100% - 3px), 50% calc(100% - 12px), 46% calc(100% - 2px), 41% calc(100% - 10px), 37% calc(100% - 1px), 32% calc(100% - 9px), 28% calc(100% - 3px), 23% calc(100% - 11px), 19% calc(100% - 2px), 14% calc(100% - 10px), 10% calc(100% - 1px), 5% calc(100% - 9px), 0% calc(100% - 3px)
+  );
+}
 .plan-legend:hover { transform: translateY(-6px) rotate(0.5deg); }
 
 /* ---- Top row: icon+name LEFT, tagline RIGHT ---- */
@@ -3144,25 +3145,22 @@ body.loading { overflow: hidden; }
 
 /* ---- PRO featured (purple dark torn paper) ---- */
 .plan-featured {
-  background: transparent;
+  background: linear-gradient(165deg, #2b1764, #4c1d95, #350e6f);
   border: none;
   overflow: visible;
   transform: scale(1.06);
   z-index: 3;
+  color: #ffffff;
+  filter: drop-shadow(0 16px 45px rgba(124, 58, 237, 0.45));
+  clip-path: polygon(
+    0% 4px, 4% 12px, 8% 2px, 13% 11px, 17% 3px, 22% 10px, 26% 1px, 31% 9px, 35% 3px, 40% 12px, 44% 2px, 49% 10px, 53% 1px, 58% 11px, 62% 3px, 67% 9px, 71% 2px, 76% 12px, 80% 1px, 85% 10px, 89% 3px, 94% 11px, 100% 4px,
+    100% calc(100% - 4px), 96% 100%, 91% calc(100% - 9px), 87% calc(100% - 2px), 82% calc(100% - 11px), 78% calc(100% - 1px), 73% calc(100% - 10px), 69% calc(100% - 3px), 64% calc(100% - 12px), 60% calc(100% - 2px), 55% calc(100% - 9px), 51% calc(100% - 1px), 46% calc(100% - 11px), 42% calc(100% - 3px), 37% calc(100% - 10px), 33% calc(100% - 2px), 28% calc(100% - 12px), 24% calc(100% - 1px), 19% calc(100% - 9px), 15% calc(100% - 3px), 10% calc(100% - 11px), 6% calc(100% - 2px), 0% calc(100% - 8px)
+  );
 }
 
 .plan-featured:hover {
   transform: scale(1.08) translateY(-6px);
-}
-
-.plan-featured .plan-card-paper {
-  background: linear-gradient(165deg, #2d1b69, #4c1d95, #3b0f7a);
-  filter: url(#torn-paper-dark);
-  box-shadow: 0 12px 48px rgba(124,58,237,0.35), 0 0 80px rgba(124,58,237,0.08);
-}
-
-.plan-featured:hover .plan-card-paper {
-  box-shadow: 0 20px 60px rgba(124,58,237,0.45), 0 0 100px rgba(124,58,237,0.12);
+  filter: drop-shadow(0 24px 60px rgba(124, 58, 237, 0.6));
 }
 
 .plan-featured .plan-name     { color: rgba(255,255,255,0.9); }
