@@ -2890,7 +2890,7 @@ body.loading { overflow: hidden; }
 .plan-card {
   position: relative;
   background: #f5f0ea;
-  border-radius: 4px;
+  border-radius: 0;
   padding: 28px 22px 22px;
   display: flex;
   flex-direction: column;
@@ -2898,52 +2898,33 @@ body.loading { overflow: hidden; }
   border: none;
   box-shadow: 0 8px 40px rgba(0,0,0,0.5);
   transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.4s ease;
-  overflow: hidden;
+  overflow: visible;
   color: #1a1a2e;
+  filter: url(#torn-paper-light);
 }
 
-/* Torn paper edge effect */
+/* Torn paper inner texture/grain */
 .plan-card-paper {
   position: absolute;
   inset: 0;
   pointer-events: none;
   z-index: 0;
-}
-
-.plan-card-paper::before,
-.plan-card-paper::after {
-  content: '';
-  position: absolute;
-  left: -2px;
-  right: -2px;
-  height: 12px;
-  z-index: 1;
-}
-
-.plan-card-paper::before {
-  top: -2px;
-  background: linear-gradient(90deg, 
-    transparent 0%, #f5f0ea 4%, transparent 8%, #f5f0ea 12%, 
-    transparent 15%, #f5f0ea 20%, transparent 25%, #f5f0ea 28%,
-    transparent 33%, #f5f0ea 36%, transparent 40%, #f5f0ea 44%,
-    transparent 48%, #f5f0ea 52%, transparent 56%, #f5f0ea 60%,
-    transparent 65%, #f5f0ea 68%, transparent 72%, #f5f0ea 76%,
-    transparent 80%, #f5f0ea 84%, transparent 88%, #f5f0ea 92%,
-    transparent 96%, #f5f0ea 100%);
-  filter: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg'><filter id='r'><feTurbulence baseFrequency='0.15' numOctaves='2'/><feDisplacementMap in='SourceGraphic' scale='4'/></filter></svg>#r");
-}
-
-.plan-card-paper::after {
-  bottom: -2px;
-  background: linear-gradient(90deg, 
-    transparent 2%, #f5f0ea 6%, transparent 10%, #f5f0ea 14%, 
-    transparent 18%, #f5f0ea 22%, transparent 26%, #f5f0ea 30%,
-    transparent 34%, #f5f0ea 38%, transparent 42%, #f5f0ea 46%,
-    transparent 50%, #f5f0ea 54%, transparent 58%, #f5f0ea 62%,
-    transparent 66%, #f5f0ea 70%, transparent 74%, #f5f0ea 78%,
-    transparent 82%, #f5f0ea 86%, transparent 90%, #f5f0ea 94%,
-    transparent 98%, #f5f0ea 100%);
-  filter: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg'><filter id='r'><feTurbulence baseFrequency='0.15' numOctaves='2'/><feDisplacementMap in='SourceGraphic' scale='4'/></filter></svg>#r");
+  background: 
+    repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 2px,
+      rgba(0,0,0,0.01) 2px,
+      rgba(0,0,0,0.01) 4px
+    ),
+    repeating-linear-gradient(
+      90deg,
+      transparent,
+      transparent 3px,
+      rgba(0,0,0,0.008) 3px,
+      rgba(0,0,0,0.008) 6px
+    );
+  opacity: 0.6;
 }
 
 .plan-card > * {
@@ -2953,14 +2934,14 @@ body.loading { overflow: hidden; }
 
 .plan-card:hover {
   transform: translateY(-6px) rotate(-0.5deg);
-  box-shadow: 0 16px 48px rgba(0,0,0,0.6);
+  box-shadow: 0 20px 56px rgba(0,0,0,0.65);
 }
 
 /* Slight random rotations for authenticity */
-.plan-beginner { transform: rotate(-1deg); }
-.plan-beginner:hover { transform: translateY(-6px) rotate(-1.5deg); }
-.plan-legend { transform: rotate(0.8deg); }
-.plan-legend:hover { transform: translateY(-6px) rotate(0.3deg); }
+.plan-beginner { transform: rotate(-1.5deg); }
+.plan-beginner:hover { transform: translateY(-6px) rotate(-2deg); }
+.plan-legend { transform: rotate(1.2deg); }
+.plan-legend:hover { transform: translateY(-6px) rotate(0.5deg); }
 
 /* ---- Top row: icon+name LEFT, tagline RIGHT ---- */
 .plan-top {
@@ -3182,35 +3163,33 @@ body.loading { overflow: hidden; }
   border: none;
   box-shadow: 0 12px 48px rgba(124,58,237,0.35), 0 0 80px rgba(124,58,237,0.08);
   overflow: visible;
-  transform: scale(1.04);
+  transform: scale(1.06);
   z-index: 3;
+  filter: url(#torn-paper-dark);
 }
 
 .plan-featured:hover {
-  transform: scale(1.06) translateY(-6px);
+  transform: scale(1.08) translateY(-6px);
   box-shadow: 0 20px 60px rgba(124,58,237,0.45), 0 0 100px rgba(124,58,237,0.12);
 }
 
-.plan-featured .plan-card-paper::before {
-  background: linear-gradient(90deg, 
-    transparent 0%, #2d1b69 4%, transparent 8%, #2d1b69 12%, 
-    transparent 15%, #2d1b69 20%, transparent 25%, #2d1b69 28%,
-    transparent 33%, #2d1b69 36%, transparent 40%, #2d1b69 44%,
-    transparent 48%, #2d1b69 52%, transparent 56%, #2d1b69 60%,
-    transparent 65%, #2d1b69 68%, transparent 72%, #2d1b69 76%,
-    transparent 80%, #2d1b69 84%, transparent 88%, #2d1b69 92%,
-    transparent 96%, #2d1b69 100%);
-}
-
-.plan-featured .plan-card-paper::after {
-  background: linear-gradient(90deg, 
-    transparent 2%, #3b0f7a 6%, transparent 10%, #3b0f7a 14%, 
-    transparent 18%, #3b0f7a 22%, transparent 26%, #3b0f7a 30%,
-    transparent 34%, #3b0f7a 38%, transparent 42%, #3b0f7a 46%,
-    transparent 50%, #3b0f7a 54%, transparent 58%, #3b0f7a 62%,
-    transparent 66%, #3b0f7a 70%, transparent 74%, #3b0f7a 78%,
-    transparent 82%, #3b0f7a 86%, transparent 90%, #3b0f7a 94%,
-    transparent 98%, #3b0f7a 100%);
+.plan-featured .plan-card-paper {
+  background: 
+    repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 2px,
+      rgba(255,255,255,0.015) 2px,
+      rgba(255,255,255,0.015) 4px
+    ),
+    repeating-linear-gradient(
+      90deg,
+      transparent,
+      transparent 3px,
+      rgba(255,255,255,0.01) 3px,
+      rgba(255,255,255,0.01) 6px
+    );
+  opacity: 0.5;
 }
 
 .plan-featured .plan-name     { color: rgba(255,255,255,0.9); }
