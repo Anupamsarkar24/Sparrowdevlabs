@@ -396,12 +396,12 @@ function initHeroCanvas() {
         return f;
       }
 
-      // Dynamic Evolving Feathery Cirrus Streaks (moving, morphing, creating new shapes)
+      // Dynamic Evolving Feathery Cirrus Streaks (visibly moving, morphing, and reforming)
       float cirrusDynamic(vec2 p, float time) {
-        // Multi-directional gentle wind & evolving currents
-        vec2 wind1 = vec2(time * 0.032, time * 0.007);
-        vec2 wind2 = vec2(time * 0.018, -time * 0.005);
-        vec2 morph = vec2(sin(time * 0.04) * 0.4, cos(time * 0.035) * 0.4);
+        // Clear, visibly drifting wind currents and flowing atmospheric motion
+        vec2 wind1 = vec2(time * 0.16, time * 0.035);
+        vec2 wind2 = vec2(time * 0.10, -time * 0.025);
+        vec2 morph = vec2(sin(time * 0.18) * 0.45, cos(time * 0.14) * 0.45);
         
         // Stretched coordinates along wind shear
         vec2 sp = vec2(p.x * 0.85 - p.y * 0.25, p.x * 0.25 + p.y * 1.6);
@@ -412,37 +412,37 @@ function initHeroCanvas() {
           fbm(sp + vec2(4.2, 1.7) + wind2 - morph)
         );
         
-        // 2nd Level Evolving Domain Warp (creates reforming, shape-shifting swirls)
+        // 2nd Level Evolving Domain Warp (creates continuously reforming, swirling shapes)
         vec2 r = vec2(
           fbm(sp + 2.4 * q + vec2(1.8, 8.5) + wind1 * 1.3),
-          fbm(sp + 2.4 * q + vec2(7.3, 3.1) + wind2 * 0.9)
+          fbm(sp + 2.4 * q + vec2(7.3, 3.1) + wind2 * 1.1)
         );
         
         float base = fbm(sp + 2.0 * r + morph * 0.5);
         
         // Dynamic filaments & flowing fibers
-        float filaments = sin(sp.x * 16.0 + sp.y * 6.0 + q.x * 8.0 + time * 0.05) * 0.5 + 0.5;
+        float filaments = sin(sp.x * 16.0 + sp.y * 6.0 + q.x * 8.0 + time * 0.25) * 0.5 + 0.5;
         return mix(base, base * filaments, 0.32);
       }
 
-      // Dynamic Fleecy Cloudlet Ripples (dissolving & reforming cloudlets)
+      // Dynamic Fleecy Cloudlet Ripples (visibly dissolving & reforming cloudlets)
       float ripplesDynamic(vec2 p, float time) {
-        vec2 wind = vec2(time * 0.042, time * 0.010);
+        vec2 wind = vec2(time * 0.20, time * 0.045);
         vec2 rp = vec2(p.x * 1.6 - p.y * 0.5, p.x * 0.4 + p.y * 2.2) + wind;
         
-        float q = fbm(rp + vec2(sin(time * 0.05), cos(time * 0.04)) * 0.3);
-        float rippleWave = sin(rp.x * 22.0 + rp.y * 9.0 + q * 7.0 + time * 0.07) * 0.5 + 0.5;
+        float q = fbm(rp + vec2(sin(time * 0.22), cos(time * 0.18)) * 0.35);
+        float rippleWave = sin(rp.x * 22.0 + rp.y * 9.0 + q * 7.0 + time * 0.30) * 0.5 + 0.5;
         
         // Reforming mask that makes cloud patches form, grow, and dissipate
-        float mask = fbm(p * 0.9 + vec2(3.1, 5.7) + wind * 0.6 + vec2(time * 0.015, -time * 0.01));
+        float mask = fbm(p * 0.9 + vec2(3.1, 5.7) + wind * 0.6 + vec2(time * 0.07, -time * 0.04));
         
-        return q * rippleWave * smoothstep(0.32, 0.72, mask);
+        return q * rippleWave * smoothstep(0.30, 0.70, mask);
       }
 
       // Dynamic Wispy Ambient Haze
       float hazeDynamic(vec2 p, float time) {
-        vec2 wind = vec2(time * 0.022, time * 0.004);
-        return fbm(vec2(p.x * 0.6, p.y * 1.2) + wind + vec2(cos(time * 0.03) * 0.2, sin(time * 0.025) * 0.2));
+        vec2 wind = vec2(time * 0.09, time * 0.02);
+        return fbm(vec2(p.x * 0.6, p.y * 1.2) + wind + vec2(cos(time * 0.12) * 0.25, sin(time * 0.10) * 0.25));
       }
 
       void main() {
@@ -606,7 +606,7 @@ function initHeroCanvas() {
       animId = null;
       return;
     }
-    const t = ((now || performance.now()) - startTime) * 0.0005;
+    const t = ((now || performance.now()) - startTime) * 0.001;
 
     // Vibrant Royal Blue Sky gradient
     const skyGrad = ctx.createLinearGradient(0, 0, 0, H);
@@ -616,11 +616,11 @@ function initHeroCanvas() {
     ctx.fillStyle = skyGrad;
     ctx.fillRect(0, 0, W, H);
 
-    // Procedural wispy cirrus bands
+    // Procedural wispy cirrus bands moving visibly
     ctx.save();
     for (let i = 0; i < 9; i++) {
-      const cy = (H * 0.15 + i * (H * 0.09) + Math.sin(i + t * 0.5) * 15);
-      const cx = ((t * 25 + i * 180) % (W + 600)) - 300;
+      const cy = (H * 0.12 + i * (H * 0.09) + Math.sin(i + t * 1.2) * 20);
+      const cx = ((t * 90 + i * 180) % (W + 700)) - 350;
       const w = 450 + (i % 3) * 120;
       const h = 25 + (i % 2) * 20;
 
