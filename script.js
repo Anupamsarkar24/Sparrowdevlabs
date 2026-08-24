@@ -293,143 +293,321 @@ function initNavbar() {
 }
 
 /* ============================================================
-   2. HERO CANVAS — Smoke / floating particles
+   2. HERO SKY CANVAS — Procedural Fractal Noise Sky & Clouds
    ============================================================ */
 function initHeroCanvas() {
-  const canvas = document.getElementById('heroCanvas');
+  const canvas = document.getElementById('heroSkyCanvas') || document.getElementById('heroCanvas');
   if (!canvas) return;
 
-  const ctx = canvas.getContext('2d');
-  let W, H, particles, smokeParticles, animId;
+  const heroSection = document.getElementById('hero');
+  let gl = null;
+  try {
+    gl = canvas.getContext('webgl', { alpha: false, antialias: false, powerPreference: 'high-performance' }) ||
+         canvas.getContext('experimental-webgl', { alpha: false, antialias: false });
+  } catch (e) {
+    gl = null;
+  }
 
-  // --- RESIZE ---
-  const resize = () => {
+  let animId = null;
+  let isVisible = true;
+  let mouseX = 0.5, mouseY = 0.5;
+  let targetMouseX = 0.5, targetMouseY = 0.5;
+  let startTime = performance.now();
+  let lastElapsed = 0;
+
+  // Handle Mouse movement on hero for subtle parallax
+  if (heroSection) {
+    heroSection.addEventListener('mousemove', (e) => {
+      const rect = heroSection.getBoundingClientRect();
+      targetMouseX = (e.clientX - rect.left) / rect.width;
+      targetMouseY = (e.clientY - rect.top) / rect.height;
+    }, { passive: true });
+
+    heroSection.addEventListener('mouseleave', () => {
+      targetMouseX = 0.5;
+      targetMouseY = 0.5;
+    }, { passive: true });
+  }
+
+  // IntersectionObserver to pause loop when not on screen
+  if ('IntersectionObserver' in window && heroSection) {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        isVisible = entry.isIntersecting;
+        if (isVisible && !animId) {
+          startTime = performance.now() - (lastElapsed * 1000);
+          if (gl) {
+            renderGL();
+          } else {
+            render2D();
+          }
+        }
+      });
+    }, { threshold: 0.05 });
+    observer.observe(heroSection);
+  }
+
+  // --- 1. WEBGL SHADER IMPLEMENTATION ---
+  if (gl) {
+    const vsSource = `
+      attribute vec2 a_position;
+      void main() {
+        gl_Position = vec4(a_position, 0.0, 1.0);
+      }
+    `;
+
+    const fsSource = `
+      precision highp float;
+      uniform vec2 u_resolution;
+      uniform float u_time;
+      uniform vec2 u_mouse;
+
+      // 2D Hash
+      float hash(vec2 p) {
+        p = fract(p * vec2(234.34, 435.345));
+        p += dot(p, p + 34.23);
+        return fract(p.x * p.y);
+      }
+
+      // 2D Value Noise
+      float noise(vec2 p) {
+        vec2 i = floor(p);
+        vec2 f = fract(p);
+        vec2 u = f * f * (3.0 - 2.0 * f);
+        
+        float a = hash(i);
+        float b = hash(i + vec2(1.0, 0.0));
+        float c = hash(i + vec2(0.0, 1.0));
+        float d = hash(i + vec2(1.0, 1.0));
+        
+        return mix(mix(a, b, u.x), mix(c, d, u.x), u.y);
+      }
+
+      // 6-Octave Fractal Brownian Motion (fBm)
+      float fbm(vec2 p) {
+        float f = 0.0;
+        float amp = 0.5;
+        mat2 rot = mat2(0.80, 0.60, -0.60, 0.80);
+        for (int i = 0; i < 6; i++) {
+          f += amp * noise(p);
+          p = rot * p * 2.02 + vec2(1.3, 1.7);
+          amp *= 0.5;
+        }
+        return f;
+      }
+
+      // Domain-warped cloud noise
+      float cloudMap(vec2 p, float time) {
+        vec2 wind = vec2(time * 0.03, time * 0.008);
+        vec2 q = vec2(fbm(p + wind), fbm(p + vec2(5.2, 1.3) + wind * 0.8));
+        
+        vec2 r = vec2(fbm(p + 3.5 * q + vec2(1.7, 9.2) + wind * 1.2),
+                      fbm(p + 3.5 * q + vec2(8.3, 2.8) + wind * 0.9));
+                      
+        return fbm(p + 3.0 * r);
+      }
+
+      // High wispy cirrus layer
+      float cirrusMap(vec2 p, float time) {
+        vec2 wind = vec2(time * 0.05, time * 0.012);
+        return fbm(p * 2.2 + wind);
+      }
+
+      void main() {
+        vec2 st = gl_FragCoord.xy / u_resolution.xy;
+        vec2 uv = (gl_FragCoord.xy - 0.5 * u_resolution.xy) / min(u_resolution.x, u_resolution.y);
+        
+        // Parallax mouse tilt
+        vec2 mouseOffset = (u_mouse - 0.5) * 0.08;
+        uv += mouseOffset;
+        
+        float time = u_time;
+        
+        // Atmospheric Sky Gradient
+        vec3 skyZenith = vec3(0.08, 0.18, 0.38);
+        vec3 skyMid = vec3(0.24, 0.46, 0.72);
+        vec3 skyHorizon = vec3(0.70, 0.82, 0.92);
+        
+        float skyT = clamp(st.y, 0.0, 1.0);
+        vec3 sky = mix(skyHorizon, skyMid, smoothstep(0.0, 0.55, skyT));
+        sky = mix(sky, skyZenith, smoothstep(0.45, 1.0, skyT));
+        
+        // Sun / Atmospheric glow
+        vec2 sunPos = vec2(0.35, 0.40);
+        float sunDist = length(uv - sunPos);
+        float sunGlow = exp(-sunDist * 2.2) * 0.45;
+        vec3 sunColor = vec3(1.0, 0.96, 0.88);
+        sky += sunColor * sunGlow;
+        
+        // Cloud mapping
+        vec2 cloudUV = uv * 2.2;
+        cloudUV.y *= 1.3;
+        
+        // 1. Cirrus wisps
+        float cirrus = cirrusMap(cloudUV * 1.8, time);
+        float cirrusDensity = smoothstep(0.45, 0.85, cirrus) * 0.30;
+        sky = mix(sky, vec3(0.96, 0.98, 1.0), cirrusDensity);
+        
+        // 2. Main Cumulus Clouds
+        float cloud = cloudMap(cloudUV, time);
+        float cloudThreshold = 0.38;
+        float cloudDensity = smoothstep(cloudThreshold, cloudThreshold + 0.35, cloud);
+        
+        // Cloud directional shading
+        vec2 lightDir = normalize(sunPos - uv);
+        float cloudLightSample = cloudMap(cloudUV + lightDir * 0.06, time);
+        float lightDiff = clamp((cloud - cloudLightSample) * 2.5 + 0.5, 0.0, 1.0);
+        
+        vec3 cloudHighlight = vec3(1.0, 0.99, 0.96) + sunColor * sunGlow * 0.5;
+        vec3 cloudShadow = mix(vec3(0.55, 0.65, 0.78), skyMid * 0.85, 0.4);
+        vec3 cloudColor = mix(cloudShadow, cloudHighlight, smoothstep(0.1, 0.9, lightDiff));
+        
+        float horizonFade = smoothstep(-0.6, 0.2, uv.y + 0.3);
+        cloudDensity *= horizonFade;
+        
+        vec3 finalColor = mix(sky, cloudColor, cloudDensity * 0.92);
+        
+        // Subtle film grain noise
+        float grain = (hash(gl_FragCoord.xy + fract(time * 0.1)) - 0.5) * 0.035;
+        finalColor += grain;
+        
+        gl_FragColor = vec4(finalColor, 1.0);
+      }
+    `;
+
+    function createShader(gl, type, source) {
+      const shader = gl.createShader(type);
+      gl.shaderSource(shader, source);
+      gl.compileShader(shader);
+      if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
+        console.warn('Shader compile error:', gl.getShaderInfoLog(shader));
+        gl.deleteShader(shader);
+        return null;
+      }
+      return shader;
+    }
+
+    const vs = createShader(gl, gl.VERTEX_SHADER, vsSource);
+    const fs = createShader(gl, gl.FRAGMENT_SHADER, fsSource);
+    if (!vs || !fs) return;
+
+    const program = gl.createProgram();
+    gl.attachShader(program, vs);
+    gl.attachShader(program, fs);
+    gl.linkProgram(program);
+    if (!gl.getProgramParameter(program, gl.LINK_STATUS)) {
+      console.warn('Program link error:', gl.getProgramInfoLog(program));
+      return;
+    }
+
+    const positionBuffer = gl.createBuffer();
+    gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
+    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([
+      -1, -1,
+       1, -1,
+      -1,  1,
+      -1,  1,
+       1, -1,
+       1,  1,
+    ]), gl.STATIC_DRAW);
+
+    const aPositionLocation = gl.getAttribLocation(program, 'a_position');
+    const uResolutionLocation = gl.getUniformLocation(program, 'u_resolution');
+    const uTimeLocation = gl.getUniformLocation(program, 'u_time');
+    const uMouseLocation = gl.getUniformLocation(program, 'u_mouse');
+
+    const resize = () => {
+      const dpr = Math.min(window.devicePixelRatio || 1, 1.5);
+      const displayWidth = Math.floor(canvas.offsetWidth * dpr);
+      const displayHeight = Math.floor(canvas.offsetHeight * dpr);
+      if (canvas.width !== displayWidth || canvas.height !== displayHeight) {
+        canvas.width = displayWidth;
+        canvas.height = displayHeight;
+        gl.viewport(0, 0, gl.drawingBufferWidth, gl.drawingBufferHeight);
+      }
+    };
+    resize();
+    window.addEventListener('resize', resize, { passive: true });
+
+    function renderGL(now) {
+      if (!isVisible) {
+        animId = null;
+        return;
+      }
+
+      const elapsed = ((now || performance.now()) - startTime) * 0.001;
+      lastElapsed = elapsed;
+
+      // Smooth mouse lerp
+      mouseX += (targetMouseX - mouseX) * 0.05;
+      mouseY += (targetMouseY - mouseY) * 0.05;
+
+      gl.useProgram(program);
+      gl.enableVertexAttribArray(aPositionLocation);
+      gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
+      gl.vertexAttribPointer(aPositionLocation, 2, gl.FLOAT, false, 0, 0);
+
+      gl.uniform2f(uResolutionLocation, canvas.width, canvas.height);
+      gl.uniform1f(uTimeLocation, elapsed);
+      gl.uniform2f(uMouseLocation, mouseX, mouseY);
+
+      gl.drawArrays(gl.TRIANGLES, 0, 6);
+      animId = requestAnimationFrame(renderGL);
+    }
+    renderGL();
+
+    return () => {
+      if (animId) cancelAnimationFrame(animId);
+    };
+  }
+
+  // --- 2. 2D CANVAS FALLBACK ---
+  const ctx = canvas.getContext('2d');
+  if (!ctx) return;
+
+  let W, H;
+  const resize2D = () => {
     W = canvas.width = canvas.offsetWidth;
     H = canvas.height = canvas.offsetHeight;
   };
-  resize();
-  window.addEventListener('resize', resize, { passive: true });
+  resize2D();
+  window.addEventListener('resize', resize2D, { passive: true });
 
-  // --- PARTICLES (floating dust) ---
-  class DustParticle {
-    constructor() { this.reset(); }
-    reset() {
-      this.x = Math.random() * W;
-      this.y = H + 10;
-      this.vx = (Math.random() - 0.5) * 0.4;
-      this.vy = -(Math.random() * 0.3 + 0.1);
-      this.r = Math.random() * 1.5 + 0.3;
-      this.opacity = 0;
-      this.maxOpacity = Math.random() * 0.35 + 0.05;
-      this.life = 0;
-      this.maxLife = Math.random() * 400 + 200;
+  function render2D(now) {
+    if (!isVisible) {
+      animId = null;
+      return;
     }
-    update() {
-      this.x += this.vx;
-      this.y += this.vy;
-      this.life++;
-      const t = this.life / this.maxLife;
-      if (t < 0.15) {
-        this.opacity = (t / 0.15) * this.maxOpacity;
-      } else if (t > 0.7) {
-        this.opacity = ((1 - t) / 0.3) * this.maxOpacity;
-      } else {
-        this.opacity = this.maxOpacity;
-      }
-      if (this.life >= this.maxLife || this.y < -10) this.reset();
-    }
-    draw() {
-      ctx.save();
-      ctx.globalAlpha = this.opacity;
-      ctx.fillStyle = '#FFFFFF';
-      ctx.beginPath();
-      ctx.arc(this.x, this.y, this.r, 0, Math.PI * 2);
-      ctx.fill();
-      ctx.restore();
-    }
-  }
+    const t = ((now || performance.now()) - startTime) * 0.0005;
 
-  // --- SMOKE PUFFS ---
-  class SmokeParticle {
-    constructor() { this.reset(); }
-    reset() {
-      // concentrate smoke near center-bottom (where the hands meet)
-      this.x = W * 0.5 + (Math.random() - 0.5) * W * 0.35;
-      this.y = H * 0.55 + (Math.random() - 0.5) * H * 0.2;
-      this.vx = (Math.random() - 0.5) * 0.5;
-      this.vy = -(Math.random() * 0.2 + 0.05);
-      this.r = Math.random() * 80 + 40;
-      this.opacity = 0;
-      this.maxOpacity = Math.random() * 0.06 + 0.01;
-      this.life = 0;
-      this.maxLife = Math.random() * 600 + 300;
-      this.rotation = Math.random() * Math.PI * 2;
-      this.rotSpeed = (Math.random() - 0.5) * 0.002;
-      this.scaleX = Math.random() * 0.5 + 0.8;
-    }
-    update() {
-      this.x += this.vx;
-      this.y += this.vy;
-      this.r += 0.08;
-      this.rotation += this.rotSpeed;
-      this.life++;
-      const t = this.life / this.maxLife;
-      if (t < 0.2) {
-        this.opacity = (t / 0.2) * this.maxOpacity;
-      } else if (t > 0.6) {
-        this.opacity = ((1 - t) / 0.4) * this.maxOpacity;
-      } else {
-        this.opacity = this.maxOpacity;
-      }
-      if (this.life >= this.maxLife) this.reset();
-    }
-    draw() {
-      ctx.save();
-      ctx.globalAlpha = this.opacity;
-      ctx.translate(this.x, this.y);
-      ctx.rotate(this.rotation);
-      ctx.scale(this.scaleX, 1);
-      const grad = ctx.createRadialGradient(0, 0, 0, 0, 0, this.r);
-      grad.addColorStop(0, 'rgba(180,180,180,0.8)');
-      grad.addColorStop(0.5, 'rgba(120,120,120,0.3)');
-      grad.addColorStop(1, 'rgba(60,60,60,0)');
+    // Sky gradient
+    const skyGrad = ctx.createLinearGradient(0, 0, 0, H);
+    skyGrad.addColorStop(0, '#152e52');
+    skyGrad.addColorStop(0.5, '#3a6ea5');
+    skyGrad.addColorStop(1, '#c8dff5');
+    ctx.fillStyle = skyGrad;
+    ctx.fillRect(0, 0, W, H);
+
+    // Procedural soft cloud puffs
+    for (let i = 0; i < 7; i++) {
+      const cx = ((i * 240 + t * 40) % (W + 400)) - 200;
+      const cy = H * 0.3 + Math.sin(i * 1.5 + t) * 40;
+      const rad = 140 + Math.cos(i) * 40;
+
+      const grad = ctx.createRadialGradient(cx, cy, 10, cx, cy, rad);
+      grad.addColorStop(0, 'rgba(255, 255, 255, 0.45)');
+      grad.addColorStop(0.6, 'rgba(230, 240, 255, 0.2)');
+      grad.addColorStop(1, 'rgba(255, 255, 255, 0)');
+
       ctx.fillStyle = grad;
       ctx.beginPath();
-      ctx.arc(0, 0, this.r, 0, Math.PI * 2);
+      ctx.arc(cx, cy, rad, 0, Math.PI * 2);
       ctx.fill();
-      ctx.restore();
     }
+
+    animId = requestAnimationFrame(render2D);
   }
-
-  // Init particle pools
-  particles = Array.from({ length: 80 }, () => {
-    const p = new DustParticle();
-    p.y = Math.random() * H;
-    p.life = Math.floor(Math.random() * p.maxLife);
-    return p;
-  });
-
-  smokeParticles = Array.from({ length: 14 }, () => {
-    const p = new SmokeParticle();
-    p.life = Math.floor(Math.random() * p.maxLife);
-    return p;
-  });
-
-  // --- RENDER LOOP ---
-  const render = () => {
-    ctx.clearRect(0, 0, W, H);
-
-    // Draw smoke
-    smokeParticles.forEach(p => { p.update(); p.draw(); });
-    // Draw dust
-    particles.forEach(p => { p.update(); p.draw(); });
-
-    animId = requestAnimationFrame(render);
-  };
-  render();
-
-  // Cleanup
-  return () => { cancelAnimationFrame(animId); };
+  render2D();
 }
 
 /* ============================================================

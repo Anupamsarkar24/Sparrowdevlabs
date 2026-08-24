@@ -231,7 +231,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Manrope:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="style.css?v=63" />
+  <link rel="stylesheet" href="style.css?v=64" />
 </head>
 <body class="loading">
 
@@ -277,8 +277,7 @@
 
   <!-- ===================== HERO ===================== -->
   <section class="hero" id="hero" aria-label="Hero section">
-<video autoplay loop muted playsinline class="hero-video" src="assets/images/hero.mp4" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: 1;"></video>
-    <img src="./assets/images/hero.png" alt="" class="hero-image-overlay" />
+    <canvas id="heroSkyCanvas" class="hero-sky-canvas" aria-label="Procedural sky and cloud simulation"></canvas>
     <!-- Our Project Button -->
     <div style="position: absolute; bottom: 200px; left: 50%; transform: translateX(-50%); z-index: 10;">
       <a href="#work" class="hero-glass-btn">
@@ -1129,7 +1128,7 @@
       </div>
   <!-- Razorpay Checkout SDK -->
   <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
-  <script src="script.js?v=2"></script>
+  <script src="script.js?v=3"></script>
   <!-- Toast Notification Container -->
   <div id="toast-container" class="toast-container"></div>
 
