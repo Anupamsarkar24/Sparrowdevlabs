@@ -362,18 +362,18 @@ function initHeroCanvas() {
       uniform float u_time;
       uniform vec2 u_mouse;
 
-      // 2D Hash
+      // High quality 2D hash
       float hash(vec2 p) {
         p = fract(p * vec2(234.34, 435.345));
         p += dot(p, p + 34.23);
         return fract(p.x * p.y);
       }
 
-      // 2D Value Noise with smooth Hermite interpolation
+      // Smooth 2D value noise with quintic interpolation
       float noise(vec2 p) {
         vec2 i = floor(p);
         vec2 f = fract(p);
-        vec2 u = f * f * (3.0 - 2.0 * f);
+        vec2 u = f * f * f * (f * (f * 6.0 - 15.0) + 10.0);
         
         float a = hash(i);
         float b = hash(i + vec2(1.0, 0.0));
@@ -383,66 +383,46 @@ function initHeroCanvas() {
         return mix(mix(a, b, u.x), mix(c, d, u.x), u.y);
       }
 
-      // 8-Octave Fractal Brownian Motion (fBm)
-      mat2 rot = mat2(0.82, 0.57, -0.57, 0.82);
+      // Rotation matrix to prevent coordinate grid alignment
+      const mat2 m2 = mat2(0.80, 0.60, -0.60, 0.80);
+
+      // 6-Octave Fractal Brownian Motion (fBm)
       float fbm(vec2 p) {
         float f = 0.0;
         float amp = 0.5;
-        for (int i = 0; i < 8; i++) {
+        for (int i = 0; i < 6; i++) {
           f += amp * noise(p);
-          p = rot * p * 2.06 + vec2(1.4, 1.9);
+          p = m2 * p * 2.02 + vec2(1.7, 3.2);
           amp *= 0.5;
         }
         return f;
       }
 
-      // Dynamic Evolving Feathery Cirrus Streaks (visibly moving, morphing, and reforming)
-      float cirrusDynamic(vec2 p, float time) {
-        // Clear, visibly drifting wind currents and flowing atmospheric motion
-        vec2 wind1 = vec2(time * 0.16, time * 0.035);
-        vec2 wind2 = vec2(time * 0.10, -time * 0.025);
-        vec2 morph = vec2(sin(time * 0.18) * 0.45, cos(time * 0.14) * 0.45);
+      // Fully organic non-uniform cloud density with domain warping
+      float cloudMap(vec2 p, float t) {
+        // Natural wind drift
+        vec2 wind = vec2(t * 0.05, t * 0.012);
         
-        // Stretched coordinates along wind shear
-        vec2 sp = vec2(p.x * 0.85 - p.y * 0.25, p.x * 0.25 + p.y * 1.6);
-        
-        // 1st Level Evolving Domain Warp
+        // 1st Domain Warp
         vec2 q = vec2(
-          fbm(sp + wind1 + morph),
-          fbm(sp + vec2(4.2, 1.7) + wind2 - morph)
+          fbm(p + wind),
+          fbm(p + vec2(5.2, 1.3) + wind * 0.85)
         );
         
-        // 2nd Level Evolving Domain Warp (creates continuously reforming, swirling shapes)
+        // 2nd Domain Warp for organic billows and swirls
         vec2 r = vec2(
-          fbm(sp + 2.4 * q + vec2(1.8, 8.5) + wind1 * 1.3),
-          fbm(sp + 2.4 * q + vec2(7.3, 3.1) + wind2 * 1.1)
+          fbm(p + 2.4 * q + vec2(1.7, 9.2) + wind * 1.2),
+          fbm(p + 2.4 * q + vec2(8.3, 2.8) - wind * 0.7)
         );
         
-        float base = fbm(sp + 2.0 * r + morph * 0.5);
+        // Base organic cloud density
+        float f = fbm(p + 2.0 * r + wind * 0.4);
         
-        // Dynamic filaments & flowing fibers
-        float filaments = sin(sp.x * 16.0 + sp.y * 6.0 + q.x * 8.0 + time * 0.25) * 0.5 + 0.5;
-        return mix(base, base * filaments, 0.32);
-      }
-
-      // Dynamic Fleecy Cloudlet Ripples (visibly dissolving & reforming cloudlets)
-      float ripplesDynamic(vec2 p, float time) {
-        vec2 wind = vec2(time * 0.20, time * 0.045);
-        vec2 rp = vec2(p.x * 1.6 - p.y * 0.5, p.x * 0.4 + p.y * 2.2) + wind;
+        // Add fine billowy detail
+        float detail = fbm(p * 2.4 + wind * 1.3);
+        f = mix(f, f * detail * 1.35, 0.35);
         
-        float q = fbm(rp + vec2(sin(time * 0.22), cos(time * 0.18)) * 0.35);
-        float rippleWave = sin(rp.x * 22.0 + rp.y * 9.0 + q * 7.0 + time * 0.30) * 0.5 + 0.5;
-        
-        // Reforming mask that makes cloud patches form, grow, and dissipate
-        float mask = fbm(p * 0.9 + vec2(3.1, 5.7) + wind * 0.6 + vec2(time * 0.07, -time * 0.04));
-        
-        return q * rippleWave * smoothstep(0.30, 0.70, mask);
-      }
-
-      // Dynamic Wispy Ambient Haze
-      float hazeDynamic(vec2 p, float time) {
-        vec2 wind = vec2(time * 0.09, time * 0.02);
-        return fbm(vec2(p.x * 0.6, p.y * 1.2) + wind + vec2(cos(time * 0.12) * 0.25, sin(time * 0.10) * 0.25));
+        return f;
       }
 
       void main() {
@@ -455,48 +435,46 @@ function initHeroCanvas() {
         
         float time = u_time;
         
-        // Vibrant Saturated Royal Blue Sky Gradient (matching reference image)
+        // Vibrant Royal / Sapphire Blue Sky Gradient
         vec3 skyZenith  = vec3(0.00, 0.32, 0.88); // Deep sapphire top
-        vec3 skyMid     = vec3(0.00, 0.46, 0.95); // Vibrant azure blue mid
-        vec3 skyHorizon = vec3(0.08, 0.64, 0.99); // Luminous bright sky blue lower
+        vec3 skyMid     = vec3(0.02, 0.46, 0.95); // Vibrant royal azure mid
+        vec3 skyHorizon = vec3(0.10, 0.64, 0.99); // Luminous bright sky blue lower
         
         float skyT = clamp(st.y, 0.0, 1.0);
         vec3 sky = mix(skyHorizon, skyMid, smoothstep(0.0, 0.55, skyT));
         sky = mix(sky, skyZenith, smoothstep(0.45, 1.0, skyT));
         
-        // Projected coordinates
-        vec2 p = uv * 2.2;
-        p.y *= 1.3;
+        // Projected cloud coordinates
+        vec2 p = uv * 1.8;
+        p.y *= 1.15;
+        p += vec2(0.3, 0.1);
         
-        // 1. Dynamic Reforming Swept Cirrus Streaks
-        float cStreaks = cirrusDynamic(p, time);
-        float dStreaks = smoothstep(0.42, 0.76, cStreaks);
+        // Calculate organic cloud noise
+        float c = cloudMap(p, time);
         
-        // 2. Dynamic Fleecy Cloudlet Ripples (reforming cloudlets)
-        float cRipples = ripplesDynamic(p, time);
-        float dRipples = smoothstep(0.18, 0.62, cRipples) * 0.68;
+        // Shape cloud density: organic, non-uniform clusters with fluffy centers and wispy edges
+        float density = smoothstep(0.36, 0.72, c);
+        density = pow(density, 1.25);
         
-        // 3. Dynamic Soft Wispy Haze
-        float cHaze = hazeDynamic(p * 1.3, time);
-        float dHaze = smoothstep(0.46, 0.74, cHaze) * 0.30;
+        // Secondary soft wisps in open sky
+        float wisps = fbm(p * 1.5 + vec2(time * 0.03, 0.0));
+        float wispDensity = smoothstep(0.48, 0.78, wisps) * 0.25;
+        density = clamp(density + wispDensity, 0.0, 1.0);
         
-        // Combined Dynamic Cloud Density
-        float cloudDensity = clamp(dStreaks * 0.88 + dRipples * 0.48 + dHaze * 0.32, 0.0, 1.0);
-        cloudDensity = pow(cloudDensity, 1.15);
+        // Sunlight highlights and soft sky-tinted underside
+        vec3 cloudSun   = vec3(1.0, 1.0, 1.0);
+        vec3 cloudWhite = vec3(0.96, 0.98, 1.0);
+        vec3 cloudShade = mix(vec3(0.68, 0.82, 0.96), skyMid, 0.25);
         
-        // Pure brilliant radiant white cloud color
-        vec3 cloudWhite = vec3(1.0, 1.0, 1.0);
-        vec3 cloudSoft  = vec3(0.95, 0.98, 1.0);
+        float light = smoothstep(0.30, 0.80, c);
+        vec3 cloudColor = mix(cloudShade, cloudWhite, light);
+        cloudColor = mix(cloudColor, cloudSun, smoothstep(0.68, 1.0, light));
         
-        // Density luminance boost
-        float densityBoost = smoothstep(0.28, 0.78, cloudDensity);
-        vec3 cloudColor = mix(cloudSoft, cloudWhite, densityBoost);
-        
-        // Soft translucent blend over deep blue sky
-        vec3 finalColor = mix(sky, cloudColor, cloudDensity * 0.95);
+        // Blend clouds seamlessly over the vibrant sky
+        vec3 finalColor = mix(sky, cloudColor, density * 0.96);
         
         // Subtle film grain
-        float grain = (hash(gl_FragCoord.xy + fract(time * 0.04)) - 0.5) * 0.015;
+        float grain = (hash(gl_FragCoord.xy + fract(time * 0.03)) - 0.5) * 0.012;
         finalColor += grain;
         
         gl_FragColor = vec4(finalColor, 1.0);
@@ -616,26 +594,33 @@ function initHeroCanvas() {
     ctx.fillStyle = skyGrad;
     ctx.fillRect(0, 0, W, H);
 
-    // Procedural wispy cirrus bands moving visibly
-    ctx.save();
-    for (let i = 0; i < 9; i++) {
-      const cy = (H * 0.12 + i * (H * 0.09) + Math.sin(i + t * 1.2) * 20);
-      const cx = ((t * 90 + i * 180) % (W + 700)) - 350;
-      const w = 450 + (i % 3) * 120;
-      const h = 25 + (i % 2) * 20;
+    // Procedural fluffy organic cloud puffs
+    const puffs = [
+      { x: 0.25, y: 0.40, r: 240, spd: 30 },
+      { x: 0.45, y: 0.30, r: 190, spd: 35 },
+      { x: 0.15, y: 0.55, r: 260, spd: 25 },
+      { x: 0.60, y: 0.45, r: 180, spd: 32 },
+      { x: 0.75, y: 0.25, r: 150, spd: 38 },
+      { x: 0.35, y: 0.60, r: 220, spd: 28 },
+      { x: 0.85, y: 0.50, r: 190, spd: 34 },
+    ];
 
-      const grad = ctx.createRadialGradient(cx + w * 0.5, cy, 5, cx + w * 0.5, cy, w * 0.5);
-      grad.addColorStop(0, 'rgba(255, 255, 255, 0.65)');
-      grad.addColorStop(0.4, 'rgba(240, 250, 255, 0.40)');
-      grad.addColorStop(0.8, 'rgba(200, 230, 255, 0.15)');
-      grad.addColorStop(1, 'rgba(0, 110, 240, 0)');
+    puffs.forEach((p, idx) => {
+      const cx = ((p.x * W + t * p.spd + idx * 50) % (W + 600)) - 300;
+      const cy = p.y * H + Math.sin(idx + t * 0.8) * 20;
+      const rad = p.r;
+
+      const grad = ctx.createRadialGradient(cx - rad * 0.2, cy - rad * 0.2, 10, cx, cy, rad);
+      grad.addColorStop(0, '#ffffff');
+      grad.addColorStop(0.5, 'rgba(245, 250, 255, 0.90)');
+      grad.addColorStop(0.8, 'rgba(180, 215, 255, 0.45)');
+      grad.addColorStop(1, 'rgba(0, 80, 220, 0)');
 
       ctx.fillStyle = grad;
       ctx.beginPath();
-      ctx.ellipse(cx + w * 0.5, cy, w * 0.5, h, -0.08, 0, Math.PI * 2);
+      ctx.arc(cx, cy, rad, 0, Math.PI * 2);
       ctx.fill();
-    }
-    ctx.restore();
+    });
 
     animId = requestAnimationFrame(render2D);
   }
