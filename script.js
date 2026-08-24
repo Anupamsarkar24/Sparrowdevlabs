@@ -383,47 +383,53 @@ function initHeroCanvas() {
         return mix(mix(a, b, u.x), mix(c, d, u.x), u.y);
       }
 
-      // 7-Octave Fractal Brownian Motion (fBm)
-      mat2 rot = mat2(0.80, 0.60, -0.60, 0.80);
+      // 8-Octave Fractal Brownian Motion (fBm)
+      mat2 rot = mat2(0.82, 0.57, -0.57, 0.82);
       float fbm(vec2 p) {
         float f = 0.0;
         float amp = 0.5;
-        for (int i = 0; i < 7; i++) {
+        for (int i = 0; i < 8; i++) {
           f += amp * noise(p);
-          p = rot * p * 2.04 + vec2(1.3, 1.7);
+          p = rot * p * 2.06 + vec2(1.4, 1.9);
           amp *= 0.5;
         }
         return f;
       }
 
-      // Volumetric Billowy Cumulus Cloud Noise
-      float cumulusNoise(vec2 p, float time) {
-        vec2 wind = vec2(time * 0.022, time * 0.005);
+      // Feathery Swept Cirrus Bands & Filaments
+      float cirrusStreaks(vec2 p, float time) {
+        vec2 wind = vec2(time * 0.018, time * 0.003);
+        // Anisotropic stretch for wind-swept wispy cirrus filaments
+        vec2 sp = vec2(p.x * 0.85 - p.y * 0.25, p.x * 0.25 + p.y * 1.6);
         
-        // 1st Domain Warp
-        vec2 q = vec2(
-          fbm(p + wind),
-          fbm(p + vec2(5.2, 1.3) + wind * 0.8)
-        );
+        // Multi-domain warp for organic curving brush-stroke wisps
+        vec2 q = vec2(fbm(sp + wind), fbm(sp + vec2(4.2, 1.7) + wind * 0.7));
+        vec2 r = vec2(fbm(sp + 2.2 * q + vec2(1.8, 8.5) + wind * 1.1),
+                      fbm(sp + 2.2 * q + vec2(7.3, 3.1) + wind * 0.6));
+                      
+        float base = fbm(sp + 1.8 * r);
         
-        // 2nd Domain Warp
-        vec2 r = vec2(
-          fbm(p + 2.8 * q + vec2(1.7, 9.2) + wind * 1.1),
-          fbm(p + 2.8 * q + vec2(8.3, 2.8) + wind * 0.7)
-        );
-        
-        // Billow shaping: creates round puffy cumulus cauliflower mounds
-        float baseFbm = fbm(p + 2.4 * r);
-        float billow = 1.0 - abs(baseFbm - 0.5) * 1.8;
-        billow = clamp(billow, 0.0, 1.0);
-        
-        return mix(baseFbm, billow, 0.68);
+        // Fine filaments & fibers
+        float filaments = sin((sp.x * 16.0 + sp.y * 6.0 + q.x * 8.0)) * 0.5 + 0.5;
+        return mix(base, base * filaments, 0.35);
       }
 
-      // Wispy cloud fragments
-      float wisps(vec2 p, float time) {
-        vec2 wind = vec2(time * 0.035, time * 0.008);
-        return fbm(p * 2.2 + wind);
+      // Fleecy Cirrocumulus Ripples / Small Cloudlets (mackerel sky)
+      float cirrocumulusRipples(vec2 p, float time) {
+        vec2 wind = vec2(time * 0.024, time * 0.006);
+        vec2 rp = vec2(p.x * 1.6 - p.y * 0.5, p.x * 0.4 + p.y * 2.2) + wind;
+        
+        float q = fbm(rp);
+        float rippleWave = sin(rp.x * 24.0 + rp.y * 10.0 + q * 6.0) * 0.5 + 0.5;
+        float mask = fbm(p * 0.8 + vec2(3.1, 5.7) + wind * 0.4);
+        
+        return q * rippleWave * smoothstep(0.35, 0.75, mask);
+      }
+
+      // Soft ambient wispy haze
+      float wispyHaze(vec2 p, float time) {
+        vec2 wind = vec2(time * 0.012, time * 0.002);
+        return fbm(vec2(p.x * 0.6, p.y * 1.2) + wind);
       }
 
       void main() {
@@ -431,63 +437,55 @@ function initHeroCanvas() {
         vec2 uv = (gl_FragCoord.xy - 0.5 * u_resolution.xy) / min(u_resolution.x, u_resolution.y);
         
         // Parallax mouse tilt
-        vec2 mouseOffset = (u_mouse - 0.5) * 0.05;
+        vec2 mouseOffset = (u_mouse - 0.5) * 0.04;
         uv += mouseOffset;
         
         float time = u_time;
         
-        // Vibrant Saturated Royal / Cobalt Blue Sky Gradient
-        vec3 skyZenith = vec3(0.00, 0.28, 0.88);
-        vec3 skyMid = vec3(0.02, 0.40, 0.95);
-        vec3 skyHorizon = vec3(0.12, 0.58, 0.98);
+        // Vibrant Saturated Royal Blue Sky Gradient (matching reference image)
+        vec3 skyZenith  = vec3(0.00, 0.32, 0.88); // Deep sapphire top
+        vec3 skyMid     = vec3(0.00, 0.46, 0.95); // Vibrant azure blue mid
+        vec3 skyHorizon = vec3(0.08, 0.64, 0.99); // Luminous bright sky blue lower
         
         float skyT = clamp(st.y, 0.0, 1.0);
         vec3 sky = mix(skyHorizon, skyMid, smoothstep(0.0, 0.55, skyT));
         sky = mix(sky, skyZenith, smoothstep(0.45, 1.0, skyT));
         
-        // Cloud Coordinate Projection
-        vec2 cloudUV = uv * 1.7;
-        cloudUV.y *= 1.15;
-        cloudUV += vec2(0.2, -0.05);
+        // UV scaling for high-altitude wide sky view
+        vec2 p = uv * 2.2;
+        p.y *= 1.3;
         
-        // 1. High Wispy Cloud Trail Layer
-        float wispNoise = wisps(cloudUV * 1.4, time);
-        float wispDensity = smoothstep(0.46, 0.80, wispNoise) * 0.38;
-        sky = mix(sky, vec3(0.94, 0.97, 1.0), wispDensity);
+        // 1. Feathery Swept Cirrus Streaks
+        float cStreaks = cirrusStreaks(p, time);
+        float dStreaks = smoothstep(0.44, 0.78, cStreaks);
         
-        // 2. Main Massive Puffy Cumulus Cloud Layer
-        float cNoise = cumulusNoise(cloudUV, time);
+        // 2. Fleecy Cloudlet Ripples (Cirrocumulus)
+        float cRipples = cirrocumulusRipples(p, time);
+        float dRipples = smoothstep(0.20, 0.65, cRipples) * 0.65;
         
-        // Density thresholding for sharp puffy cumulus edges
-        float cloudThreshold = 0.35;
-        float cloudDensity = smoothstep(cloudThreshold, cloudThreshold + 0.30, cNoise);
-        cloudDensity = pow(cloudDensity, 1.25);
+        // 3. Soft Wispy Haze
+        float cHaze = wispyHaze(p * 1.4, time);
+        float dHaze = smoothstep(0.48, 0.75, cHaze) * 0.25;
         
-        // Directional Sunlight (from upper-left, casting bright white highlights and soft blue shadows)
-        vec2 sunDir = normalize(vec2(-0.5, 0.85));
-        float lightSample = cumulusNoise(cloudUV + sunDir * 0.045, time);
-        float lightDiff = clamp((cNoise - lightSample) * 3.8 + 0.5, 0.0, 1.0);
+        // Combined Cloud Density
+        float cloudDensity = clamp(dStreaks * 0.85 + dRipples * 0.45 + dHaze * 0.3, 0.0, 1.0);
         
-        // Cloud colors:
-        // Pure radiant white sunlight crests
-        vec3 cloudSun = vec3(1.0, 1.0, 1.0);
-        // Pure clean white body
-        vec3 cloudBody = vec3(0.96, 0.98, 1.0);
-        // Soft sky-blue shaded underside
-        vec3 cloudShadow = mix(vec3(0.48, 0.68, 0.94), skyMid * 0.88, 0.35);
+        // Feathered soft opacity profile
+        cloudDensity = pow(cloudDensity, 1.15);
         
-        vec3 cloudColor = mix(cloudShadow, cloudBody, smoothstep(0.15, 0.65, lightDiff));
-        cloudColor = mix(cloudColor, cloudSun, smoothstep(0.65, 0.95, lightDiff));
+        // Pure brilliant radiant white cloud color
+        vec3 cloudWhite = vec3(1.0, 1.0, 1.0);
+        vec3 cloudSoft  = vec3(0.95, 0.98, 1.0);
         
-        // Inner dense cloud core boost for solid opaque puffy center
-        float coreDensity = smoothstep(cloudThreshold + 0.12, cloudThreshold + 0.42, cNoise);
-        cloudColor = mix(cloudColor, vec3(1.0, 1.0, 1.0), coreDensity * 0.7 * lightDiff);
+        // Slight sun luminance on denser wisps
+        float densityBoost = smoothstep(0.3, 0.8, cloudDensity);
+        vec3 cloudColor = mix(cloudSoft, cloudWhite, densityBoost);
         
-        // Final blend of cloud over vibrant sky
-        vec3 finalColor = mix(sky, cloudColor, cloudDensity * 0.98);
+        // Soft translucent blend over deep blue sky
+        vec3 finalColor = mix(sky, cloudColor, cloudDensity * 0.94);
         
         // Subtle film grain
-        float grain = (hash(gl_FragCoord.xy + fract(time * 0.05)) - 0.5) * 0.018;
+        float grain = (hash(gl_FragCoord.xy + fract(time * 0.05)) - 0.5) * 0.015;
         finalColor += grain;
         
         gl_FragColor = vec4(finalColor, 1.0);
@@ -601,39 +599,32 @@ function initHeroCanvas() {
 
     // Vibrant Royal Blue Sky gradient
     const skyGrad = ctx.createLinearGradient(0, 0, 0, H);
-    skyGrad.addColorStop(0, '#0047d4');
-    skyGrad.addColorStop(0.5, '#0464f0');
-    skyGrad.addColorStop(1, '#1e88f7');
+    skyGrad.addColorStop(0, '#0052db');
+    skyGrad.addColorStop(0.5, '#0070f3');
+    skyGrad.addColorStop(1, '#1890ff');
     ctx.fillStyle = skyGrad;
     ctx.fillRect(0, 0, W, H);
 
-    // Procedural bright white cumulus puffs
-    const puffs = [
-      { x: 0.25, y: 0.45, r: 220 },
-      { x: 0.40, y: 0.35, r: 180 },
-      { x: 0.18, y: 0.60, r: 240 },
-      { x: 0.55, y: 0.48, r: 160 },
-      { x: 0.70, y: 0.30, r: 140 },
-      { x: 0.35, y: 0.65, r: 200 },
-      { x: 0.85, y: 0.55, r: 170 },
-    ];
+    // Procedural wispy cirrus bands
+    ctx.save();
+    for (let i = 0; i < 9; i++) {
+      const cy = (H * 0.15 + i * (H * 0.09) + Math.sin(i + t * 0.5) * 15);
+      const cx = ((t * 25 + i * 180) % (W + 600)) - 300;
+      const w = 450 + (i % 3) * 120;
+      const h = 25 + (i % 2) * 20;
 
-    puffs.forEach((p, idx) => {
-      const cx = ((p.x * W + t * 30 + idx * 40) % (W + 500)) - 250;
-      const cy = p.y * H + Math.sin(idx + t) * 20;
-      const rad = p.r;
-
-      const grad = ctx.createRadialGradient(cx - rad * 0.2, cy - rad * 0.2, 10, cx, cy, rad);
-      grad.addColorStop(0, '#ffffff');
-      grad.addColorStop(0.5, 'rgba(245, 250, 255, 0.95)');
-      grad.addColorStop(0.8, 'rgba(160, 200, 250, 0.5)');
-      grad.addColorStop(1, 'rgba(0, 80, 220, 0)');
+      const grad = ctx.createRadialGradient(cx + w * 0.5, cy, 5, cx + w * 0.5, cy, w * 0.5);
+      grad.addColorStop(0, 'rgba(255, 255, 255, 0.65)');
+      grad.addColorStop(0.4, 'rgba(240, 250, 255, 0.40)');
+      grad.addColorStop(0.8, 'rgba(200, 230, 255, 0.15)');
+      grad.addColorStop(1, 'rgba(0, 110, 240, 0)');
 
       ctx.fillStyle = grad;
       ctx.beginPath();
-      ctx.arc(cx, cy, rad, 0, Math.PI * 2);
+      ctx.ellipse(cx + w * 0.5, cy, w * 0.5, h, -0.08, 0, Math.PI * 2);
       ctx.fill();
-    });
+    }
+    ctx.restore();
 
     animId = requestAnimationFrame(render2D);
   }
