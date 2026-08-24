@@ -396,40 +396,36 @@ function initHeroCanvas() {
         return f;
       }
 
-      // Feathery Swept Cirrus Bands & Filaments
-      float cirrusStreaks(vec2 p, float time) {
-        vec2 wind = vec2(time * 0.018, time * 0.003);
+      // Feathery Swept Cirrus Bands & Filaments (Stable structure)
+      float cirrusPattern(vec2 p) {
         // Anisotropic stretch for wind-swept wispy cirrus filaments
         vec2 sp = vec2(p.x * 0.85 - p.y * 0.25, p.x * 0.25 + p.y * 1.6);
         
-        // Multi-domain warp for organic curving brush-stroke wisps
-        vec2 q = vec2(fbm(sp + wind), fbm(sp + vec2(4.2, 1.7) + wind * 0.7));
-        vec2 r = vec2(fbm(sp + 2.2 * q + vec2(1.8, 8.5) + wind * 1.1),
-                      fbm(sp + 2.2 * q + vec2(7.3, 3.1) + wind * 0.6));
+        // Static domain warp for organic curving brush-stroke wisps (stable structure)
+        vec2 q = vec2(fbm(sp), fbm(sp + vec2(4.2, 1.7)));
+        vec2 r = vec2(fbm(sp + 2.2 * q + vec2(1.8, 8.5)),
+                      fbm(sp + 2.2 * q + vec2(7.3, 3.1)));
                       
         float base = fbm(sp + 1.8 * r);
         
         // Fine filaments & fibers
-        float filaments = sin((sp.x * 16.0 + sp.y * 6.0 + q.x * 8.0)) * 0.5 + 0.5;
+        float filaments = sin(sp.x * 16.0 + sp.y * 6.0 + q.x * 8.0) * 0.5 + 0.5;
         return mix(base, base * filaments, 0.35);
       }
 
-      // Fleecy Cirrocumulus Ripples / Small Cloudlets (mackerel sky)
-      float cirrocumulusRipples(vec2 p, float time) {
-        vec2 wind = vec2(time * 0.024, time * 0.006);
-        vec2 rp = vec2(p.x * 1.6 - p.y * 0.5, p.x * 0.4 + p.y * 2.2) + wind;
-        
+      // Fleecy Cirrocumulus Ripples / Small Cloudlets (Stable structure)
+      float ripplesPattern(vec2 p) {
+        vec2 rp = vec2(p.x * 1.6 - p.y * 0.5, p.x * 0.4 + p.y * 2.2);
         float q = fbm(rp);
         float rippleWave = sin(rp.x * 24.0 + rp.y * 10.0 + q * 6.0) * 0.5 + 0.5;
-        float mask = fbm(p * 0.8 + vec2(3.1, 5.7) + wind * 0.4);
+        float mask = fbm(p * 0.8 + vec2(3.1, 5.7));
         
         return q * rippleWave * smoothstep(0.35, 0.75, mask);
       }
 
-      // Soft ambient wispy haze
-      float wispyHaze(vec2 p, float time) {
-        vec2 wind = vec2(time * 0.012, time * 0.002);
-        return fbm(vec2(p.x * 0.6, p.y * 1.2) + wind);
+      // Soft ambient wispy haze (Stable structure)
+      float hazePattern(vec2 p) {
+        return fbm(vec2(p.x * 0.6, p.y * 1.2));
       }
 
       void main() {
@@ -440,7 +436,10 @@ function initHeroCanvas() {
         vec2 mouseOffset = (u_mouse - 0.5) * 0.04;
         uv += mouseOffset;
         
-        float time = u_time;
+        // Unified steady translation without shape-deforming
+        vec2 wind = vec2(u_time * 0.003, u_time * 0.0006);
+        vec2 p = (uv + wind) * 2.2;
+        p.y *= 1.3;
         
         // Vibrant Saturated Royal Blue Sky Gradient (matching reference image)
         vec3 skyZenith  = vec3(0.00, 0.32, 0.88); // Deep sapphire top
@@ -451,20 +450,16 @@ function initHeroCanvas() {
         vec3 sky = mix(skyHorizon, skyMid, smoothstep(0.0, 0.55, skyT));
         sky = mix(sky, skyZenith, smoothstep(0.45, 1.0, skyT));
         
-        // UV scaling for high-altitude wide sky view
-        vec2 p = uv * 2.2;
-        p.y *= 1.3;
-        
         // 1. Feathery Swept Cirrus Streaks
-        float cStreaks = cirrusStreaks(p, time);
+        float cStreaks = cirrusPattern(p);
         float dStreaks = smoothstep(0.44, 0.78, cStreaks);
         
         // 2. Fleecy Cloudlet Ripples (Cirrocumulus)
-        float cRipples = cirrocumulusRipples(p, time);
+        float cRipples = ripplesPattern(p);
         float dRipples = smoothstep(0.20, 0.65, cRipples) * 0.65;
         
         // 3. Soft Wispy Haze
-        float cHaze = wispyHaze(p * 1.4, time);
+        float cHaze = hazePattern(p * 1.4);
         float dHaze = smoothstep(0.48, 0.75, cHaze) * 0.25;
         
         // Combined Cloud Density
@@ -485,7 +480,7 @@ function initHeroCanvas() {
         vec3 finalColor = mix(sky, cloudColor, cloudDensity * 0.94);
         
         // Subtle film grain
-        float grain = (hash(gl_FragCoord.xy + fract(time * 0.05)) - 0.5) * 0.015;
+        float grain = (hash(gl_FragCoord.xy) - 0.5) * 0.015;
         finalColor += grain;
         
         gl_FragColor = vec4(finalColor, 1.0);
