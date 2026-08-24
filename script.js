@@ -310,24 +310,8 @@ function initHeroCanvas() {
 
   let animId = null;
   let isVisible = true;
-  let mouseX = 0.5, mouseY = 0.5;
-  let targetMouseX = 0.5, targetMouseY = 0.5;
   let startTime = performance.now();
   let lastElapsed = 0;
-
-  // Handle Mouse movement on hero for subtle parallax
-  if (heroSection) {
-    heroSection.addEventListener('mousemove', (e) => {
-      const rect = heroSection.getBoundingClientRect();
-      targetMouseX = (e.clientX - rect.left) / rect.width;
-      targetMouseY = (e.clientY - rect.top) / rect.height;
-    }, { passive: true });
-
-    heroSection.addEventListener('mouseleave', () => {
-      targetMouseX = 0.5;
-      targetMouseY = 0.5;
-    }, { passive: true });
-  }
 
   // IntersectionObserver to pause loop when not on screen
   if ('IntersectionObserver' in window && heroSection) {
@@ -360,7 +344,6 @@ function initHeroCanvas() {
       precision highp float;
       uniform vec2 u_resolution;
       uniform float u_time;
-      uniform vec2 u_mouse;
 
       // High quality 2D hash
       float hash(vec2 p) {
@@ -429,10 +412,6 @@ function initHeroCanvas() {
         vec2 st = gl_FragCoord.xy / u_resolution.xy;
         vec2 uv = (gl_FragCoord.xy - 0.5 * u_resolution.xy) / min(u_resolution.x, u_resolution.y);
         
-        // Parallax mouse tilt
-        vec2 mouseOffset = (u_mouse - 0.5) * 0.04;
-        uv += mouseOffset;
-        
         float time = u_time;
         
         // Vibrant Royal / Sapphire Blue Sky Gradient
@@ -444,7 +423,7 @@ function initHeroCanvas() {
         vec3 sky = mix(skyHorizon, skyMid, smoothstep(0.0, 0.55, skyT));
         sky = mix(sky, skyZenith, smoothstep(0.45, 1.0, skyT));
         
-        // Projected cloud coordinates
+        // Projected cloud coordinates (stable in place)
         vec2 p = uv * 1.8;
         p.y *= 1.15;
         p += vec2(0.3, 0.1);
@@ -520,7 +499,6 @@ function initHeroCanvas() {
     const aPositionLocation = gl.getAttribLocation(program, 'a_position');
     const uResolutionLocation = gl.getUniformLocation(program, 'u_resolution');
     const uTimeLocation = gl.getUniformLocation(program, 'u_time');
-    const uMouseLocation = gl.getUniformLocation(program, 'u_mouse');
 
     const resize = () => {
       const dpr = Math.min(window.devicePixelRatio || 1, 1.5);
@@ -544,10 +522,6 @@ function initHeroCanvas() {
       const elapsed = ((now || performance.now()) - startTime) * 0.001;
       lastElapsed = elapsed;
 
-      // Smooth mouse lerp
-      mouseX += (targetMouseX - mouseX) * 0.05;
-      mouseY += (targetMouseY - mouseY) * 0.05;
-
       gl.useProgram(program);
       gl.enableVertexAttribArray(aPositionLocation);
       gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
@@ -555,7 +529,6 @@ function initHeroCanvas() {
 
       gl.uniform2f(uResolutionLocation, canvas.width, canvas.height);
       gl.uniform1f(uTimeLocation, elapsed);
-      gl.uniform2f(uMouseLocation, mouseX, mouseY);
 
       gl.drawArrays(gl.TRIANGLES, 0, 6);
       animId = requestAnimationFrame(renderGL);
@@ -1229,29 +1202,7 @@ document.head.appendChild(rippleStyle);
    16. HERO MASK EFFECT
    ============================================================ */
 function initHeroMask() {
-  const hero = document.getElementById('hero');
-  const overlay = document.querySelector('.hero-image-overlay');
-  if (!hero || !overlay) return;
-  const vid = hero.querySelector('video');
-  if (vid) { vid.play().catch(e => console.log(e)); }
-  
-  const resetMask = "radial-gradient(circle at -9999px -9999px, transparent 0%, transparent 150px, black 300px)";
-  overlay.style.webkitMaskImage = resetMask;
-  overlay.style.maskImage = resetMask;
-
-  hero.addEventListener('mousemove', (e) => {
-    const rect = hero.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
-    const maskStr = `radial-gradient(circle at ${x}px ${y}px, transparent 0%, transparent 150px, black 300px)`;
-    overlay.style.webkitMaskImage = maskStr;
-    overlay.style.maskImage = maskStr;
-  });
-  
-  hero.addEventListener('mouseleave', () => {
-    overlay.style.webkitMaskImage = resetMask;
-    overlay.style.maskImage = resetMask;
-  });
+  // Disabled to keep hero section static
 }
 
 /* ============================================================
