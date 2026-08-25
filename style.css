@@ -1460,84 +1460,172 @@ body {
 }
 
 /* ============================================================
-   STATISTICS STRIP
+   STATISTICS STRIP — Cyber Royal Blue Theme
    ============================================================ */
 .stats {
   position: relative;
-  background: white;
-  padding: 0;
+  background: radial-gradient(circle at 50% 50%, #0047e0 0%, #002db3 55%, #001a80 100%);
+  padding: 46px 0 38px;
   z-index: 3;
+  color: #ffffff;
+  overflow: hidden;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), inset 0 -1px 0 rgba(0, 0, 0, 0.3);
 }
 
-.stats-inner {
-  display: grid;
-  grid-template-columns: repeat(7, 1fr);
+.stats-cyber-bg {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.stats-constellation {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 220px;
+  height: 120px;
+  opacity: 0.65;
+}
+.stats-constellation.left { left: -20px; }
+.stats-constellation.right { right: -20px; }
+
+/* Top indicator dots */
+.stats-top-indicators {
+  position: absolute;
+  top: 14px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
   align-items: center;
-  padding-top: 0px;
-  padding-bottom: 0px;
+  gap: 8px;
+  z-index: 2;
+}
+
+.stats-top-indicators span {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  display: block;
+}
+
+.stats-top-indicators .dot-blue { background: #38bdf8; box-shadow: 0 0 8px #38bdf8; }
+.stats-top-indicators .dot-white { background: #ffffff; }
+.stats-top-indicators .dot-grey { background: rgba(255, 255, 255, 0.35); }
+
+.stats-inner {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr auto 1fr auto 1fr;
+  align-items: center;
+  gap: 24px;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 10px 32px;
 }
 
 .stat-item {
   display: flex;
-  flex-direction: column;
   align-items: center;
-  gap: 6px;
-  opacity: 0;
-  grid-column: span 1;
+  justify-content: center;
+  gap: 16px;
+  opacity: 1;
+  transition: transform 0.35s ease;
 }
-.stat-item:nth-child(1) { grid-column: 1; }
-.stat-item:nth-child(3) { grid-column: 3; }
-.stat-item:nth-child(5) { grid-column: 5; }
-.stat-item:nth-child(7) { grid-column: 7; }
-.stat-divider {
-  width: 1px;
-  height: 80px;
-  background: rgba(0,0,0,0.06);
+
+.stat-item:hover {
+  transform: translateY(-2px);
 }
-.stat-divider:nth-child(2) { grid-column: 2; }
-.stat-divider:nth-child(4) { grid-column: 4; }
-.stat-divider:nth-child(6) { grid-column: 6; }
 
 .stat-icon {
-  color: #111;
-  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+  flex-shrink: 0;
+  filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.4));
 }
-.stat-icon svg {
-  width: 28px;
-  height: 28px;
+
+.stat-text-block {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
 }
 
 .stat-num-row {
   display: flex;
   align-items: baseline;
   gap: 2px;
+  line-height: 1;
 }
+
 .stat-number {
   font-family: var(--font-primary);
-  font-size: 56px;
-  font-weight: 800;
-  letter-spacing: -2px;
-  color: #5B8A31;
+  font-size: 38px;
+  font-weight: 900;
+  letter-spacing: -1px;
+  color: #ffffff;
   line-height: 1;
   display: block;
+  text-shadow: 0 4px 16px rgba(0, 20, 80, 0.5);
 }
+
 .stat-suffix {
   font-family: var(--font-primary);
-  font-size: 32px;
-  font-weight: 800;
-  color: #5B8A31;
+  font-size: 26px;
+  font-weight: 900;
+  color: #ffffff;
   line-height: 1;
   display: block;
-  margin-top: 4px;
+  text-shadow: 0 4px 16px rgba(0, 20, 80, 0.5);
 }
 
 .stat-label {
-  font-family: var(--font-primary);
-  font-size: 13px;
+  font-family: var(--font-secondary);
+  font-size: 9.5px;
   font-weight: 800;
-  color: #111;
+  color: rgba(255, 255, 255, 0.85);
   text-transform: uppercase;
-  letter-spacing: 0.05em;
+  letter-spacing: 1.4px;
+  margin-top: 4px;
+  white-space: nowrap;
+}
+
+.stat-divider {
+  width: 1px;
+  height: 44px;
+  background: rgba(255, 255, 255, 0.22);
+}
+
+/* Responsive for Stats Strip */
+@media (max-width: 1024px) {
+  .stats-inner {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 32px 24px;
+  }
+  .stat-divider {
+    display: none;
+  }
+  .stat-item {
+    justify-content: flex-start;
+    padding-left: 20px;
+  }
+}
+
+@media (max-width: 600px) {
+  .stats-inner {
+    grid-template-columns: 1fr;
+    gap: 24px;
+    padding: 10px 24px;
+  }
+  .stat-item {
+    justify-content: flex-start;
+    padding-left: 10px;
+  }
+  .stat-number {
+    font-size: 32px;
+  }
 }
 
 /* ---- STATS TRANSITION ---- */
