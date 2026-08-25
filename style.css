@@ -480,31 +480,321 @@ body {
   text-align: right;
 }
 
-/* ---- 3D Wireframe Terrain & Floating Cards ---- */
+/* ---- 3D Cyberspace Wireframe & Futuristic UI Floating Cards ---- */
 .hero-wireframe-grid {
   position: absolute;
   bottom: 0;
   left: 0;
   width: 100%;
-  height: 380px;
-  max-height: 48vh;
+  height: 340px;
   z-index: 3;
   pointer-events: none;
-  overflow: hidden;
+  overflow: visible;
+}
+
+.wireframe-terrain-svg {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0.85;
+}
+
+/* Atmospheric misty cloud shelf at base of mountains */
+.wireframe-mist-layer {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 120px;
+  background: linear-gradient(to top, rgba(255, 255, 255, 0.25) 0%, rgba(255, 255, 255, 0.08) 50%, transparent 100%);
+  filter: blur(14px);
+  pointer-events: none;
+}
+
+/* Base Glassmorphism Cyber UI Card */
+.cyber-ui-card {
+  position: absolute;
+  background: rgba(255, 255, 255, 0.10);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  border-radius: 8px;
+  box-shadow: 0 20px 45px rgba(0, 20, 80, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.4);
+  color: #ffffff;
+  pointer-events: none;
+  animation: cyberFloat 7s ease-in-out infinite;
+}
+
+@keyframes cyberFloat {
+  0%, 100% { transform: translateY(0px) rotate(var(--rot, 0deg)); }
+  50% { transform: translateY(-8px) rotate(var(--rot, 0deg)); }
+}
+
+.cyber-card-header {
   display: flex;
-  align-items: flex-end;
+  align-items: center;
+  justify-content: space-between;
+  padding: 6px 10px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+  font-size: 10px;
+}
+
+.cyber-dots {
+  display: flex;
+  gap: 4px;
+}
+.cyber-dots span {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.6);
+}
+
+/* CARD 1: Left Code Card */
+.cyber-card-code {
+  width: 190px;
+  left: 2.5%;
+  bottom: 80px;
+  --rot: -4deg;
+  transform: rotate(-4deg);
+  font-family: 'Courier New', Courier, monospace;
+  animation-delay: 0s;
+}
+
+.cyber-code-badge {
+  font-family: var(--font-primary);
+  font-size: 11px;
+  font-weight: 800;
+  color: #ffffff;
+  background: rgba(255, 255, 255, 0.15);
+  padding: 1px 6px;
+  border-radius: 4px;
+}
+
+.cyber-code-content {
+  padding: 8px 10px;
+  font-size: 8.5px;
+  line-height: 1.45;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.code-line {
+  white-space: nowrap;
+}
+.code-line.indent-1 { padding-left: 8px; }
+.code-line.indent-2 { padding-left: 16px; }
+.c-num { color: rgba(255, 255, 255, 0.35); margin-right: 6px; }
+.c-tag { color: #93c5fd; font-weight: 600; }
+.c-attr { color: #fed7aa; }
+.c-str { color: #86efac; }
+
+/* CARD 2: Gallery Card */
+.cyber-card-gallery {
+  width: 155px;
+  left: 17%;
+  bottom: 140px;
+  --rot: 2deg;
+  transform: rotate(2deg);
+  animation-delay: 1.5s;
+}
+
+.cyber-gallery-content {
+  padding: 8px;
+  height: 80px;
+}
+
+.cyber-mini-tag {
+  font-size: 9px;
+  opacity: 0.8;
+}
+
+/* CENTER HUD TELEMETRY */
+.cyber-hud-telemetry {
+  position: absolute;
+  left: 31%;
+  bottom: 120px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  opacity: 0.85;
+}
+
+.hud-slider-bar {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  background: rgba(255, 255, 255, 0.08);
+  padding: 6px 4px;
+  border-radius: 4px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.hud-plus {
+  font-size: 10px;
+  color: #fff;
+}
+.hud-ticks {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.hud-ticks span {
+  width: 10px;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.5);
+}
+.hud-binary {
+  font-family: monospace;
+  font-size: 7px;
+  letter-spacing: 1px;
+  color: rgba(255, 255, 255, 0.7);
+  writing-mode: vertical-rl;
+}
+.hud-node-square {
+  width: 5px;
+  height: 5px;
+  border: 1px solid #fff;
+}
+.hud-node-circle {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #fff;
+}
+
+.hud-constellation-svg {
+  width: 120px;
+  height: 80px;
+}
+
+/* CARD 3: Video Player Card */
+.cyber-card-video {
+  width: 140px;
+  right: 28%;
+  bottom: 130px;
+  --rot: -5deg;
+  transform: rotate(-5deg);
+  animation-delay: 2.5s;
+}
+
+.cyber-video-body {
+  height: 70px;
+  display: flex;
+  align-items: center;
   justify-content: center;
 }
 
-.hero-wireframe-img {
-  width: 100%;
-  min-width: 1080px;
-  height: 100%;
-  object-fit: cover;
-  object-position: bottom center;
-  filter: drop-shadow(0 -6px 20px rgba(0, 40, 140, 0.3));
-  opacity: 0.95;
-  mix-blend-mode: screen;
+.cyber-play-btn {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.25);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 18px rgba(255, 255, 255, 0.5);
+}
+.cyber-play-btn svg {
+  margin-left: 2px;
+}
+
+/* CARD 4: Prominent Tilted Message Preview (Foreground) */
+.cyber-card-message {
+  width: 240px;
+  right: 17%;
+  bottom: 50px;
+  padding: 12px 14px;
+  background: rgba(255, 255, 255, 0.90);
+  border: 1px solid rgba(255, 255, 255, 1);
+  box-shadow: 0 24px 50px rgba(0, 20, 80, 0.45), 0 0 30px rgba(255, 255, 255, 0.3);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  --rot: -8deg;
+  transform: rotate(-8deg) skewX(-8deg);
+  z-index: 8;
+  animation-delay: 1s;
+}
+
+.cyber-msg-avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: #004de6;
+  flex-shrink: 0;
+}
+
+.cyber-msg-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.cyber-msg-line {
+  height: 5px;
+  border-radius: 4px;
+  background: rgba(0, 77, 230, 0.3);
+}
+.cyber-msg-line.long { width: 90%; background: rgba(0, 77, 230, 0.6); }
+.cyber-msg-line.med { width: 65%; }
+.cyber-msg-line.short { width: 40%; }
+
+/* CARD 5: Browser Wireframe */
+.cyber-card-browser {
+  width: 150px;
+  right: 2.5%;
+  bottom: 75px;
+  --rot: 10deg;
+  transform: rotate(10deg) skewY(4deg);
+  animation-delay: 3s;
+}
+
+.cyber-search-bar {
+  width: 60px;
+  height: 4px;
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 3px;
+}
+
+.cyber-browser-body {
+  padding: 8px;
+  display: flex;
+  gap: 6px;
+  height: 65px;
+}
+
+.cyber-wire-box {
+  width: 40px;
+  height: 40px;
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 4px;
+}
+
+.cyber-wire-col {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+/* Bottom Tagline Underline */
+.hero-bottom-tagline {
+  position: relative;
+  padding-bottom: 6px;
+}
+.hero-bottom-tagline::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 48px;
+  height: 1.5px;
+  background: rgba(255, 255, 255, 0.75);
 }
 
 /* CTA Button Wrapper */
