@@ -1337,9 +1337,9 @@ function showToast(message, type = 'info') {
    12. MOBILE HAMBURGER MENU
    ============================================================ */
 function initMobileMenu() {
-  const hamburger = document.querySelector('.nav-hamburger');
+  const hamburger = document.querySelector('.nav-hamburger, .nav-hamburger-btn');
   const navbar = document.getElementById('navbar');
-  const navLinks = document.querySelectorAll('.nav-link, .nav-cta');
+  const navLinks = document.querySelectorAll('.nav-link, .nav-cta, .nav-talk-btn');
 
   if (!hamburger || !navbar) return;
 
