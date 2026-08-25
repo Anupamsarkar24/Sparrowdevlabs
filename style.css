@@ -486,102 +486,25 @@ body {
   bottom: 0;
   left: 0;
   width: 100%;
-  height: 280px;
-  z-index: 2;
+  height: 380px;
+  max-height: 48vh;
+  z-index: 3;
   pointer-events: none;
   overflow: hidden;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
 }
 
-.wireframe-terrain-svg {
-  position: absolute;
-  bottom: 0;
-  left: 0;
+.hero-wireframe-img {
   width: 100%;
+  min-width: 1080px;
   height: 100%;
-  opacity: 0.75;
-}
-
-.floating-ui-card {
-  position: absolute;
-  background: rgba(255, 255, 255, 0.12);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.28);
-  border-radius: 8px;
-  box-shadow: 0 16px 32px rgba(0, 20, 80, 0.25);
-  animation: floatCard 6s ease-in-out infinite;
-}
-
-.ui-card-1 {
-  width: 140px;
-  height: 80px;
-  bottom: 60px;
-  left: 10%;
-  transform: rotate(-12deg) skewX(-6deg);
-  animation-delay: 0s;
-}
-
-.ui-card-2 {
-  width: 180px;
-  height: 95px;
-  bottom: 40px;
-  right: 18%;
-  transform: rotate(8deg) skewX(4deg);
-  animation-delay: 2s;
-}
-
-.ui-card-3 {
-  width: 110px;
-  height: 65px;
-  bottom: 110px;
-  left: 42%;
-  transform: rotate(-4deg);
-  animation-delay: 4s;
-  opacity: 0.6;
-}
-
-.ui-card-bar {
-  display: flex;
-  gap: 4px;
-  padding: 6px 8px;
-  border-bottom: 1px solid rgba(255,255,255,0.15);
-}
-
-.ui-card-bar span {
-  width: 4px;
-  height: 4px;
-  border-radius: 50%;
-  background: rgba(255,255,255,0.6);
-}
-
-.ui-card-body {
-  padding: 8px;
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-}
-
-.ui-card-line {
-  height: 4px;
-  background: rgba(255,255,255,0.4);
-  border-radius: 4px;
-  width: 85%;
-}
-
-.ui-card-line.short {
-  width: 50%;
-}
-
-.ui-card-circle {
-  width: 16px;
-  height: 16px;
-  border-radius: 50%;
-  background: rgba(255,255,255,0.4);
-}
-
-@keyframes floatCard {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-10px); }
+  object-fit: cover;
+  object-position: bottom center;
+  filter: drop-shadow(0 -6px 20px rgba(0, 40, 140, 0.3));
+  opacity: 0.95;
+  mix-blend-mode: screen;
 }
 
 /* CTA Button Wrapper */
