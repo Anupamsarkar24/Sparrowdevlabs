@@ -405,8 +405,8 @@ body {
   position: absolute;
   top: 42%;
   left: 49%;
-  width: min(39vw, 460px);
-  max-width: 460px;
+  width: min(46vw, 530px);
+  max-width: 530px;
   z-index: 5;
   display: flex;
   align-items: center;
@@ -708,7 +708,7 @@ body {
     top: 38%;
   }
   .hero-human-wrap {
-    width: min(48vw, 280px);
+    width: min(54vw, 320px);
     top: 40%;
   }
   .hero-brands-block {
