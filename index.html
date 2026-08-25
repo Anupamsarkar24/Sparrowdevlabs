@@ -231,7 +231,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Manrope:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="style.css?v=88" />
+  <link rel="stylesheet" href="style.css?v=89" />
 </head>
 <body class="loading">
 
@@ -932,80 +932,103 @@
     </div>
   </section>
 
-<!-- ===================== PROCESS ===================== -->
+  <!-- ===================== PROCESS (Side-by-Side Connected Flow) ===================== -->
   <section class="process" id="process" aria-label="Our process">
+    <!-- Nature foliage ambient decorations -->
+    <div class="process-foliage-left" aria-hidden="true"></div>
+    <div class="process-foliage-right" aria-hidden="true"></div>
+
     <div class="process-inner max-w">
       
-      <!-- Header -->
-      <div class="process-header">
+      <!-- Left Column: Label + Headline with Brush Underline -->
+      <div class="process-left-col">
         <div class="process-section-label">
           <span>OUR PROCESS</span>
           <span class="process-label-line"></span>
         </div>
         <h2 class="process-main-title">
-          A SIMPLE PROCESS<br/>FOR <span class="text-impact-blue">BIG IMPACT.</span>
+          A SIMPLE PROCESS<br/>
+          FOR <span class="text-impact-blue brush-underline">BIG IMPACT.</span>
         </h2>
       </div>
 
-      <!-- 4 Process Step Cards with Connecting Line -->
-      <div class="process-steps-container" role="list">
-        <div class="process-connecting-line" aria-hidden="true"></div>
-
-        <!-- Step 1 -->
-        <div class="process-step-node" id="ps-1">
-          <div class="ps-circle-badge">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#0055ff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <circle cx="11" cy="11" r="8"></circle>
-              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-            </svg>
+      <!-- Right Column: 4 Connected Horizontal Process Nodes -->
+      <div class="process-right-col">
+        <div class="process-steps-track" role="list">
+          
+          <!-- Dashed connecting line -->
+          <div class="process-connecting-line" aria-hidden="true">
+            <span class="step-dot dot-1"></span>
+            <span class="step-dot dot-2"></span>
+            <span class="step-dot dot-3"></span>
+            <span class="step-dot dot-4"></span>
           </div>
-          <div class="ps-step-num">01</div>
-          <h3 class="ps-step-title">DISCOVER</h3>
-          <p class="ps-step-desc">We understand your business, audience and goals in depth.</p>
-        </div>
 
-        <!-- Step 2 -->
-        <div class="process-step-node" id="ps-2">
-          <div class="ps-circle-badge">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#0055ff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path>
-            </svg>
+          <!-- Step 1: Discover -->
+          <div class="process-step-node" id="ps-1">
+            <div class="ps-circle-badge">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#0055ff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="11" cy="11" r="7"></circle>
+                <line x1="21" y1="21" x2="16.5" y2="16.5"></line>
+              </svg>
+            </div>
+            <span class="ps-step-num">01</span>
+            <h3 class="ps-step-title">DISCOVER</h3>
+            <p class="ps-step-desc">We understand your business, audience and goals in depth.</p>
           </div>
-          <div class="ps-step-num">02</div>
-          <h3 class="ps-step-title">STRATEGY</h3>
-          <p class="ps-step-desc">We plan the right strategy to achieve measurable results.</p>
-        </div>
 
-        <!-- Step 3 -->
-        <div class="process-step-node" id="ps-3">
-          <div class="ps-circle-badge">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#0055ff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <polygon points="12 2 2 22 22 22 12 2"></polygon>
-              <line x1="12" y1="12" x2="12" y2="18"></line>
-            </svg>
+          <!-- Step 2: Strategy -->
+          <div class="process-step-node" id="ps-2">
+            <div class="ps-circle-badge">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#0055ff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="6" y1="6" x2="18" y2="18"></line>
+                <line x1="6" y1="18" x2="18" y2="6"></line>
+                <polyline points="14 6 18 6 18 10"></polyline>
+                <polyline points="10 18 6 18 6 14"></polyline>
+                <polyline points="18 14 18 18 14 18"></polyline>
+                <polyline points="6 10 6 6 10 6"></polyline>
+              </svg>
+            </div>
+            <span class="ps-step-num">02</span>
+            <h3 class="ps-step-title">STRATEGY</h3>
+            <p class="ps-step-desc">We plan the right strategy to achieve measurable results.</p>
           </div>
-          <div class="ps-step-num">03</div>
-          <h3 class="ps-step-title">DESIGN</h3>
-          <p class="ps-step-desc">We create stunning designs that align with your brand and users.</p>
-        </div>
 
-        <!-- Step 4 -->
-        <div class="process-step-node" id="ps-4">
-          <div class="ps-circle-badge">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#0055ff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"></path>
-            </svg>
+          <!-- Step 3: Design -->
+          <div class="process-step-node" id="ps-3">
+            <div class="ps-circle-badge">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#0055ff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 19l7-7 3 3-7 7-3-3z"></path>
+                <path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"></path>
+                <path d="M2 2l7.586 7.586"></path>
+                <circle cx="11" cy="11" r="2"></circle>
+              </svg>
+            </div>
+            <span class="ps-step-num">03</span>
+            <h3 class="ps-step-title">DESIGN</h3>
+            <p class="ps-step-desc">We create stunning designs that align with your brand and users.</p>
           </div>
-          <div class="ps-step-num">04</div>
-          <h3 class="ps-step-title">DEVELOP &amp; LAUNCH</h3>
-          <p class="ps-step-desc">We build, test and launch products that deliver performance.</p>
-        </div>
 
+          <!-- Step 4: Develop & Launch -->
+          <div class="process-step-node" id="ps-4">
+            <div class="ps-circle-badge">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#0055ff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M22 2L11 13"></path>
+                <path d="M22 2l-7 20-4-9-9-4 20-7z"></path>
+              </svg>
+            </div>
+            <span class="ps-step-num">04</span>
+            <h3 class="ps-step-title">DEVELOP &amp; LAUNCH</h3>
+            <p class="ps-step-desc">We build, test and launch products that deliver performance.</p>
+          </div>
+
+        </div>
       </div>
+
     </div>
   </section>
 
-  <!-- ===================== TESTIMONIALS ===================== -->
+<!-- ===================== TESTIMONIALS ===================== -->
   <section class="testimonials" id="about" aria-label="Client testimonials">
     <div class="testimonials-inner max-w">
       
@@ -1418,7 +1441,7 @@
 
   <!-- Razorpay Checkout SDK -->
   <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
-  <script src="script.js?v=27"></script>
+  <script src="script.js?v=28"></script>
   <!-- Toast Notification Container -->
   <div id="toast-container" class="toast-container"></div>
 
