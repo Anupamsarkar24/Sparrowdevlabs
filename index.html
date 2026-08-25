@@ -231,7 +231,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Manrope:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="style.css?v=83" />
+  <link rel="stylesheet" href="style.css?v=84" />
 </head>
 <body class="loading">
 
@@ -504,29 +504,31 @@
       </div>
     </div>
 
-    <!-- Floating Action Button: Our Projects -->
+        <!-- Floating Action Button: Our Projects + Bouncy Arrow -->
     <div class="hero-cta-wrapper">
-      <a href="#work" class="hero-glass-btn">
-        Our Projects
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-left: 8px;"><line x1="12" y1="5" x2="12" y2="19"></line><polyline points="19 12 12 19 5 12"></polyline></svg>
+      <a href="#work" class="hero-blue-cta-btn">
+        OUR PROJECTS
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M2.5 7h9M7.5 2.5l4.5 4.5-4.5 4.5"/>
+        </svg>
       </a>
+      <div class="hero-bounce-arrow" aria-hidden="true">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="12" y1="5" x2="12" y2="19"></line>
+          <polyline points="19 12 12 19 5 12"></polyline>
+        </svg>
+      </div>
     </div>
 
-    <!-- Hero bottom ripped paper transition -->
+    <!-- Hero bottom curved wave transition -->
     <div class="hero-transition" aria-hidden="true">
       <svg viewBox="0 0 1440 180" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg" style="overflow: visible;">
-        <defs>
-          <filter id="tornPaperEdge" x="-10%" y="-30%" width="120%" height="160%">
-            <feTurbulence type="fractalNoise" baseFrequency="0.04 0.08" numOctaves="4" result="noise"/>
-            <feDisplacementMap in="SourceGraphic" in2="noise" scale="18" xChannelSelector="R" yChannelSelector="G"/>
-          </filter>
-        </defs>
-        <path d="M-50,220 L-50,70 Q360,40 720,70 T1490,50 L1490,220 Z" fill="#F5F3EE" filter="url(#tornPaperEdge)"/>
+        <path d="M-50,220 L-50,60 Q360,30 720,60 T1490,40 L1490,220 Z" fill="#ffffff"/>
       </svg>
     </div>
   </section>
 
-  <!-- ===================== SERVICES / WHAT WE DO ===================== -->
+    <!-- ===================== SERVICES / WHAT WE DO ===================== -->
   <section class="services" id="services" aria-label="What We Do">
     <div class="services-inner max-w">
       
@@ -556,7 +558,7 @@
         <!-- Top Far Right: Circle Arrow CTA -->
         <div class="services-cta-block">
           <a href="#work" class="services-round-arrow-btn" aria-label="Explore all services">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
               <line x1="7" y1="17" x2="17" y2="7"></line>
               <polyline points="7 7 17 7 17 17"></polyline>
             </svg>
@@ -572,18 +574,26 @@
           <div class="service-col-top">
             <div class="service-col-badge">
               <svg width="34" height="34" viewBox="0 0 34 34" fill="none">
-                <rect x="1" y="1" width="32" height="32" rx="6" stroke="#004de6" stroke-width="2"/>
-                <path d="M12 12l10 10M22 12l-10 10" stroke="#004de6" stroke-width="2" stroke-linecap="round"/>
-                <circle cx="12" cy="12" r="2" fill="#004de6"/>
-                <circle cx="22" cy="22" r="2" fill="#004de6"/>
-                <circle cx="22" cy="12" r="2" fill="#004de6"/>
-                <circle cx="12" cy="22" r="2" fill="#004de6"/>
+                <rect x="1" y="1" width="32" height="32" rx="6" stroke="#0055ff" stroke-width="2"/>
+                <path d="M12 12l10 10M22 12l-10 10" stroke="#0055ff" stroke-width="2" stroke-linecap="round"/>
+                <circle cx="12" cy="12" r="2" fill="#0055ff"/>
+                <circle cx="22" cy="22" r="2" fill="#0055ff"/>
+                <circle cx="22" cy="12" r="2" fill="#0055ff"/>
+                <circle cx="12" cy="22" r="2" fill="#0055ff"/>
               </svg>
             </div>
             <span class="service-col-num">01</span>
           </div>
           <h3 class="service-col-title">WEB DESIGN</h3>
           <p class="service-col-desc">Beautiful, modern websites built with creativity and precision.</p>
+          <div class="service-col-bottom">
+            <span class="service-arrow-link">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#0055ff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+                <polyline points="12 5 19 12 12 19"></polyline>
+              </svg>
+            </span>
+          </div>
         </article>
 
         <!-- Column 02: Web Development -->
@@ -591,16 +601,24 @@
           <div class="service-col-top">
             <div class="service-col-badge">
               <svg width="34" height="34" viewBox="0 0 34 34" fill="none">
-                <rect x="1" y="1" width="32" height="32" rx="6" stroke="#004de6" stroke-width="2"/>
-                <polyline points="13 13 9 17 13 21" stroke="#004de6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                <polyline points="21 13 25 17 21 21" stroke="#004de6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                <line x1="19" y1="11" x2="15" y2="23" stroke="#004de6" stroke-width="2" stroke-linecap="round"/>
+                <rect x="1" y="1" width="32" height="32" rx="6" stroke="#0055ff" stroke-width="2"/>
+                <polyline points="13 13 9 17 13 21" stroke="#0055ff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <polyline points="21 13 25 17 21 21" stroke="#0055ff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <line x1="19" y1="11" x2="15" y2="23" stroke="#0055ff" stroke-width="2" stroke-linecap="round"/>
               </svg>
             </div>
             <span class="service-col-num">02</span>
           </div>
           <h3 class="service-col-title">WEB DEVELOPMENT</h3>
           <p class="service-col-desc">Fast, secure and scalable web solutions tailored to your business.</p>
+          <div class="service-col-bottom">
+            <span class="service-arrow-link">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#0055ff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+                <polyline points="12 5 19 12 12 19"></polyline>
+              </svg>
+            </span>
+          </div>
         </article>
 
         <!-- Column 03: Branding -->
@@ -608,15 +626,23 @@
           <div class="service-col-top">
             <div class="service-col-badge">
               <svg width="34" height="34" viewBox="0 0 34 34" fill="none">
-                <rect x="1" y="1" width="32" height="32" rx="6" stroke="#004de6" stroke-width="2"/>
-                <circle cx="17" cy="17" r="7" stroke="#004de6" stroke-width="2"/>
-                <circle cx="17" cy="17" r="2.5" fill="#004de6"/>
+                <rect x="1" y="1" width="32" height="32" rx="6" stroke="#0055ff" stroke-width="2"/>
+                <circle cx="17" cy="17" r="7" stroke="#0055ff" stroke-width="2"/>
+                <circle cx="17" cy="17" r="2.5" fill="#0055ff"/>
               </svg>
             </div>
             <span class="service-col-num">03</span>
           </div>
           <h3 class="service-col-title">BRANDING</h3>
           <p class="service-col-desc">Strong identities that connect, inspire and leave a mark.</p>
+          <div class="service-col-bottom">
+            <span class="service-arrow-link">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#0055ff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+                <polyline points="12 5 19 12 12 19"></polyline>
+              </svg>
+            </span>
+          </div>
         </article>
 
         <!-- Column 04: Digital Marketing -->
@@ -624,17 +650,25 @@
           <div class="service-col-top">
             <div class="service-col-badge">
               <svg width="34" height="34" viewBox="0 0 34 34" fill="none">
-                <rect x="1" y="1" width="32" height="32" rx="6" stroke="#004de6" stroke-width="2"/>
-                <line x1="22" y1="22" x2="22" y2="14" stroke="#004de6" stroke-width="2" stroke-linecap="round"/>
-                <line x1="17" y1="22" x2="17" y2="10" stroke="#004de6" stroke-width="2" stroke-linecap="round"/>
-                <line x1="12" y1="22" x2="12" y2="17" stroke="#004de6" stroke-width="2" stroke-linecap="round"/>
-                <path d="M10 12l4-4 4 2 4-4" stroke="#004de6" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                <rect x="1" y="1" width="32" height="32" rx="6" stroke="#0055ff" stroke-width="2"/>
+                <line x1="22" y1="22" x2="22" y2="14" stroke="#0055ff" stroke-width="2" stroke-linecap="round"/>
+                <line x1="17" y1="22" x2="17" y2="10" stroke="#0055ff" stroke-width="2" stroke-linecap="round"/>
+                <line x1="12" y1="22" x2="12" y2="17" stroke="#0055ff" stroke-width="2" stroke-linecap="round"/>
+                <path d="M10 12l4-4 4 2 4-4" stroke="#0055ff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
               </svg>
             </div>
             <span class="service-col-num">04</span>
           </div>
           <h3 class="service-col-title">DIGITAL MARKETING</h3>
           <p class="service-col-desc">Data-driven strategies to grow your brand and reach the right audience.</p>
+          <div class="service-col-bottom">
+            <span class="service-arrow-link">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#0055ff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+                <polyline points="12 5 19 12 12 19"></polyline>
+              </svg>
+            </span>
+          </div>
         </article>
 
         <!-- Column 05: Photography -->
@@ -642,177 +676,128 @@
           <div class="service-col-top">
             <div class="service-col-badge">
               <svg width="34" height="34" viewBox="0 0 34 34" fill="none">
-                <rect x="1" y="1" width="32" height="32" rx="6" stroke="#004de6" stroke-width="2"/>
-                <path d="M24 22a1 1 0 0 1-1 1H11a1 1 0 0 1-1-1v-8a1 1 0 0 1 1-1h2.5l1.5-2h4l1.5 2H23a1 1 0 0 1 1 1z" stroke="#004de6" stroke-width="1.8" stroke-linejoin="round"/>
-                <circle cx="17" cy="17.5" r="3" stroke="#004de6" stroke-width="1.8"/>
+                <rect x="1" y="1" width="32" height="32" rx="6" stroke="#0055ff" stroke-width="2"/>
+                <path d="M24 22a1 1 0 0 1-1 1H11a1 1 0 0 1-1-1v-8a1 1 0 0 1 1-1h2.5l1.5-2h4l1.5 2H23a1 1 0 0 1 1 1z" stroke="#0055ff" stroke-width="1.8" stroke-linejoin="round"/>
+                <circle cx="17" cy="17.5" r="3" stroke="#0055ff" stroke-width="1.8"/>
               </svg>
             </div>
             <span class="service-col-num">05</span>
           </div>
           <h3 class="service-col-title">PHOTOGRAPHY</h3>
           <p class="service-col-desc">Capturing stories and brands with impact and emotion.</p>
+          <div class="service-col-bottom">
+            <span class="service-arrow-link">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#0055ff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+                <polyline points="12 5 19 12 12 19"></polyline>
+              </svg>
+            </span>
+          </div>
         </article>
 
       </div>
-    </div>
-
-    <!-- Ink brush transition to dark -->
-    <div class="services-transition" aria-hidden="true">
-      <svg viewBox="0 0 1440 200" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
-        <defs>
-          <filter id="brushToDark" x="-20%" y="-20%" width="140%" height="140%">
-            <!-- Fine bristle texture -->
-            <feTurbulence type="fractalNoise" baseFrequency="0.06 0.005" numOctaves="4" result="noise1" seed="3"/>
-            <feDisplacementMap in="SourceGraphic" in2="noise1" scale="24" xChannelSelector="R" yChannelSelector="G" result="disp1"/>
-            <!-- Large structural wobble -->
-            <feTurbulence type="fractalNoise" baseFrequency="0.005 0.005" numOctaves="2" result="noise2" seed="6"/>
-            <feDisplacementMap in="disp1" in2="noise2" scale="35" xChannelSelector="R" yChannelSelector="G"/>
-          </filter>
-        </defs>
-        <!-- Main ink stroke, pushed lower -->
-        <path d="M0,110 Q360,80 720,110 T1440,110 L1440,300 L0,300 Z" fill="#141414" filter="url(#brushToDark)"/>
-        <!-- Semi-transparent wet ink bleed beneath it -->
-        <path d="M0,110 Q360,80 720,110 T1440,110 L1440,300 L0,300 Z" fill="#141414" opacity="0.6" transform="translate(0, 15)"/>
-      </svg>
     </div>
   </section>
 
   <!-- ===================== FEATURED PROJECTS ===================== -->
   <section class="projects" id="work" aria-label="Featured projects">
     <div class="projects-inner max-w">
-      <div class="projects-left">
-        <div class="section-label section-label--green">
-          <span>OUR WORK</span>
-          <span class="label-line"></span>
-        </div>
-        <h2 class="projects-heading uppercase">
-          FEATURED<br/>
-          PROJECTS
-        </h2>
-        <p class="projects-desc">
-          We partner with ambitious brands and<br/>
-          bring their ideas to life through design,<br/>
-          technology and strategy.
-        </p>
-      </div>
-
-      <div class="projects-right-wrap">
-        <div class="projects-cards horizontal-scroll" aria-label="Project showcase cards">
-        <!-- Project Card 1 -->
-        <article class="project-card" id="proj-1">
-          <div class="project-img-wrap">
-            <div class="project-img proj-img-1" aria-hidden="true">
-              <img src="assets/images/prithibi.png" alt="Prithibi Portfolio" style="width: 100%; height: 100%; object-fit: cover;">
-            </div>
-          </div>
-          <div class="project-card-body">
-            <div class="project-info">
-              <h3 class="project-title uppercase">Prithibi Portfolio</h3>
-              <span class="project-cat">WEB DESIGN / BRANDING</span>
-            </div>
-            <a href="https://prithibi-portfolio.vercel.app/" target="_blank" class="project-arrow-btn" aria-label="View Prithibi Portfolio project">
-              <svg width="18" height="18" viewBox="0 0 20 20" fill="none"><path d="M5 15L15 5M15 5H7M15 5V13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </a>
-          </div>
-        </article>
-
-        <!-- Project Card 2 -->
-        <article class="project-card" id="proj-2">
-          <div class="project-img-wrap">
-            <div class="project-img proj-img-2" aria-hidden="true">
-              <img src="assets/images/Shivasai WILDLIFE PHOTOGRAPHY.png" alt="Shivasai Wildlife Photography" style="width: 100%; height: 100%; object-fit: cover;">
-            </div>
-          </div>
-          <div class="project-card-body">
-            <div class="project-info">
-              <h3 class="project-title uppercase">Shivasai Wildlife Photography</h3>
-              <span class="project-cat">WEB DEVELOPMENT / UI-UX</span>
-            </div>
-            <a href="https://prithibi17.github.io/photo-web/" target="_blank" class="project-arrow-btn" aria-label="View Shivasai Wildlife Photography project">
-              <svg width="18" height="18" viewBox="0 0 20 20" fill="none"><path d="M5 15L15 5M15 5H7M15 5V13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </a>
-          </div>
-        </article>
-      </div>
-
-      <!-- Navigation UI -->
-      <div class="projects-nav">
-        <button class="nav-btn nav-up" aria-label="Previous project">
-          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 13V3M3 8l5-5 5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </button>
-        <div class="nav-track">
-          <div class="nav-thumb"></div>
-        </div>
-        <button class="nav-btn nav-down" aria-label="Next project">
-          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 3v10M3 8l5 5 5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </button>
-      </div>
-    </div>
-    </div> <!-- Close projects-inner -->
-
-    <!-- Torn paper transition to stats -->
-    <div class="projects-transition" aria-hidden="true" style="position: relative; overflow: visible; z-index: 10;">
-      <!-- Main ink stroke (torn paper) -->
-      <svg viewBox="0 0 1440 160" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg" style="position: relative; z-index: 2; display: block; overflow: visible;">
-        <defs>
-          <filter id="tornPaperWhite" x="-10%" y="-10%" width="120%" height="130%">
-            <feTurbulence type="fractalNoise" baseFrequency="0.08 0.03" numOctaves="6" result="noise" seed="22"/>
-            <feDisplacementMap in="SourceGraphic" in2="noise" scale="28" xChannelSelector="R" yChannelSelector="G"/>
-          </filter>
-        </defs>
-        <!-- Fills the bottom part with white -->
-        <path d="M-50,80 C100,50 200,120 360,80 C520,40 600,110 720,70 C840,30 960,100 1080,60 C1200,20 1340,90 1490,50 L1490,200 L-50,200 Z" 
-              fill="white" filter="url(#tornPaperWhite)"/>
-      </svg>
       
-      <!-- Grass images -->
-      <img src="assets/images/new_grass2.png" alt="" style="position: absolute; left: -20px; top: 0; width: 280px; z-index: 3; pointer-events: none;" />
-      <img src="assets/images/new_grass1.png" alt="" style="position: absolute; right: -20px; top: 0; width: 340px; z-index: 3; pointer-events: none;" />
+      <!-- Top Header Row -->
+      <div class="projects-header-row">
+        <div class="projects-headline-block">
+          <div class="projects-section-label">
+            <span>FEATURED WORK</span>
+            <span class="projects-label-line"></span>
+          </div>
+          <h2 class="projects-main-title">
+            DIGITAL WORK<br/>
+            WE'RE <span class="text-underline-blue">PROUD</span> OF.
+          </h2>
+          <a href="#work" class="projects-view-all-link">
+            VIEW ALL PROJECTS
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="5" y1="12" x2="19" y2="12"></line>
+              <polyline points="12 5 19 12 12 19"></polyline>
+            </svg>
+          </a>
+        </div>
+
+        <!-- Slider Arrows -->
+        <div class="projects-slider-arrows">
+          <button class="proj-arrow-btn proj-arrow-prev" id="proj-prev" aria-label="Previous project">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="19" y1="12" x2="5" y2="12"></line>
+              <polyline points="12 19 5 12 12 5"></polyline>
+            </svg>
+          </button>
+          <button class="proj-arrow-btn proj-arrow-next" id="proj-next" aria-label="Next project">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="5" y1="12" x2="19" y2="12"></line>
+              <polyline points="12 5 19 12 12 19"></polyline>
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- 3 Project Cards Grid -->
+      <div class="projects-cards-grid" role="list">
+        
+        <!-- Card 1: The Storm Incident -->
+        <article class="project-showcase-card">
+          <div class="project-card-image-wrap">
+            <img src="assets/images/prithibi.png" alt="The Storm Incident" class="project-card-img" />
+          </div>
+          <div class="project-card-footer">
+            <h3 class="project-card-name">The Storm Incident</h3>
+            <span class="project-card-category">Web Design / Branding</span>
+          </div>
+        </article>
+
+        <!-- Card 2: Vertex IT Solutions -->
+        <article class="project-showcase-card">
+          <div class="project-card-image-wrap">
+            <div class="project-card-tag-badge">WEB DESIGN</div>
+            <img src="assets/images/logo1.png" alt="Vertex IT Solutions" class="project-card-img dark-mockup-bg" />
+          </div>
+          <div class="project-card-footer">
+            <h3 class="project-card-name">Vertex IT Solutions</h3>
+            <span class="project-card-category">Branding / Web Design</span>
+          </div>
+        </article>
+
+        <!-- Card 3: Capturing Stories -->
+        <article class="project-showcase-card">
+          <div class="project-card-image-wrap">
+            <div class="project-card-tag-badge">PHOTOGRAPHY</div>
+            <img src="assets/images/Shivasai WILDLIFE PHOTOGRAPHY.png" alt="Capturing Stories That Belong To Nature" class="project-card-img" />
+          </div>
+          <div class="project-card-footer">
+            <h3 class="project-card-name">Capturing Stories That Belong To Nature</h3>
+            <span class="project-card-category">Web Development / UI/UX</span>
+          </div>
+        </article>
+
+      </div>
+
+      <!-- Project Indicator Dots -->
+      <div class="projects-dots-indicator" aria-hidden="true">
+        <span class="active"></span>
+        <span></span>
+        <span></span>
+      </div>
+
     </div>
   </section>
 
-  <!-- ===================== STATISTICS STRIP (Cyber Blue Theme) ===================== -->
+  <!-- ===================== STATISTICS STRIP (Ice Blue Theme) ===================== -->
   <section class="stats" id="stats" aria-label="Statistics">
-    <!-- Cyber Constellation Grid Background Elements -->
-    <div class="stats-cyber-bg" aria-hidden="true">
-      <svg class="stats-constellation left" viewBox="0 0 200 120" fill="none">
-        <circle cx="20" cy="60" r="2.5" fill="rgba(255,255,255,0.7)"/>
-        <circle cx="60" cy="20" r="2" fill="rgba(255,255,255,0.6)"/>
-        <circle cx="100" cy="80" r="2.5" fill="rgba(255,255,255,0.8)"/>
-        <circle cx="140" cy="40" r="2" fill="rgba(255,255,255,0.6)"/>
-        <circle cx="180" cy="90" r="2.5" fill="rgba(255,255,255,0.7)"/>
-        <line x1="20" y1="60" x2="60" y2="20" stroke="rgba(255,255,255,0.25)" stroke-width="0.8"/>
-        <line x1="60" y1="20" x2="100" y2="80" stroke="rgba(255,255,255,0.25)" stroke-width="0.8"/>
-        <line x1="100" y1="80" x2="140" y2="40" stroke="rgba(255,255,255,0.25)" stroke-width="0.8"/>
-        <line x1="140" y1="40" x2="180" y2="90" stroke="rgba(255,255,255,0.25)" stroke-width="0.8"/>
-        <line x1="20" y1="60" x2="100" y2="80" stroke="rgba(255,255,255,0.15)" stroke-dasharray="2,2" stroke-width="0.8"/>
-      </svg>
-      <svg class="stats-constellation right" viewBox="0 0 200 120" fill="none">
-        <circle cx="20" cy="40" r="2" fill="rgba(255,255,255,0.6)"/>
-        <circle cx="60" cy="90" r="2.5" fill="rgba(255,255,255,0.7)"/>
-        <circle cx="100" cy="30" r="2.5" fill="rgba(255,255,255,0.8)"/>
-        <circle cx="140" cy="70" r="2" fill="rgba(255,255,255,0.6)"/>
-        <circle cx="180" cy="40" r="2.5" fill="rgba(255,255,255,0.7)"/>
-        <line x1="20" y1="40" x2="60" y2="90" stroke="rgba(255,255,255,0.25)" stroke-width="0.8"/>
-        <line x1="60" y1="90" x2="100" y2="30" stroke="rgba(255,255,255,0.25)" stroke-width="0.8"/>
-        <line x1="100" y1="30" x2="140" y2="70" stroke="rgba(255,255,255,0.25)" stroke-width="0.8"/>
-        <line x1="140" y1="70" x2="180" y2="40" stroke="rgba(255,255,255,0.25)" stroke-width="0.8"/>
-        <line x1="60" y1="90" x2="180" y2="40" stroke="rgba(255,255,255,0.15)" stroke-dasharray="2,2" stroke-width="0.8"/>
-      </svg>
-    </div>
-
-    <!-- Top Indicator Dots -->
-    <div class="stats-top-indicators" aria-hidden="true">
-      <span class="dot-blue"></span>
-      <span class="dot-white"></span>
-      <span class="dot-grey"></span>
-    </div>
-
-    <div class="stats-inner max-w">
+    <div class="stats-pill-container max-w">
+      
       <!-- Item 1: Happy Clients -->
       <div class="stat-item" id="stat-1">
         <div class="stat-icon" aria-hidden="true">
-          <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#0055ff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
             <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
             <circle cx="9" cy="7" r="4"></circle>
             <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
@@ -824,7 +809,7 @@
             <div class="stat-number" data-target="250">0</div>
             <div class="stat-suffix">+</div>
           </div>
-          <div class="stat-label">HAPPY CLIENTS</div>
+          <div class="stat-label">Happy Clients</div>
         </div>
       </div>
 
@@ -833,10 +818,10 @@
       <!-- Item 2: Projects Completed -->
       <div class="stat-item" id="stat-2">
         <div class="stat-icon" aria-hidden="true">
-          <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#0055ff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
             <path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.71 1.26-1.5 1.5-2.5l-4.5-4.5c-1 0-1.79.79-1.79 1.79z"></path>
             <path d="M12 15l-3-3m5.5-8.5C18 3.5 21 3 21 3s-.5 3-.5 6.5c0 4-4.5 7.5-6.5 7.5L8.5 11.5C8.5 9.5 12 5 14.5 3.5z"></path>
-            <circle cx="15" cy="9" r="1" fill="white"></circle>
+            <circle cx="15" cy="9" r="1" fill="#0055ff"></circle>
           </svg>
         </div>
         <div class="stat-text-block">
@@ -844,7 +829,7 @@
             <div class="stat-number" data-target="120">0</div>
             <div class="stat-suffix">+</div>
           </div>
-          <div class="stat-label">PROJECTS COMPLETED</div>
+          <div class="stat-label">Projects Completed</div>
         </div>
       </div>
 
@@ -853,7 +838,7 @@
       <!-- Item 3: Awards Received -->
       <div class="stat-item" id="stat-3">
         <div class="stat-icon" aria-hidden="true">
-          <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#0055ff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
             <path d="M6 9H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h2"></path>
             <path d="M18 9h2a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2h-2"></path>
             <path d="M6 3h12v7a6 6 0 0 1-12 0V3z"></path>
@@ -866,7 +851,7 @@
             <div class="stat-number" data-target="18">0</div>
             <div class="stat-suffix">+</div>
           </div>
-          <div class="stat-label">AWARDS RECEIVED</div>
+          <div class="stat-label">Awards Received</div>
         </div>
       </div>
 
@@ -875,7 +860,7 @@
       <!-- Item 4: Years Experience -->
       <div class="stat-item" id="stat-4">
         <div class="stat-icon" aria-hidden="true">
-          <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#0055ff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
             <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
             <polygon points="12 6 13.8 9.8 18 10.4 15 13.4 15.7 17.6 12 15.6 8.3 17.6 9 13.4 6 10.4 10.2 9.8 12 6" stroke-width="1.2"></polygon>
           </svg>
@@ -885,249 +870,218 @@
             <div class="stat-number" data-target="10">0</div>
             <div class="stat-suffix">+</div>
           </div>
-          <div class="stat-label">YEARS EXPERIENCE</div>
+          <div class="stat-label">Years Experience</div>
         </div>
       </div>
-    </div>
 
-    <!-- Stats to dark transition: brush stroke -->
-    <div class="stats-transition" aria-hidden="true">
-      <svg viewBox="0 0 1440 160" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg" style="overflow: visible;">
-        <defs>
-          <filter id="brushFilter" x="-10%" y="-10%" width="120%" height="130%">
-            <feTurbulence type="fractalNoise" baseFrequency="0.08 0.03" numOctaves="6" result="noise" seed="15"/>
-            <feDisplacementMap in="SourceGraphic" in2="noise" scale="28" xChannelSelector="R" yChannelSelector="G"/>
-          </filter>
-        </defs>
-        <path d="M-50,40 C100,20 200,80 360,50 C520,20 600,90 720,55 C840,20 960,80 1080,45 C1200,10 1340,70 1490,35 L1490,170 L-50,170 Z" 
-              fill="#141414" filter="url(#brushFilter)"/>
-      </svg>
     </div>
   </section>
 
   <!-- ===================== PROCESS ===================== -->
   <section class="process" id="process" aria-label="Our process">
     <div class="process-inner max-w">
-      <div class="process-left">
-        <div class="section-label section-label--green" style="margin-bottom:16px;">
+      
+      <!-- Header -->
+      <div class="process-header">
+        <div class="process-section-label">
           <span>OUR PROCESS</span>
-          <span class="label-line"></span>
+          <span class="process-label-line"></span>
         </div>
-        <h2 class="process-heading uppercase">
-          A SIMPLE PROCESS<br/>FOR BIG IMPACT
+        <h2 class="process-main-title">
+          A SIMPLE PROCESS<br/>FOR <span class="text-impact-blue">BIG IMPACT.</span>
         </h2>
-        <p class="process-sub">
-          We follow a collaborative approach to ensure<br/>every project is delivered with excellence.
-        </p>
       </div>
 
-      <div class="process-steps" aria-label="Process steps">
+      <!-- 4 Process Step Cards with Connecting Line -->
+      <div class="process-steps-container" role="list">
+        <div class="process-connecting-line" aria-hidden="true"></div>
+
         <!-- Step 1 -->
-        <div class="process-step" id="ps-1">
-          <div class="ps-header">
-            <div class="ps-circle" aria-hidden="true">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-                <circle cx="10" cy="10" r="6" stroke="currentColor" stroke-width="1.5"/>
-                <path d="M15 15L20 20" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
-              </svg>
-            </div>
-            <div class="ps-line"></div>
-            <div class="ps-dot"></div>
+        <div class="process-step-node" id="ps-1">
+          <div class="ps-circle-badge">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#0055ff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="11" cy="11" r="8"></circle>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
           </div>
-          <div class="ps-number">01</div>
-          <h3 class="ps-title">DISCOVER</h3>
-          <p class="ps-desc">We understand your business, audience and goals in depth.</p>
+          <div class="ps-step-num">01</div>
+          <h3 class="ps-step-title">DISCOVER</h3>
+          <p class="ps-step-desc">We understand your business, audience and goals in depth.</p>
         </div>
 
         <!-- Step 2 -->
-        <div class="process-step" id="ps-2">
-          <div class="ps-header">
-            <div class="ps-circle" aria-hidden="true">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-                <path d="M8 8l8 8M16 8l-8 8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
-                <circle cx="6" cy="6" r="2" fill="currentColor"/>
-                <circle cx="18" cy="18" r="2" fill="currentColor"/>
-              </svg>
-            </div>
-            <div class="ps-line"></div>
-            <div class="ps-dot"></div>
+        <div class="process-step-node" id="ps-2">
+          <div class="ps-circle-badge">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#0055ff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path>
+            </svg>
           </div>
-          <div class="ps-number">02</div>
-          <h3 class="ps-title">STRATEGY</h3>
-          <p class="ps-desc">We plan the right strategy to achieve measurable results.</p>
+          <div class="ps-step-num">02</div>
+          <h3 class="ps-step-title">STRATEGY</h3>
+          <p class="ps-step-desc">We plan the right strategy to achieve measurable results.</p>
         </div>
 
         <!-- Step 3 -->
-        <div class="process-step" id="ps-3">
-          <div class="ps-header">
-            <div class="ps-circle" aria-hidden="true">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-                <path d="M12 2L4 22l8-6 8 6L12 2z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
-              </svg>
-            </div>
-            <div class="ps-line"></div>
-            <div class="ps-dot"></div>
+        <div class="process-step-node" id="ps-3">
+          <div class="ps-circle-badge">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#0055ff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polygon points="12 2 2 22 22 22 12 2"></polygon>
+              <line x1="12" y1="12" x2="12" y2="18"></line>
+            </svg>
           </div>
-          <div class="ps-number">03</div>
-          <h3 class="ps-title">DESIGN</h3>
-          <p class="ps-desc">We create stunning designs that align with your brand.</p>
+          <div class="ps-step-num">03</div>
+          <h3 class="ps-step-title">DESIGN</h3>
+          <p class="ps-step-desc">We create stunning designs that align with your brand and users.</p>
         </div>
 
         <!-- Step 4 -->
-        <div class="process-step" id="ps-4">
-          <div class="ps-header">
-            <div class="ps-circle" aria-hidden="true">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-                <path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
-              </svg>
-            </div>
+        <div class="process-step-node" id="ps-4">
+          <div class="ps-circle-badge">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#0055ff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"></path>
+            </svg>
           </div>
-          <div class="ps-number">04</div>
-          <h3 class="ps-title">DEVELOP &amp; LAUNCH</h3>
-          <p class="ps-desc">We build, test and launch products that deliver performance.</p>
+          <div class="ps-step-num">04</div>
+          <h3 class="ps-step-title">DEVELOP &amp; LAUNCH</h3>
+          <p class="ps-step-desc">We build, test and launch products that deliver performance.</p>
         </div>
-      </div>
-    </div>
 
-    <!-- Ink wave transition to white -->
-    <div class="process-transition" aria-hidden="true">
-      <svg viewBox="0 0 1440 180" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
-        <defs>
-          <filter id="waveInk">
-            <feTurbulence type="turbulence" baseFrequency="0.02 0.05" numOctaves="4" result="noise" seed="22"/>
-            <feDisplacementMap in="SourceGraphic" in2="noise" scale="16" xChannelSelector="R" yChannelSelector="G"/>
-          </filter>
-        </defs>
-        <path d="M0,90 C240,20 480,160 720,70 C960,-20 1200,130 1440,50 L1440,180 L0,180 Z" 
-              fill="white" filter="url(#waveInk)"/>
-        <path d="M0,110 C280,30 560,180 840,90 C1120,0 1320,150 1440,70 L1440,180 L0,180 Z" 
-              fill="white" opacity="0.5"/>
-      </svg>
+      </div>
     </div>
   </section>
 
-  <!-- ===================== TESTIMONIALS & NEWSLETTER WRAPPER ===================== -->
-  <div class="bottom-section-wrapper">
-    <section class="testimonials" id="about" aria-label="Client testimonials">
-      <div class="testimonials-inner max-w">
-        <div class="testimonials-left">
-          <div class="section-label section-label--green" style="margin-bottom: 8px;">
-            <span>WHAT CLIENTS SAY</span>
-            <span class="label-line"></span>
-          </div>
-          <h2 class="testimonials-heading uppercase" style="font-size: 42px; margin-bottom: 12px; font-weight: 900; letter-spacing: -1px; color: #111;">
-            TRUSTED BY BRANDS<br/>
-            WE WORK WITH
-          </h2>
-          <div class="testimonials-rating-summary" style="display: flex; flex-direction: column; align-items: flex-start; gap: 8px;">
-            <div class="stars" aria-label="5 out of 5 stars" style="color: #5B8A31; font-size: 24px; letter-spacing: 2px;">
-              <span>★★★★★</span>
+  <!-- ===================== TESTIMONIALS ===================== -->
+  <section class="testimonials" id="about" aria-label="Client testimonials">
+    <div class="testimonials-inner max-w">
+      
+      <!-- Left Column -->
+      <div class="testimonials-left">
+        <div class="testimonials-section-label">
+          <span>WHAT CLIENTS SAY</span>
+          <span class="testimonials-label-line"></span>
+        </div>
+        <h2 class="testimonials-main-title">
+          TRUSTED BY BRANDS<br/>
+          WE <span class="text-underline-blue">LOVE</span> TO WORK WITH.
+        </h2>
+        <a href="#about" class="testimonials-see-all-link">
+          SEE ALL REVIEWS
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="5" y1="12" x2="19" y2="12"></line>
+            <polyline points="12 5 19 12 12 19"></polyline>
+          </svg>
+        </a>
+        <div class="testimonials-slider-arrows">
+          <button class="test-arrow-btn" id="tc-prev" aria-label="Previous review">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="19" y1="12" x2="5" y2="12"></line>
+              <polyline points="12 19 5 12 12 5"></polyline>
+            </svg>
+          </button>
+          <button class="test-arrow-btn" id="tc-next" aria-label="Next review">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="5" y1="12" x2="19" y2="12"></line>
+              <polyline points="12 5 19 12 12 19"></polyline>
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- Right 3 Testimonial Cards -->
+      <div class="testimonials-cards-grid" role="list">
+        
+        <!-- Review 1 -->
+        <article class="testimonial-glass-card" id="tc-1">
+          <div class="test-quote-mark" aria-hidden="true">❝</div>
+          <p class="test-quote-text">SparrowDevLabs delivered a website that not only looks incredible but works flawlessly. Highly recommended!</p>
+          <div class="test-user-row">
+            <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=100&q=80" alt="Jessica Miller" class="test-avatar" />
+            <div class="test-user-info">
+              <strong class="test-user-name">Jessica Miller</strong>
+              <span class="test-user-role">CEO, GreenPax</span>
             </div>
-            <span class="rating-detail" style="font-family: var(--font-secondary); font-size: 14px; font-weight: 500; color: #555;">4.9/5 from 250+ reviews</span>
           </div>
-        </div>
+        </article>
 
-        <div class="testimonials-cards-wrapper" style="display: flex; align-items: center; gap: 24px;">
-          <div class="testimonials-cards" aria-label="Testimonial cards" style="display: flex; gap: 20px;">
-            <!-- Testimonial 1 -->
-            <article class="testimonial-card" id="tc-1">
-              <div class="tc-quote-icon" aria-hidden="true" style="color: #5B8A31; margin-bottom: 8px;">
-                <svg width="24" height="20" viewBox="0 0 28 20" fill="none">
-                  <path d="M0 20V11.6C0 5.2 4 1.6 12 0l1.4 2.4C8.4 3.6 5.8 6.4 5.4 11H10V20H0ZM16 20V11.6C16 5.2 20 1.6 28 0l1.4 2.4c-5 1.2-7.6 4-8 8.6H27V20H16Z" fill="currentColor"/>
-                </svg>
-              </div>
-              <p class="tc-text" style="font-family: var(--font-secondary); font-size: 14px; line-height: 1.6; color: #555; margin-bottom: 16px;">Dave Agency delivered a website that not only looks incredible but also performs beyond expectations. Highly recommended!</p>
-              <div class="tc-author" style="display: flex; align-items: center; gap: 12px; margin-top: auto;">
-                <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=100&q=80" alt="Jessica Miller" style="width: 40px; height: 40px; border-radius: 50%; object-fit: cover;">
-                <div class="tc-info">
-                  <span class="tc-name" style="display: block; font-family: var(--font-primary); font-size: 14px; font-weight: 700; color: #111;">Jessica Miller</span>
-                  <span class="tc-role" style="display: block; font-family: var(--font-secondary); font-size: 12px; color: #777;">CEO, GreenPeak</span>
-                </div>
-              </div>
-            </article>
-
-            <!-- Testimonial 2 -->
-            <article class="testimonial-card" id="tc-2">
-              <div class="tc-quote-icon" aria-hidden="true" style="color: #5B8A31; margin-bottom: 8px;">
-                <svg width="24" height="20" viewBox="0 0 28 20" fill="none">
-                  <path d="M0 20V11.6C0 5.2 4 1.6 12 0l1.4 2.4C8.4 3.6 5.8 6.4 5.4 11H10V20H0ZM16 20V11.6C16 5.2 20 1.6 28 0l1.4 2.4c-5 1.2-7.6 4-8 8.6H27V20H16Z" fill="currentColor"/>
-                </svg>
-              </div>
-              <p class="tc-text" style="font-family: var(--font-secondary); font-size: 14px; line-height: 1.6; color: #555; margin-bottom: 16px;">Professional, creative and reliable team. They truly understood our vision and turned it into reality.</p>
-              <div class="tc-author" style="display: flex; align-items: center; gap: 12px; margin-top: auto;">
-                <img src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=100&q=80" alt="Michael Brown" style="width: 40px; height: 40px; border-radius: 50%; object-fit: cover;">
-                <div class="tc-info">
-                  <span class="tc-name" style="display: block; font-family: var(--font-primary); font-size: 14px; font-weight: 700; color: #111;">Michael Brown</span>
-                  <span class="tc-role" style="display: block; font-family: var(--font-secondary); font-size: 12px; color: #777;">Founder, BrightCode</span>
-                </div>
-              </div>
-            </article>
-
-            <!-- Testimonial 3 -->
-            <article class="testimonial-card" id="tc-3">
-              <div class="tc-quote-icon" aria-hidden="true" style="color: #5B8A31; margin-bottom: 8px;">
-                <svg width="24" height="20" viewBox="0 0 28 20" fill="none">
-                  <path d="M0 20V11.6C0 5.2 4 1.6 12 0l1.4 2.4C8.4 3.6 5.8 6.4 5.4 11H10V20H0ZM16 20V11.6C16 5.2 20 1.6 28 0l1.4 2.4c-5 1.2-7.6 4-8 8.6H27V20H16Z" fill="currentColor"/>
-                </svg>
-              </div>
-              <p class="tc-text" style="font-family: var(--font-secondary); font-size: 14px; line-height: 1.6; color: #555; margin-bottom: 16px;">Their attention to detail and ability to deliver on time is what makes them our go-to digital partner.</p>
-              <div class="tc-author" style="display: flex; align-items: center; gap: 12px; margin-top: auto;">
-                <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=100&q=80" alt="David Wilson" style="width: 40px; height: 40px; border-radius: 50%; object-fit: cover;">
-                <div class="tc-info">
-                  <span class="tc-name" style="display: block; font-family: var(--font-primary); font-size: 14px; font-weight: 700; color: #111;">David Wilson</span>
-                  <span class="tc-role" style="display: block; font-family: var(--font-secondary); font-size: 12px; color: #777;">Marketing Head, Nexa</span>
-                </div>
-              </div>
-            </article>
+        <!-- Review 2 -->
+        <article class="testimonial-glass-card" id="tc-2">
+          <div class="test-quote-mark" aria-hidden="true">❝</div>
+          <p class="test-quote-text">Professional, creative and reliable team. They truly understood our vision and turned it into reality.</p>
+          <div class="test-user-row">
+            <img src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=100&q=80" alt="Michael Brown" class="test-avatar" />
+            <div class="test-user-info">
+              <strong class="test-user-name">Michael Brown</strong>
+              <span class="test-user-role">Founder, Brightcode</span>
+            </div>
           </div>
+        </article>
 
-          <!-- Carousel Arrow Controls on the right -->
-          <div class="carousel-arrows" aria-label="Testimonial navigation" style="display: flex; flex-direction: column; gap: 12px;">
-            <button class="carousel-btn-circle" id="tc-prev" aria-label="Previous testimonial" style="width: 40px; height: 40px; border-radius: 50%; border: 1px solid rgba(0,0,0,0.1); background: white; display: flex; align-items: center; justify-content: center; cursor: pointer;">
-              <svg width="18" height="18" viewBox="0 0 18 18" fill="none" style="color: #555;">
-                <path d="M11 4L6 9l5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        <!-- Review 3 -->
+        <article class="testimonial-glass-card" id="tc-3">
+          <div class="test-quote-mark" aria-hidden="true">❝</div>
+          <p class="test-quote-text">Their attention to detail and ability to deliver on time is what makes them our go-to digital partner.</p>
+          <div class="test-user-row">
+            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=100&q=80" alt="David Wilson" class="test-avatar" />
+            <div class="test-user-info">
+              <strong class="test-user-name">David Wilson</strong>
+              <span class="test-user-role">Marketing Head, Nexa</span>
+            </div>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== PRE-FOOTER CTA BANNER (Anime Grassy Hill Landscape) ===================== -->
+  <section class="cta-banner" id="cta-banner" aria-label="Call to action banner">
+    <div class="cta-banner-bg" aria-hidden="true">
+      <img src="assets/images/hero.png" alt="Grassy Hill Landscape" class="cta-banner-landscape-img" />
+      <div class="cta-banner-overlay"></div>
+    </div>
+
+    <div class="cta-banner-inner max-w">
+      <div class="cta-banner-content">
+        <h2 class="cta-banner-title">
+          LET'S BUILD SOMETHING<br/>
+          <span class="text-underline-blue">AMAZING</span> TOGETHER.
+        </h2>
+        <div class="cta-banner-sub-row">
+          <p class="cta-banner-subtitle">
+            Have a project in mind or just want to say hi?<br/>
+            We'd love to <a href="#footer" class="cta-sub-link">hear from you.</a>
+          </p>
+          <div class="cta-btn-wrap">
+            <a href="#footer" class="cta-solid-blue-btn">
+              LET'S TALK
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M2.5 7h9M7.5 2.5l4.5 4.5-4.5 4.5"/>
               </svg>
-            </button>
-            <button class="carousel-btn-circle" id="tc-next" aria-label="Next testimonial" style="width: 40px; height: 40px; border-radius: 50%; border: 1px solid rgba(0,0,0,0.1); background: white; display: flex; align-items: center; justify-content: center; cursor: pointer;">
-              <svg width="18" height="18" viewBox="0 0 18 18" fill="none" style="color: #555;">
-                <path d="M7 4l5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
-            </button>
+            </a>
+            <!-- Dashed paper plane looping line -->
+            <svg class="cta-plane-loop-svg" width="120" height="50" viewBox="0 0 120 50" fill="none" aria-hidden="true">
+              <path d="M5 25 C30 5, 60 45, 90 20 C100 12, 105 15, 115 10" stroke="#0055ff" stroke-width="1.8" stroke-dasharray="4 4"/>
+              <path d="M115 10 L108 8 M115 10 L112 16" stroke="#0055ff" stroke-width="1.8" stroke-linecap="round"/>
+            </svg>
           </div>
         </div>
       </div>
-      <!-- Dash controls below cards -->
-      <div class="carousel-dashes" aria-label="Testimonial position" style="display: flex; justify-content: center; gap: 8px; margin-top: 8px; padding-left: 360px;">
-        <span class="c-dash active" style="width: 24px; height: 3px; background: #5B8A31; border-radius: 2px;"></span>
-        <span class="c-dash" style="width: 16px; height: 3px; background: rgba(0,0,0,0.2); border-radius: 2px;"></span>
-        <span class="c-dash" style="width: 16px; height: 3px; background: rgba(0,0,0,0.2); border-radius: 2px;"></span>
-      </div>
-    </section>
-
-  </div> <!-- End of bottom-section-wrapper -->
+    </div>
+  </section>
 
   <!-- ===================== MEMBERSHIP / PRICING ===================== -->
   <section class="membership" id="membership" aria-label="Membership plans">
-    <!-- Floating paper planes decoration -->
-    <div class="membership-planes" aria-hidden="true">
-      <svg class="plane plane-1" width="28" height="28" viewBox="0 0 24 24" fill="none"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z" stroke="#8b5cf6" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      <svg class="plane plane-2" width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z" stroke="#a78bfa" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      <svg class="plane plane-3" width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z" stroke="#c4b5fd" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-    </div>
-
-
     <div class="membership-inner max-w">
 
       <!-- Left Column: Section Header, Billing Toggle & Why Us Note -->
       <div class="membership-left">
         <div class="membership-header">
-          <div class="plans-sublabel">OUR PLANS —</div>
-          <h2 class="membership-title uppercase">
-            CHOOSE YOUR<br/>
-            <span class="membership-title-purple">MEMBERSHIP</span>
-            <svg class="header-plane-svg" width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z" stroke="#a78bfa" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </h2>
-          <div class="purple-brush-line" aria-hidden="true"></div>
+          <div class="membership-brand-heading">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#0055ff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+            </svg>
+            <h2 class="membership-title">CHOOSE YOUR<br/>MEMBERSHIP</h2>
+          </div>
           <p class="membership-subtitle">
             Simple, transparent pricing.<br/>
             Pick the plan that fits your goals<br/>
@@ -1143,292 +1097,259 @@
               </button>
               <span class="billing-label" id="billing-yearly-label">Yearly</span>
             </div>
-            <div class="billing-save-note">
-              <svg width="22" height="16" viewBox="0 0 22 16" fill="none" aria-hidden="true"><path d="M2 3c4 7 11 10 17 10m0 0l-4-3m4 3l-3 2" stroke="#a78bfa" stroke-width="1.6" stroke-linecap="round"/></svg>
-              <span>Save 25%</span>
-            </div>
+            <div class="billing-save-badge">Save 25%</div>
           </div>
         </div>
 
-        <!-- Sticky Note: WHY SPARROWDEVLABS? -->
-        <div class="membership-why-note">
-          <div class="purple-tape-strip" aria-hidden="true"></div>
-          <h4 class="why-note-title">WHY SPARROWDEVLABS?</h4>
-          <ul class="why-note-list">
+        <!-- Why Choose Us Panel -->
+        <div class="membership-why">
+          <h4 class="why-title">WHY SPARROWDEVLABS?</h4>
+          <ul class="why-list">
             <li>
-              <div class="why-note-icon">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" stroke="#222" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              </div>
-              <div class="why-note-text">
-                <strong>No long-term contracts</strong>
-                <span>Cancel anytime.</span>
-              </div>
+              <span class="why-check">✓</span>
+              <span>No long-term contracts.<br/><em>Cancel anytime.</em></span>
             </li>
             <li>
-              <div class="why-note-icon">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" stroke="#222" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M9 12l2 2 4-4" stroke="#222" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              </div>
-              <div class="why-note-text">
-                <strong>100% transparent pricing</strong>
-                <span>No hidden fees, ever.</span>
-              </div>
+              <span class="why-check">✓</span>
+              <span>100% transparent pricing.<br/><em>No hidden fees.</em></span>
             </li>
             <li>
-              <div class="why-note-icon">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" stroke="#222" stroke-width="2"/><path d="M12 6v6l4 2" stroke="#222" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              </div>
-              <div class="why-note-text">
-                <strong>Average response &lt; 2 hrs</strong>
-                <span>We're super-fast.</span>
-              </div>
+              <span class="why-check">✓</span>
+              <span>Average response &lt; 2 hrs<br/><em>White glove fast.</em></span>
             </li>
           </ul>
-          <!-- Paper plane doodle decor at bottom right -->
-          <div class="why-note-doodle" aria-hidden="true">
-            <svg width="32" height="32" viewBox="0 0 32 32" fill="none"><path d="M4 28c8-2 18-8 20-18M24 10l-4 4M24 10l-4-4" stroke="rgba(0,0,0,0.3)" stroke-width="1.5" stroke-linecap="round" stroke-dasharray="3 3"/><path d="M26 4l-9 8-4-4 13-4z" stroke="rgba(0,0,0,0.4)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </div>
         </div>
       </div>
 
-      <!-- Cards -->
+      <!-- Cards Grid -->
       <div class="membership-cards">
 
         <!-- BEGINNER -->
-        <article class="plan-card plan-beginner" id="plan-beginner" data-plan="BEGINNER" data-monthly-display="999" data-monthly-period="/month" data-monthly-amount="99900" data-yearly-display="8,988" data-yearly-period="/year" data-yearly-amount="898800">
-          <div class="plan-card-paper"></div>
-          <!-- Top area: plan name + gift image -->
+        <article class="plan-card plan-beginner" id="plan-beginner">
           <div class="plan-top">
-            <div class="plan-top-left">
-              <div class="plan-icon-circle plan-icon-circle--purple">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              </div>
-              <span class="plan-name">BEGINNER</span>
+            <div class="plan-badge-icon plan-badge-blue">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0055ff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="2" y="3" width="20" height="14" rx="2" ry="2"/>
+                <line x1="8" y1="21" x2="16" y2="21"/>
+                <line x1="12" y1="17" x2="12" y2="21"/>
+              </svg>
             </div>
-            <p class="plan-tagline-top">For startups &amp;<br/>personal projects</p>
+            <div class="plan-meta">
+              <span class="plan-name">BEGINNER</span>
+              <span class="plan-target">For startups &amp; personal projects</span>
+            </div>
           </div>
-          <!-- Price -->
+
           <div class="plan-price">
             <span class="plan-currency">₹</span>
             <span class="plan-amount" id="price-beginner">999</span>
             <span class="plan-period" id="period-beginner">/month</span>
           </div>
           <span class="plan-billed">Billed yearly</span>
-          <div class="yearly-bonus-tag" id="yearly-bonus-beginner" style="display: none;">🎁 2 Months FREE + Free Domain &amp; SSL (1 Yr)</div>
-          <hr class="plan-divider"/>
-          <!-- Features -->
-          <ul class="plan-features" role="list">
-            <li><span class="plan-check plan-check--purple">✓</span> 1-Page Website Design</li>
-            <li><span class="plan-check plan-check--purple">✓</span> Mobile Responsive</li>
-            <li><span class="plan-check plan-check--purple">✓</span> Basic SEO Setup</li>
-            <li><span class="plan-check plan-check--purple">✓</span> Vercel Edge Hosting</li>
-            <li><span class="plan-check plan-check--purple">✓</span> 1 Month Support</li>
-            <li class="plan-more">+2 more features</li>
+
+          <hr class="plan-divider" />
+
+          <ul class="plan-features">
+            <li><span class="plan-check plan-check--blue">✓</span> 1-Page Website Design</li>
+            <li><span class="plan-check plan-check--blue">✓</span> Mobile Responsive</li>
+            <li><span class="plan-check plan-check--blue">✓</span> Basic SEO Setup</li>
+            <li><span class="plan-check plan-check--blue">✓</span> 1 Month Support</li>
+            <li class="plan-more">+ 2 more features</li>
           </ul>
-          <a href="#footer" class="plan-cta plan-cta--outline plan-cta--purple">GET STARTED
-            <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+
+          <a href="#footer" class="plan-cta plan-cta--outline-blue">
+            GET STARTED
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2.5 7h9M7.5 2.5l4.5 4.5-4.5 4.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </a>
         </article>
 
-        <!-- PRO (Featured) -->
-        <article class="plan-card plan-pro plan-featured" id="plan-pro" data-plan="PRO" data-monthly-display="2,999" data-monthly-period="/month" data-monthly-amount="299900" data-yearly-display="26,388" data-yearly-period="/year" data-yearly-amount="2638800">
-          <div class="plan-card-paper"></div>
-          <div class="plan-popular-ribbon">
-            <svg width="12" height="12" viewBox="0 0 16 16" fill="none"><path d="M8 1l2.5 4.5L16 6.5l-4 3.8L13 16l-5-2.8L3 16l1-5.7-4-3.8 5.5-1L8 1z" fill="white"/></svg>
-            MOST POPULAR
-          </div>
-          <!-- Top area -->
+        <!-- PRO (Featured Electric Blue Card) -->
+        <article class="plan-card plan-pro plan-featured" id="plan-pro">
           <div class="plan-top">
-            <div class="plan-top-left">
-              <div class="plan-icon-circle plan-icon-circle--white">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.71 1.26-1.5 1.5-2.5l-4.5-4.5c-1 0-1.79.79-1.79 1.79z"/><circle cx="15" cy="9" r="1"/><path d="M12 15l-3-3m5.5-8.5C18 3.5 21 3 21 3s-.5 3-.5 6.5c0 4-4.5 7.5-6.5 7.5L8.5 11.5C8.5 9.5 12 5 14.5 3.5z"/></svg>
-              </div>
-              <span class="plan-name">PRO</span>
+            <div class="plan-badge-icon plan-badge-white">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+              </svg>
             </div>
-            <p class="plan-tagline-top">For growing businesses<br/>that need more.</p>
+            <div class="plan-meta">
+              <span class="plan-name text-white">PRO</span>
+              <span class="plan-target text-white-70">For growing businesses that need more</span>
+            </div>
           </div>
-          <!-- Giftbox Center -->
-          <div class="plan-giftbox-center">
-            <img src="assets/images/giftbox-pro.png" alt="Pro Gift Box" class="plan-giftbox plan-giftbox--bright" aria-hidden="true"/>
+
+          <div class="plan-price text-white">
+            <span class="plan-currency text-white">₹</span>
+            <span class="plan-amount text-white" id="price-pro">2,999</span>
+            <span class="plan-period text-white-70" id="period-pro">/month</span>
           </div>
-          <!-- Price -->
-          <div class="plan-price">
-            <span class="plan-currency">₹</span>
-            <span class="plan-amount" id="price-pro">2,999</span>
-            <span class="plan-period" id="period-pro">/month</span>
-          </div>
-          <span class="plan-billed">Billed yearly</span>
-          <div class="yearly-bonus-tag" id="yearly-bonus-pro" style="display: none;">🎁 2 Months FREE + Domain + 2 Emails + Brand PDF</div>
-          <hr class="plan-divider plan-divider--light"/>
-          <!-- Features -->
-          <ul class="plan-features" role="list">
+          <span class="plan-billed text-white-70">Billed yearly</span>
+
+          <hr class="plan-divider plan-divider--white" />
+
+          <ul class="plan-features text-white">
             <li><span class="plan-check plan-check--white">✓</span> Up to 5-Page Website</li>
             <li><span class="plan-check plan-check--white">✓</span> Custom Branding &amp; Logo</li>
             <li><span class="plan-check plan-check--white">✓</span> UI/UX Design System</li>
             <li><span class="plan-check plan-check--white">✓</span> Analytics Dashboard</li>
             <li><span class="plan-check plan-check--white">✓</span> Advanced SEO + Google</li>
-            <li><span class="plan-check plan-check--white">✓</span> Vercel + Domain Deploy</li>
+            <li><span class="plan-check plan-check--white">✓</span> Social + Domain Deploy</li>
             <li><span class="plan-check plan-check--white">✓</span> 3 Months Support</li>
-            <li class="plan-more plan-more--light">+4 more features</li>
+            <li class="plan-more text-white-90">+ 4 more features</li>
           </ul>
-          <a href="#footer" class="plan-cta plan-cta--solid plan-cta--white">GET STARTED
-            <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+
+          <a href="#footer" class="plan-cta plan-cta--solid-white">
+            GET STARTED
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2.5 7h9M7.5 2.5l4.5 4.5-4.5 4.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </a>
         </article>
 
         <!-- LEGEND -->
-        <article class="plan-card plan-legend" id="plan-legend" data-plan="LEGEND" data-monthly-display="6,999" data-monthly-period="/month" data-monthly-amount="699900" data-yearly-display="62,388" data-yearly-period="/year" data-yearly-amount="6238800">
-          <div class="plan-card-paper"></div>
-          <!-- Top area -->
+        <article class="plan-card plan-legend" id="plan-legend">
           <div class="plan-top">
-            <div class="plan-top-left">
-              <div class="plan-icon-circle plan-icon-circle--gold">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M3 7l4 10h10l4-10-5 4-3-6-3 6-5-4z" fill="white" stroke="white" stroke-width="1.5" stroke-linejoin="round"/></svg>
-              </div>
-              <span class="plan-name">LEGEND</span>
+            <div class="plan-badge-icon plan-badge-orange">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M6 9H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h2"></path>
+                <path d="M18 9h2a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2h-2"></path>
+                <path d="M6 3h12v7a6 6 0 0 1-12 0V3z"></path>
+                <path d="M9 21h6"></path>
+                <path d="M12 16v5"></path>
+              </svg>
             </div>
-            <p class="plan-tagline-top">For digital dominance<br/>and enterprise scale.</p>
+            <div class="plan-meta">
+              <span class="plan-name">LEGEND</span>
+              <span class="plan-target">For digital agencies &amp; enterprises</span>
+            </div>
           </div>
-          <!-- Price -->
+
           <div class="plan-price">
-            <span class="plan-currency plan-currency--gold">₹</span>
-            <span class="plan-amount plan-amount--gold" id="price-legend">6,999</span>
+            <span class="plan-currency text-orange">₹</span>
+            <span class="plan-amount text-orange" id="price-legend">6,999</span>
             <span class="plan-period" id="period-legend">/month</span>
           </div>
           <span class="plan-billed">Billed yearly</span>
-          <div class="yearly-bonus-tag" id="yearly-bonus-legend" style="display: none;">🎁 2 Months FREE + Enterprise Domain + Dedicated Engineer</div>
-          <hr class="plan-divider"/>
-          <!-- Features -->
-          <ul class="plan-features" role="list">
-            <li><span class="plan-check plan-check--gold">✓</span> Unlimited Pages &amp; Revisions</li>
-            <li><span class="plan-check plan-check--gold">✓</span> Full UI/UX &amp; Branding Suite</li>
-            <li><span class="plan-check plan-check--gold">✓</span> SEO + Digital Marketing</li>
-            <li><span class="plan-check plan-check--gold">✓</span> Web App Development</li>
-            <li><span class="plan-check plan-check--gold">✓</span> Photography &amp; Content</li>
-            <li><span class="plan-check plan-check--gold">✓</span> Dedicated Account Manager</li>
-            <li><span class="plan-check plan-check--gold">✓</span> 12 Months Priority Support</li>
-            <li class="plan-more">+4 more features</li>
+
+          <hr class="plan-divider" />
+
+          <ul class="plan-features">
+            <li><span class="plan-check plan-check--orange">✓</span> Unlimited Pages &amp; Revisions</li>
+            <li><span class="plan-check plan-check--orange">✓</span> Full UI/UX &amp; Branding Suite</li>
+            <li><span class="plan-check plan-check--orange">✓</span> SEO + Digital Marketing</li>
+            <li><span class="plan-check plan-check--orange">✓</span> Web App Development</li>
+            <li><span class="plan-check plan-check--orange">✓</span> Priority Support</li>
+            <li><span class="plan-check plan-check--orange">✓</span> 6 Months Priority Support</li>
+            <li class="plan-more text-orange">+ 4 more features</li>
           </ul>
-          <a href="#footer" class="plan-cta plan-cta--outline plan-cta--gold">GET STARTED
-            <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+
+          <a href="#footer" class="plan-cta plan-cta--outline-orange">
+            GET STARTED
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2.5 7h9M7.5 2.5l4.5 4.5-4.5 4.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </a>
         </article>
 
-      </div><!-- end .membership-cards -->
+      </div>
 
-      <!-- Right Side Branding Column -->
-      <div class="membership-right-side" aria-hidden="true">
-        <!-- Flying 3D purple paper plane + looping dashed flight path -->
-        <div class="right-plane-container">
-          <svg class="flight-path-svg" width="140" height="380" viewBox="0 0 140 380" fill="none">
-            <path d="M125 15 C100 10 75 25 75 42 C75 62 110 62 110 38 C110 18 80 15 50 40 C20 70 10 130 55 160 C95 185 110 220 75 250 C45 270 20 285 10 330" 
-                  stroke="rgba(255,255,255,0.45)" stroke-width="2" stroke-linecap="round" stroke-dasharray="6 6"/>
-          </svg>
-          <!-- 3D folded purple paper plane -->
-          <svg class="top-purple-plane" width="48" height="48" viewBox="0 0 50 50" fill="none">
-            <path d="M45 5L20 40L28 28L45 5Z" fill="#c4b5fd"/>
-            <path d="M45 5L5 25L20 40L45 5Z" fill="#8b5cf6"/>
-            <path d="M20 40L28 28L24 46L20 40Z" fill="#5b21b6"/>
-          </svg>
-        </div>
-
-        <!-- Bottom handwritten text block & crown doodle -->
-        <div class="right-text-block">
-          <div class="right-handwritten-text">
-            <span class="word-1">Powerful</span>
-            <span class="word-2">solutions</span>
-            <span class="word-3">for serious</span>
-            <span class="word-4">brands.</span>
-          </div>
-          <!-- Arrow pointing down to crown circle with bottom flourish -->
-          <div class="crown-doodle-wrap">
-            <svg width="65" height="55" viewBox="0 0 65 55" fill="none">
-              <!-- Dashed arrow pointing down to crown -->
-              <path d="M45 2 C47 12 40 18 35 24" stroke="#f59e0b" stroke-width="1.8" stroke-linecap="round" stroke-dasharray="3 3"/>
-              <path d="M38 21l-3 4-1-4" stroke="#f59e0b" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-              <!-- Crown circle -->
-              <circle cx="28" cy="38" r="11" stroke="#f59e0b" stroke-width="1.8" stroke-dasharray="24 2"/>
-              <!-- Crown icon -->
-              <path d="M22 41l1.5-6 3.5 3 3.5-3 1.5 6h-10z" fill="#f59e0b"/>
-              <!-- Bottom flourish trailing to the left -->
-              <path d="M16 45 C10 47 4 44 2 48" stroke="#f59e0b" stroke-width="1.6" stroke-linecap="round" stroke-dasharray="3 3"/>
-            </svg>
-          </div>
-        </div>
+      <!-- Right side doodle quote -->
+      <div class="membership-right-doodle" aria-hidden="true">
+        <svg class="doodle-plane" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#0055ff" stroke-width="1.8">
+          <path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/>
+        </svg>
+        <span class="doodle-text">Powerful<br/>solutions for<br/>serious brands.</span>
+        <span class="doodle-smile">:)</span>
       </div>
 
     </div>
   </section>
 
-  <!-- ===================== FOOTER ===================== -->
+<!-- ===================== FOOTER ===================== -->
   <footer class="footer" id="footer" aria-label="Site footer">
     <div class="footer-inner max-w">
-      <div class="footer-col footer-brand" style="flex: 1; max-width: 300px;">
-        <a href="#" class="footer-logo" aria-label="SparrowDevLabs home">
-          <img src="assets/images/logo.png" alt="SparrowDevLabs" class="footer-logo-img" style="height: 32px; width: auto; object-fit: contain;">
+      
+      <!-- Col 1: Brand -->
+      <div class="footer-col footer-col-brand">
+        <a href="#" class="footer-brand-link" aria-label="SparrowDevLabs Home">
+          <img src="assets/images/logo.png" alt="SparrowDevLabs" class="footer-logo-img" />
+          <span class="footer-brand-title">SPARROW<br/>DEV LABS</span>
         </a>
-        <p class="footer-brand-desc" style="margin-top: 16px;">
-          We design and build digital experiences that connect people, ideas and brands.
+        <p class="footer-brand-tagline">
+          We design and build digital experiences<br/>that connect people, ideas and brands.
         </p>
-        <div class="footer-social" aria-label="Social media links">
-          <a href="#" class="social-icon" aria-label="LinkedIn"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><rect x="1.5" y="1.5" width="15" height="15" rx="3" stroke="currentColor" stroke-width="1.4"/><path d="M5 7.5v5M5 5.5v.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/><path d="M8.5 12.5V9.5c0-1.1.9-2 2-2s2 .9 2 2v3" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg></a>
-          <a href="#" class="social-icon" aria-label="Twitter / X"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M2 3h4.5L9 7 11.5 3H16L12 9.5 17 15h-4.5L10 11 7.5 15H3l4.5-6.5L2 3Z" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/></svg></a>
-          <a href="https://www.instagram.com/spar.rowlabs?igsh=dWs4eXVwa3VpbWR5" target="_blank" class="social-icon" aria-label="Instagram"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><rect x="2" y="2" width="14" height="14" rx="4" stroke="currentColor" stroke-width="1.4"/><circle cx="9" cy="9" r="3.5" stroke="currentColor" stroke-width="1.4"/><circle cx="13" cy="5" r="1" fill="currentColor"/></svg></a>
+        <div class="footer-social-icons">
+          <a href="#" class="footer-social-btn" aria-label="Website"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg></a>
+          <a href="#" class="footer-social-btn" aria-label="Behance"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="4"/><circle cx="9" cy="9" r="2"/></svg></a>
+          <a href="#" class="footer-social-btn" aria-label="LinkedIn"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg></a>
+          <a href="https://www.instagram.com/spar.rowlabs?igsh=dWs4eXVwa3VpbWR5" target="_blank" class="footer-social-btn" aria-label="Instagram"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a>
         </div>
       </div>
 
-      <div class="footer-form-wrapper" style="flex: 2; max-width: 500px; padding: 0 40px;">
-        <h4 class="footer-col-title" style="margin-bottom: 24px;">Start a Conversation</h4>
-        <form id="contact-form" class="footer-contact-form" style="display: flex; flex-direction: column; gap: 16px;">
-          <select id="contact-category" class="footer-input" required aria-label="Choose Category" style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; padding: 12px 16px; color: white; font-family: var(--font-secondary); outline: none;">
-            <option value="" disabled selected>Choose Category...</option>
-            <option value="web-design" style="color: black;">Web Design</option>
-            <option value="web-dev" style="color: black;">Web Development</option>
-            <option value="other" style="color: black;">Other Inquiry</option>
-          </select>
-          <input type="email" id="contact-email" class="footer-input" placeholder="Your Gmail address" required aria-label="Email address" style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; padding: 12px 16px; color: white; font-family: var(--font-secondary); outline: none;">
-          <textarea id="contact-message" class="footer-input" placeholder="Your Message" required aria-label="Message" rows="3" style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; padding: 12px 16px; color: white; font-family: var(--font-secondary); outline: none; resize: none;"></textarea>
-          <div style="display: flex; justify-content: flex-end;">
-            <button id="contact-submit" type="submit" style="background: white; color: black; border: none; border-radius: 8px; padding: 12px 24px; font-family: var(--font-primary); font-size: 13px; font-weight: 700; cursor: pointer; text-transform: uppercase;">Send Message</button>
-          </div>
+      <!-- Col 2: Links -->
+      <div class="footer-col footer-col-links">
+        <h4 class="footer-col-heading">LINKS</h4>
+        <ul class="footer-links-list">
+          <li><a href="#work">Work</a></li>
+          <li><a href="#services">Services</a></li>
+          <li><a href="#about">About Us</a></li>
+          <li><a href="#process">Process</a></li>
+          <li><a href="#work">Insights</a></li>
+          <li><a href="#footer">Contact</a></li>
+        </ul>
+      </div>
+
+      <!-- Col 3: Services -->
+      <div class="footer-col footer-col-services">
+        <h4 class="footer-col-heading">SERVICES</h4>
+        <ul class="footer-links-list">
+          <li><a href="#services">Web Design</a></li>
+          <li><a href="#services">Web Development</a></li>
+          <li><a href="#services">Branding</a></li>
+          <li><a href="#services">Digital Marketing</a></li>
+          <li><a href="#services">Photography</a></li>
+          <li><a href="#services">UI / UX Design</a></li>
+        </ul>
+      </div>
+
+      <!-- Col 4: Contact & Newsletter -->
+      <div class="footer-col footer-col-contact">
+        <h4 class="footer-col-heading">CONTACT</h4>
+        <ul class="footer-contact-details">
+          <li>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#0055ff" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            <a href="mailto:hello@sparrowdevlabs.com">hello@sparrowdevlabs.com</a>
+          </li>
+          <li>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#0055ff" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+            <span>+91 90785 43213</span>
+          </li>
+          <li>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#0055ff" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            <span>Jaipur, Rajasthan, India</span>
+          </li>
+        </ul>
+
+        <h4 class="footer-col-heading" style="margin-top: 20px;">NEWSLETTER</h4>
+        <p class="footer-newsletter-text">Get insights on design, tech and growth in your inbox.</p>
+        <form class="footer-newsletter-form" onsubmit="event.preventDefault();">
+          <input type="email" placeholder="Your email address" class="footer-newsletter-input" required />
+          <button type="submit" class="footer-newsletter-btn" aria-label="Subscribe">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+          </button>
         </form>
       </div>
 
-      <div class="footer-id-cards" style="flex: 1; max-width: 300px;">
-        <h4 class="footer-col-title" style="margin-bottom: 24px;">Key Contacts</h4>
-        <div style="display: flex; flex-direction: column; gap: 16px;">
-          <div class="id-card" style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; padding: 16px; display: flex; align-items: center; gap: 12px;">
-            <div style="width: 48px; height: 48px; border-radius: 50%; background: #333; overflow: hidden;"><img src="https://ui-avatars.com/api/?name=Anupam+Sarkar&background=random" style="width: 100%; height: 100%; object-fit: cover;"></div>
-            <div>
-              <div style="color: white; font-family: var(--font-primary); font-size: 14px; font-weight: 600;">Anupam Sarkar</div>
-              <div style="color: rgba(255,255,255,0.5); font-family: var(--font-secondary); font-size: 12px;">Project Manager</div>
-            </div>
-          </div>
-          <div class="id-card" style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; padding: 16px; display: flex; align-items: center; gap: 12px;">
-            <div style="width: 48px; height: 48px; border-radius: 50%; background: #333; overflow: hidden;"><img src="https://ui-avatars.com/api/?name=Prithibi+Mandi&background=random" style="width: 100%; height: 100%; object-fit: cover;"></div>
-            <div>
-              <div style="color: white; font-family: var(--font-primary); font-size: 14px; font-weight: 600;">Prithibi Mandi</div>
-              <div style="color: rgba(255,255,255,0.5); font-family: var(--font-secondary); font-size: 12px;">Lead Designer</div>
-            </div>
-          </div>
-        </div>
-      </div>
     </div>
 
     <div class="footer-bottom max-w">
-      <div class="footer-divider" aria-hidden="true"></div>
       <div class="footer-bottom-inner">
         <p class="footer-copy">© 2026 SparrowDevLabs. All rights reserved.</p>
         <p class="footer-made">
-          Made with 
-          <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true" style="display:inline;margin:0 3px;vertical-align:middle;">
-            <path d="M6 10.5C6 10.5 1 7 1 4a2.5 2.5 0 015 0 2.5 2.5 0 015 0c0 3-5 6.5-5 6.5Z" fill="#555" stroke="#555" stroke-width="0.8"/>
-          </svg>
-          by SparrowDevLabs
+          Made with <span style="color: #0055ff;">💙</span> by SparrowDevLabs
         </p>
       </div>
+    </div>
+  </footer>
+
   <!-- Razorpay Checkout SDK -->
   <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
-  <script src="script.js?v=22"></script>
+  <script src="script.js?v=23"></script>
   <!-- Toast Notification Container -->
   <div id="toast-container" class="toast-container"></div>
 
@@ -1440,7 +1361,7 @@
       
       <div class="payment-modal-header">
         <div class="payment-modal-brand">
-          <img src="assets/images/logo1.png" alt="SparrowDevLabs Logo" class="payment-modal-logo" />
+          <img src="assets/images/logo.png" alt="SparrowDevLabs Logo" class="payment-modal-logo" />
           <span class="payment-modal-brand-name">SPARROWDEVLABS</span>
         </div>
         <div class="payment-modal-badge" id="modal-plan-badge">PRO PLAN</div>
