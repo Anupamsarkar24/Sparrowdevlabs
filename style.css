@@ -1688,23 +1688,26 @@ body {
 }
 
 /* ============================================================
-   STATISTICS STRIP (Pure White Section)
+   STATISTICS STRIP (Ice Blue Cloud Atmosphere)
    ============================================================ */
 .stats {
   position: relative;
-  background: #ffffff;
-  padding: 40px 0 60px;
+  background: linear-gradient(180deg, #dbeafe 0%, #eef6ff 50%, #ffffff 100%);
+  padding: 50px 0 0;
   z-index: 3;
+  overflow: hidden;
 }
 
-.stats-pill-container {
+.stats-atmosphere-inner {
   display: grid;
   grid-template-columns: 1fr auto 1fr auto 1fr auto 1fr;
   align-items: center;
-  gap: 24px;
-  max-width: 1280px;
+  gap: 32px;
+  max-width: 1320px;
   margin: 0 auto;
-  padding: 0 32px;
+  padding: 0 32px 50px;
+  position: relative;
+  z-index: 2;
 }
 
 .stat-item {
@@ -1723,8 +1726,9 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #0055ff;
+  color: #004de6;
   flex-shrink: 0;
+  filter: drop-shadow(0 4px 10px rgba(0, 77, 230, 0.15));
 }
 
 .stat-text-block {
@@ -1742,28 +1746,28 @@ body {
 
 .stat-number {
   font-family: var(--font-primary);
-  font-size: 38px;
+  font-size: 40px;
   font-weight: 900;
-  letter-spacing: -1px;
-  color: #0055ff;
+  letter-spacing: -1.5px;
+  color: #0033cc;
   line-height: 1;
   display: block;
 }
 
 .stat-suffix {
   font-family: var(--font-primary);
-  font-size: 26px;
+  font-size: 28px;
   font-weight: 900;
-  color: #0055ff;
+  color: #0033cc;
   line-height: 1;
   display: block;
 }
 
 .stat-label {
   font-family: var(--font-secondary);
-  font-size: 11px;
-  font-weight: 700;
-  color: #111827;
+  font-size: 12px;
+  font-weight: 600;
+  color: #334155;
   letter-spacing: 0.2px;
   margin-top: 4px;
   white-space: nowrap;
@@ -1771,8 +1775,48 @@ body {
 
 .stat-divider {
   width: 1px;
-  height: 44px;
-  background: rgba(0, 0, 0, 0.1);
+  height: 52px;
+  background: rgba(0, 51, 204, 0.15);
+}
+
+.stats-to-process-wave {
+  line-height: 0;
+  margin-bottom: -1px;
+}
+
+.stats-to-process-wave svg {
+  width: 100%;
+  height: 70px;
+  display: block;
+}
+
+@media (max-width: 1024px) {
+  .stats-atmosphere-inner {
+    grid-template-columns: 1fr 1fr;
+    gap: 32px 24px;
+  }
+  .stat-divider {
+    display: none;
+  }
+  .stat-item {
+    justify-content: flex-start;
+    padding-left: 20px;
+  }
+}
+
+@media (max-width: 600px) {
+  .stats-atmosphere-inner {
+    grid-template-columns: 1fr;
+    gap: 24px;
+    padding: 0 20px 40px;
+  }
+  .stat-item {
+    justify-content: flex-start;
+    padding-left: 10px;
+  }
+  .stat-number {
+    font-size: 32px;
+  }
 }
 
 /* ============================================================
