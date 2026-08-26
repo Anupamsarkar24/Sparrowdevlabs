@@ -1295,12 +1295,12 @@ body {
 }
 
 /* ============================================================
-   FEATURED WORK SECTION — Undulating Royal Blue Ribbon
+   FEATURED WORK SECTION — Exact Undulating Royal Blue Ribbon
    ============================================================ */
 .projects {
   position: relative;
-  background: radial-gradient(circle at 60% 50%, #0042d6 0%, #002db3 45%, #001a80 100%);
-  padding: 50px 0 0;
+  background: radial-gradient(circle at 50% 50%, #003db8 0%, #00268a 50%, #001557 100%);
+  padding: 55px 0 0;
   color: #ffffff;
   overflow: hidden;
 }
@@ -1324,7 +1324,7 @@ body {
   width: 100%;
   max-width: 1400px;
   margin: 0 auto;
-  padding: 0 32px 50px;
+  padding: 0 32px 30px;
   position: relative;
   z-index: 2;
 }
@@ -1422,39 +1422,58 @@ body {
 }
 
 .project-showcase-card {
-  background: #ffffff;
-  border-radius: 18px;
+  background: #0d1527;
+  border-radius: 20px;
   overflow: hidden;
-  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.28);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.35);
   display: flex;
   flex-direction: column;
-  transition: transform 0.35s cubic-bezier(0.25, 1, 0.5, 1), box-shadow 0.35s ease;
+  transition: transform 0.35s cubic-bezier(0.25, 1, 0.5, 1), box-shadow 0.35s ease, border-color 0.35s ease;
+  position: relative;
 }
 
 .project-showcase-card:hover {
   transform: translateY(-8px);
-  box-shadow: 0 24px 50px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 24px 50px rgba(0, 0, 0, 0.5);
+  border-color: rgba(56, 189, 248, 0.4);
 }
 
 .project-card-visual {
-  height: 190px;
+  height: 200px;
   position: relative;
   overflow: hidden;
 }
 
-/* Storm Card */
-.card-visual-storm {
-  background: #fbf5e8;
-  display: flex;
-  padding: 16px;
-  gap: 12px;
+.card-bg-photo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
 }
 
-.storm-card-left {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
+.project-showcase-card:hover .card-bg-photo {
+  transform: scale(1.06);
+}
+
+/* Storm Card */
+.storm-visual-bg {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.storm-visual-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.6) 100%);
+}
+
+.storm-top-content {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  z-index: 2;
 }
 
 .case-study-badge {
@@ -1467,49 +1486,22 @@ body {
   color: #ffffff;
   padding: 3px 8px;
   border-radius: 100px;
-  width: max-content;
+  margin-bottom: 8px;
 }
 
-.storm-title {
+.storm-main-title {
   font-family: var(--font-primary);
-  font-size: 15px;
+  font-size: 16px;
   font-weight: 900;
   line-height: 1.1;
-  color: #111827;
-  margin: 4px 0 0;
-}
-
-.storm-doodles {
-  font-family: 'Caveat', cursive;
-  font-size: 12px;
-  color: rgba(0, 0, 0, 0.4);
-}
-
-.storm-card-right {
-  flex: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.storm-painting-box {
-  width: 100%;
-  height: 100%;
-  border-radius: 8px;
-  overflow: hidden;
-  box-shadow: 0 4px 14px rgba(0,0,0,0.15);
-  border: 2px solid #fef3c7;
-}
-
-.storm-painting-box img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+  color: #ffffff;
+  margin: 0;
+  text-shadow: 0 2px 8px rgba(0,0,0,0.6);
 }
 
 /* Vertex Card */
 .card-visual-vertex {
-  background: radial-gradient(circle at 70% 30%, #004de6 0%, #031340 60%, #01081a 100%);
+  background: radial-gradient(circle at 70% 30%, #004ee6 0%, #041444 60%, #01081f 100%);
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -1517,12 +1509,15 @@ body {
   position: relative;
 }
 
-.vertex-glow-particles {
+.vertex-glow-wave {
   position: absolute;
-  inset: 0;
-  background-image: radial-gradient(circle, rgba(56, 189, 248, 0.3) 1px, transparent 1px);
-  background-size: 12px 12px;
-  opacity: 0.7;
+  right: -20px;
+  bottom: -20px;
+  width: 160px;
+  height: 160px;
+  background: radial-gradient(circle, rgba(56, 189, 248, 0.45) 0%, rgba(0, 85, 255, 0.1) 60%, transparent 80%);
+  filter: blur(10px);
+  pointer-events: none;
 }
 
 .vertex-content {
@@ -1532,7 +1527,7 @@ body {
 
 .vertex-title {
   font-family: var(--font-primary);
-  font-size: 26px;
+  font-size: 28px;
   font-weight: 900;
   color: #ffffff;
   margin: 0;
@@ -1541,79 +1536,72 @@ body {
 
 .vertex-sub {
   font-family: var(--font-secondary);
-  font-size: 11px;
+  font-size: 12px;
   color: #94a3b8;
-  margin: 2px 0 14px;
+  margin: 4px 0 0;
 }
 
-.vertex-badge,
-.nature-badge {
-  display: inline-block;
-  font-family: var(--font-primary);
-  font-size: 8px;
-  font-weight: 800;
-  letter-spacing: 1px;
-  background: rgba(0, 0, 0, 0.5);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  color: #ffffff;
-  padding: 3px 8px;
-  border-radius: 100px;
-}
-
-/* Nature Card */
-.card-visual-nature {
+/* WildNest Card */
+.card-visual-wildnest {
   position: relative;
 }
 
-.nature-bg-img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-.nature-overlay-content {
+.wildnest-overlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(180deg, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.65) 100%);
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  padding: 16px;
-  color: #ffffff;
+  background: linear-gradient(180deg, rgba(0,0,0,0.25) 0%, rgba(0,0,0,0.7) 100%);
 }
 
-.nature-title {
+.wildnest-content {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  z-index: 2;
+}
+
+.wildnest-title {
   font-family: var(--font-primary);
-  font-size: 14px;
-  font-weight: 800;
-  line-height: 1.2;
-  margin: 0 0 8px;
+  font-size: 20px;
+  font-weight: 900;
   color: #ffffff;
+  margin: 0;
+  text-shadow: 0 2px 8px rgba(0,0,0,0.6);
 }
 
-/* Card Footer */
-.project-card-footer {
-  padding: 14px 18px;
+.wildnest-sub {
+  font-family: var(--font-secondary);
+  font-size: 11.5px;
+  color: rgba(255, 255, 255, 0.85);
+  margin: 2px 0 0;
+  text-shadow: 0 1px 4px rgba(0,0,0,0.6);
+}
+
+/* Bottom Frosted Glass Bar */
+.project-card-footer-glass {
+  padding: 12px 18px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background: #ffffff;
-  border-top: 1px solid rgba(0, 0, 0, 0.05);
+  background: rgba(10, 18, 36, 0.85);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 .project-cat-name {
   font-family: var(--font-secondary);
   font-size: 11.5px;
   font-weight: 700;
-  color: #111827;
+  color: rgba(255, 255, 255, 0.9);
 }
 
-.project-round-arrow-btn {
-  width: 30px;
-  height: 30px;
+.project-dark-round-btn {
+  width: 32px;
+  height: 32px;
   border-radius: 50%;
-  border: 1px solid rgba(0, 0, 0, 0.15);
-  color: #111827;
+  background: rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  color: #ffffff;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1621,9 +1609,8 @@ body {
   transition: all 0.3s ease;
 }
 
-.project-showcase-card:hover .project-round-arrow-btn {
+.project-showcase-card:hover .project-dark-round-btn {
   background: #0055ff;
-  color: #ffffff;
   border-color: #0055ff;
   transform: rotate(45deg);
 }
@@ -1633,15 +1620,15 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 10px;
+  gap: 12px;
   flex-shrink: 0;
 }
 
 .proj-nav-circle-btn {
-  width: 42px;
-  height: 42px;
+  width: 44px;
+  height: 44px;
   border-radius: 50%;
-  border: 1.5px solid rgba(255, 255, 255, 0.4);
+  border: 1.5px solid rgba(255, 255, 255, 0.35);
   background: rgba(255, 255, 255, 0.08);
   color: #ffffff;
   display: flex;
@@ -1659,10 +1646,43 @@ body {
   transform: scale(1.08);
 }
 
-.proj-nav-vertical-line {
-  width: 1.5px;
-  height: 24px;
-  background: rgba(255, 255, 255, 0.25);
+/* Centered Pagination Dots along the bottom wave */
+.projects-pagination-dots {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  position: relative;
+  z-index: 3;
+  margin-top: 10px;
+  margin-bottom: -15px;
+}
+
+.proj-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.35);
+  transition: all 0.3s ease;
+}
+
+.proj-dot.active {
+  background: #ffffff;
+  transform: scale(1.25);
+  box-shadow: 0 0 8px rgba(255, 255, 255, 0.8);
+}
+
+.work-to-stats-wave {
+  line-height: 0;
+  margin-bottom: -1px;
+  position: relative;
+  z-index: 1;
+}
+
+.work-to-stats-wave svg {
+  width: 100%;
+  height: 90px;
+  display: block;
 }
 
 /* Responsive */
