@@ -1297,10 +1297,22 @@ body {
 /* ============================================================
    FEATURED WORK SECTION — Exact Undulating Royal Blue Ribbon
    ============================================================ */
+.services-to-work-wave {
+  line-height: 0;
+  margin-bottom: -1px;
+  background: #ffffff;
+}
+
+.services-to-work-wave svg {
+  width: 100%;
+  height: 100px;
+  display: block;
+}
+
 .projects {
   position: relative;
   background: radial-gradient(circle at 50% 50%, #003db8 0%, #00268a 50%, #001557 100%);
-  padding: 55px 0 0;
+  padding: 40px 0 0;
   color: #ffffff;
   overflow: hidden;
 }
@@ -1310,17 +1322,17 @@ body {
   top: 0;
   bottom: 0;
   left: 0;
-  width: 280px;
-  background-image: radial-gradient(circle, rgba(255, 255, 255, 0.15) 1px, transparent 1px);
-  background-size: 16px 16px;
+  width: 240px;
+  background-image: radial-gradient(circle, rgba(255, 255, 255, 0.22) 1.5px, transparent 1.5px);
+  background-size: 14px 14px;
   pointer-events: none;
-  opacity: 0.6;
+  opacity: 0.7;
 }
 
 .projects-ribbon-inner {
   display: flex;
   align-items: center;
-  gap: 28px;
+  gap: 32px;
   width: 100%;
   max-width: 1400px;
   margin: 0 auto;
@@ -1341,26 +1353,26 @@ body {
   align-items: center;
   gap: 10px;
   font-family: var(--font-primary);
-  font-size: 10px;
+  font-size: 10.5px;
   font-weight: 800;
   letter-spacing: 2px;
-  color: #38bdf8;
+  color: #a5d8ff;
   text-transform: uppercase;
   margin-bottom: 12px;
 }
 
 .projects-label-line {
   display: inline-block;
-  width: 24px;
-  height: 2px;
-  background: #38bdf8;
+  width: 30px;
+  height: 1.5px;
+  background: #a5d8ff;
 }
 
 .projects-main-title {
   font-family: var(--font-primary);
-  font-size: clamp(26px, 2.8vw, 36px);
+  font-size: clamp(28px, 2.8vw, 36px);
   font-weight: 900;
-  line-height: 1.06;
+  line-height: 1.08;
   letter-spacing: -1px;
   color: #ffffff;
   margin: 0 0 24px 0;
@@ -1369,13 +1381,15 @@ body {
 
 .text-script-blue {
   font-family: 'Caveat', cursive, sans-serif;
-  font-size: 1.25em;
+  font-size: 1.35em;
+  font-weight: 700;
   color: #38bdf8;
   text-decoration: underline;
   text-decoration-color: #38bdf8;
   text-underline-offset: 4px;
   display: inline-block;
-  transform: rotate(-2deg);
+  transform: rotate(-3deg);
+  margin: 0 4px;
 }
 
 .projects-view-all-btn {
@@ -1383,9 +1397,9 @@ body {
   align-items: center;
   gap: 10px;
   font-family: var(--font-primary);
-  font-size: 10.5px;
+  font-size: 11px;
   font-weight: 800;
-  letter-spacing: 1.2px;
+  letter-spacing: 1.5px;
   color: #ffffff;
   text-transform: uppercase;
   text-decoration: none;
@@ -1397,11 +1411,11 @@ body {
 }
 
 .view-all-circle-arrow {
-  width: 28px;
-  height: 28px;
+  width: 32px;
+  height: 32px;
   border-radius: 50%;
   border: 1.5px solid rgba(255, 255, 255, 0.4);
-  display: flex;
+  display: inline-flex;
   align-items: center;
   justify-content: center;
   transition: all 0.3s ease;
