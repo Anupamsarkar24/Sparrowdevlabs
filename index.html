@@ -231,7 +231,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Manrope:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="style.css?v=94" />
+  <link rel="stylesheet" href="style.css?v=95" />
 </head>
 <body class="loading">
 
@@ -1104,50 +1104,108 @@
     </div>
   </section>
 
-<!-- ===================== PRE-FOOTER CTA BANNER (Anime Grassy Hill Landscape) ===================== -->
+  <!-- ===================== PRE-FOOTER CTA BANNER (Royal Blue Ribbon with Hot Air Balloon) ===================== -->
   <section class="cta-banner" id="cta-banner" aria-label="Call to action banner">
+    <!-- Anime Sky & Hot Air Balloon Background -->
     <div class="cta-banner-bg" aria-hidden="true">
-      <img src="assets/images/hero.png" alt="Grassy Hill Landscape" class="cta-banner-landscape-img" />
+      <img src="assets/images/hero.png" alt="Anime Landscape" class="cta-banner-landscape-img" />
       <div class="cta-banner-overlay"></div>
     </div>
 
-    <div class="cta-banner-inner max-w">
-      <div class="cta-banner-content">
-        <div class="cta-banner-text-side">
-          <div class="cta-section-label">
-            <span>READY TO START?</span>
-            <span class="cta-label-line"></span>
-          </div>
-          <h2 class="cta-banner-title">
-            LET'S BUILD SOMETHING<br/>
-            <span class="text-underline-blue">AMAZING</span> TOGETHER.
-          </h2>
-        </div>
+    <!-- Hot Air Balloon Floating on the Right -->
+    <div class="cta-hot-air-balloon" aria-hidden="true">
+      <svg width="180" height="240" viewBox="0 0 180 240" fill="none">
+        <defs>
+          <radialGradient id="balloonGrad" cx="50%" cy="40%" r="50%">
+            <stop offset="0%" stop-color="#38bdf8"/>
+            <stop offset="50%" stop-color="#0055ff"/>
+            <stop offset="100%" stop-color="#001f80"/>
+          </radialGradient>
+          <linearGradient id="yellowStripe" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#fef08a"/>
+            <stop offset="50%" stop-color="#facc15"/>
+            <stop offset="100%" stop-color="#eab308"/>
+          </linearGradient>
+        </defs>
+        <!-- Balloon Body -->
+        <path d="M90 10 C145 10, 175 60, 155 120 C140 160, 110 185, 102 195 L78 195 C70 185, 40 160, 25 120 C5 60, 35 10, 90 10 Z" fill="url(#balloonGrad)"/>
+        <!-- Yellow Center Stripes -->
+        <path d="M90 10 C110 10, 120 60, 110 120 C102 160, 96 185, 93 195 L87 195 C84 185, 78 160, 70 120 C60 60, 70 10, 90 10 Z" fill="url(#yellowStripe)"/>
+        <path d="M50 30 C65 25, 75 70, 68 120 C62 160, 56 180, 52 190" stroke="#facc15" stroke-width="3" fill="none" opacity="0.8"/>
+        <path d="M130 30 C115 25, 105 70, 112 120 C118 160, 124 180, 128 190" stroke="#facc15" stroke-width="3" fill="none" opacity="0.8"/>
+        <!-- Ropes & Basket -->
+        <line x1="82" y1="195" x2="84" y2="215" stroke="#78350f" stroke-width="1.5"/>
+        <line x1="98" y1="195" x2="96" y2="215" stroke="#78350f" stroke-width="1.5"/>
+        <line x1="75" y1="195" x2="82" y2="215" stroke="#78350f" stroke-width="1.5"/>
+        <line x1="105" y1="195" x2="98" y2="215" stroke="#78350f" stroke-width="1.5"/>
+        <!-- Basket -->
+        <rect x="80" y="215" width="20" height="15" rx="3" fill="#b45309" stroke="#78350f" stroke-width="1.5"/>
+      </svg>
+    </div>
 
-        <div class="cta-banner-sub-row">
-          <p class="cta-banner-subtitle">
-            Have a project in mind or just want to say hi?<br/>
-            We'd love to <a href="#footer" class="cta-sub-link">hear from you.</a>
-          </p>
-          <div class="cta-btn-wrap">
-            <a href="#footer" class="cta-solid-blue-btn">
-              LET'S TALK
-              <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M2.5 7h9M7.5 2.5l4.5 4.5-4.5 4.5"/>
-              </svg>
-            </a>
-            <!-- Dashed paper plane looping line -->
-            <svg class="cta-plane-loop-svg" width="120" height="50" viewBox="0 0 120 50" fill="none" aria-hidden="true">
-              <path d="M5 25 C30 5, 60 45, 90 20 C100 12, 105 15, 115 10" stroke="#0055ff" stroke-width="1.8" stroke-dasharray="4 4"/>
-              <path d="M115 10 L108 8 M115 10 L112 16" stroke="#0055ff" stroke-width="1.8" stroke-linecap="round"/>
-            </svg>
+    <!-- Blue Ribbon Wrapper -->
+    <div class="cta-ribbon-container">
+      <div class="cta-ambient-dots cta-dots-left" aria-hidden="true"></div>
+      <div class="cta-ambient-dots cta-dots-right" aria-hidden="true"></div>
+
+      <div class="cta-banner-inner max-w">
+        <div class="cta-banner-content">
+          
+          <!-- Left Text Block -->
+          <div class="cta-banner-text-side">
+            <div class="cta-section-label">
+              <span>READY TO START?</span>
+              <span class="cta-label-line"></span>
+            </div>
+            <div class="cta-headline-wrap">
+              <span class="cta-sparkle-icon" aria-hidden="true">✨</span>
+              <h2 class="cta-banner-title">
+                LET'S BUILD SOMETHING<br/>
+                <span class="text-script-yellow">AMAZING</span> TOGETHER.
+              </h2>
+            </div>
           </div>
+
+          <!-- Right Action Block -->
+          <div class="cta-banner-sub-row">
+            <p class="cta-banner-subtitle">
+              Have a project in mind or just want to say hi?<br/>
+              We'd love to hear from you.
+            </p>
+            <div class="cta-btn-wrap">
+              <a href="#footer" class="cta-golden-btn">
+                LET'S TALK
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <line x1="5" y1="12" x2="19" y2="12"></line>
+                  <polyline points="12 5 19 12 12 19"></polyline>
+                </svg>
+              </a>
+              <!-- Dashed paper plane trail with flying plane -->
+              <div class="cta-plane-trail-wrap" aria-hidden="true">
+                <svg class="cta-plane-loop-svg" width="140" height="60" viewBox="0 0 140 60" fill="none">
+                  <path d="M5 45 C40 45, 75 35, 115 15" stroke="rgba(255,255,255,0.7)" stroke-width="2" stroke-dasharray="5 5"/>
+                  <path d="M115 15 L108 12 M115 15 L112 21" stroke="rgba(255,255,255,0.7)" stroke-width="2" stroke-linecap="round"/>
+                </svg>
+                <svg class="cta-flying-plane" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/>
+                </svg>
+              </div>
+            </div>
+          </div>
+
         </div>
+      </div>
+
+      <!-- Bottom Wave Transition to Membership -->
+      <div class="cta-to-membership-wave" aria-hidden="true">
+        <svg viewBox="0 0 1440 90" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M0,45 C320,0 680,75 1060,25 C1240,0 1380,45 1440,65 L1440,90 L0,90 Z" fill="#ffffff"/>
+        </svg>
       </div>
     </div>
   </section>
 
-<!-- ===================== MEMBERSHIP / PRICING ===================== -->
+  <!-- ===================== MEMBERSHIP / PRICING ===================== -->
   <section class="membership" id="membership" aria-label="Membership plans">
     <div class="membership-inner max-w">
 
@@ -1155,8 +1213,8 @@
       <div class="membership-left">
         <div class="membership-header">
           <div class="membership-brand-heading">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#0055ff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+            <svg class="membership-header-plane" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#0055ff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/>
             </svg>
             <h2 class="membership-title">CHOOSE YOUR<br/>MEMBERSHIP</h2>
           </div>
@@ -1193,7 +1251,7 @@
             </li>
             <li>
               <span class="why-check">✓</span>
-              <span>Average response &lt; 2 hrs<br/><em>White glove fast.</em></span>
+              <span>Average response &lt; 2 hrs<br/><em>We're super fast.</em></span>
             </li>
           </ul>
         </div>
@@ -1202,18 +1260,16 @@
       <!-- Cards Grid -->
       <div class="membership-cards">
 
-        <!-- BEGINNER -->
+        <!-- BEGINNER / BASIC -->
         <article class="plan-card plan-beginner" id="plan-beginner">
           <div class="plan-top">
             <div class="plan-badge-icon plan-badge-blue">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0055ff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <rect x="2" y="3" width="20" height="14" rx="2" ry="2"/>
-                <line x1="8" y1="21" x2="16" y2="21"/>
-                <line x1="12" y1="17" x2="12" y2="21"/>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#0055ff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/>
               </svg>
             </div>
             <div class="plan-meta">
-              <span class="plan-name">BEGINNER</span>
+              <span class="plan-name">BASIC</span>
               <span class="plan-target">For startups &amp; personal projects</span>
             </div>
           </div>
@@ -1241,12 +1297,15 @@
           </a>
         </article>
 
-        <!-- PRO (Featured Electric Blue Card) -->
+        <!-- PRO (Featured Electric Blue Card with MOST POPULAR Top Badge) -->
         <article class="plan-card plan-pro plan-featured" id="plan-pro">
+          <!-- MOST POPULAR Ribbon Badge -->
+          <div class="pro-popular-badge">MOST POPULAR</div>
+
           <div class="plan-top">
             <div class="plan-badge-icon plan-badge-white">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M2 4l3 12h14l3-12-6 7-4-7-4 7-6-7z" fill="white"/>
               </svg>
             </div>
             <div class="plan-meta">
@@ -1285,12 +1344,8 @@
         <article class="plan-card plan-legend" id="plan-legend">
           <div class="plan-top">
             <div class="plan-badge-icon plan-badge-orange">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M6 9H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h2"></path>
-                <path d="M18 9h2a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2h-2"></path>
-                <path d="M6 3h12v7a6 6 0 0 1-12 0V3z"></path>
-                <path d="M9 21h6"></path>
-                <path d="M12 16v5"></path>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M6 3h12l4 6-10 13L2 9l4-6z"/>
               </svg>
             </div>
             <div class="plan-meta">
@@ -1326,19 +1381,10 @@
 
       </div>
 
-      <!-- Right side doodle quote -->
-      <div class="membership-right-doodle" aria-hidden="true">
-        <svg class="doodle-plane" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#0055ff" stroke-width="1.8">
-          <path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/>
-        </svg>
-        <span class="doodle-text">Powerful<br/>solutions for<br/>serious brands.</span>
-        <span class="doodle-smile">:)</span>
-      </div>
-
     </div>
   </section>
 
-      <!-- ===================== FOOTER (Deep Royal Navy Blue with Top Wave) ===================== -->
+<!-- ===================== FOOTER (Deep Royal Navy Blue with Top Wave) ===================== -->
   <footer class="footer" id="footer" aria-label="Site footer">
     <!-- Top Navy Wave Transition -->
     <div class="footer-top-wave" aria-hidden="true">
@@ -1430,7 +1476,7 @@
 
   <!-- Razorpay Checkout SDK -->
   <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
-  <script src="script.js?v=33"></script>
+  <script src="script.js?v=34"></script>
   <!-- Toast Notification Container -->
   <div id="toast-container" class="toast-container"></div>
 
