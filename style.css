@@ -2217,58 +2217,20 @@ body {
 }
 
 /* ============================================================
-   PRE-FOOTER CTA BANNER (Seamlessly inside 3section landscape wrapper)
+   PRE-FOOTER CTA BANNER (Powered by section4.png)
    ============================================================ */
 .cta-banner {
   position: relative;
-  background: transparent;
-  overflow: visible;
-  display: flex;
-  flex-direction: column;
-}
-
-.cta-hot-air-balloon {
-  position: absolute;
-  right: 2%;
-  top: -40px;
-  z-index: 5;
-  pointer-events: none;
-  filter: drop-shadow(0 16px 32px rgba(0, 0, 0, 0.35));
-  animation: floatBalloon 7s ease-in-out infinite alternate;
-}
-
-@keyframes floatBalloon {
-  0% { transform: translateY(0) rotate(0deg); }
-  100% { transform: translateY(-16px) rotate(1.5deg); }
-}
-
-.cta-ribbon-container {
-  position: relative;
-  z-index: 2;
-  background: transparent;
-  padding: 0;
+  background-image: url('assets/images/section4.png');
+  background-position: center center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  padding: 60px 0 60px;
   color: #ffffff;
-}
-
-.cta-top-wave {
-  line-height: 0;
-  margin-top: -1px;
-  position: relative;
-  z-index: 3;
-  width: 100%;
-}
-
-.cta-top-wave svg {
-  width: 100%;
-  height: 85px;
-  display: block;
-}
-
-.cta-ribbon-body {
-  position: relative;
-  background: linear-gradient(180deg, #003db8 0%, #002c9e 50%, #001f7a 100%);
-  margin-top: -1px;
-  padding: 0;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  min-height: 240px;
 }
 
 .cta-ambient-dots {
@@ -2289,7 +2251,7 @@ body {
   width: 100%;
   max-width: 1360px;
   margin: 0 auto;
-  padding: 0 32px 30px;
+  padding: 0 32px;
   position: relative;
   z-index: 4;
 }
@@ -2429,17 +2391,6 @@ body {
 @keyframes floatPlane {
   0% { transform: translate(0, 0) rotate(0deg); }
   100% { transform: translate(4px, -6px) rotate(5deg); }
-}
-
-.cta-to-membership-wave {
-  line-height: 0;
-  margin-bottom: -1px;
-}
-
-.cta-to-membership-wave svg {
-  width: 100%;
-  height: 80px;
-  display: block;
 }
 
 /* ============================================================
