@@ -2178,41 +2178,6 @@ body {
   flex-direction: column;
 }
 
-.cta-banner-bg {
-  position: absolute;
-  inset: 0;
-  z-index: 1;
-}
-
-.cta-banner-landscape-img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center 35%;
-  opacity: 0.85;
-}
-
-.cta-banner-overlay {
-  position: absolute;
-  inset: 0;
-  background: rgba(255, 255, 255, 0.1);
-}
-
-.cta-hot-air-balloon {
-  position: absolute;
-  right: 2%;
-  top: 10px;
-  z-index: 4;
-  pointer-events: none;
-  filter: drop-shadow(0 16px 32px rgba(0, 0, 0, 0.35));
-  animation: floatBalloon 7s ease-in-out infinite alternate;
-}
-
-@keyframes floatBalloon {
-  0% { transform: translateY(0) rotate(0deg); }
-  100% { transform: translateY(-16px) rotate(1.5deg); }
-}
-
 .cta-ribbon-container {
   position: relative;
   z-index: 2;
@@ -2231,8 +2196,23 @@ body {
 
 .cta-top-wave svg {
   width: 100%;
-  height: 80px;
+  height: 85px;
   display: block;
+}
+
+.cta-hot-air-balloon {
+  position: absolute;
+  right: 1%;
+  top: -20px;
+  z-index: 4;
+  pointer-events: none;
+  filter: drop-shadow(0 16px 32px rgba(0, 0, 0, 0.35));
+  animation: floatBalloon 7s ease-in-out infinite alternate;
+}
+
+@keyframes floatBalloon {
+  0% { transform: translateY(0) rotate(0deg); }
+  100% { transform: translateY(-16px) rotate(1.5deg); }
 }
 
 .cta-ambient-dots {
@@ -2253,7 +2233,7 @@ body {
   width: 100%;
   max-width: 1360px;
   margin: 0 auto;
-  padding: 10px 32px 30px;
+  padding: 0 32px 30px;
   position: relative;
   z-index: 4;
 }
@@ -2263,7 +2243,7 @@ body {
   align-items: center;
   justify-content: space-between;
   gap: 40px;
-  padding-right: 140px;
+  padding-right: 170px;
 }
 
 .cta-section-label {
