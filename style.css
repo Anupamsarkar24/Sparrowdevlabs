@@ -2217,32 +2217,14 @@ body {
 }
 
 /* ============================================================
-   PRE-FOOTER CTA BANNER (Royal Blue Ribbon with Hot Air Balloon)
+   PRE-FOOTER CTA BANNER (Seamlessly inside 3section landscape wrapper)
    ============================================================ */
 .cta-banner {
   position: relative;
-  overflow: hidden;
+  background: transparent;
+  overflow: visible;
   display: flex;
   flex-direction: column;
-}
-
-.cta-banner-bg {
-  position: absolute;
-  inset: 0;
-  z-index: 1;
-}
-
-.cta-banner-landscape-img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center bottom;
-}
-
-.cta-banner-overlay {
-  position: absolute;
-  inset: 0;
-  background: rgba(255, 255, 255, 0.05);
 }
 
 .cta-hot-air-balloon {
