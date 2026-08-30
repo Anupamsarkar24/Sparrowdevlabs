@@ -231,7 +231,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Manrope:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="style.css?v=117" />
+  <link rel="stylesheet" href="style.css?v=118" />
 </head>
 <body class="loading">
 
@@ -702,7 +702,7 @@
     </div>
   </section>
 
-  <!-- ===================== FEATURED PROJECTS (Exact Seamless Royal Blue Wave Ribbon) ===================== -->
+    <!-- ===================== FEATURED PROJECTS (Exact Seamless Royal Blue Wave Ribbon with Infinite Looping Carousel) ===================== -->
   <section class="projects" id="work" aria-label="Featured projects">
     <!-- Top White Organic Wave Cutout (Seamless Transition from White Services) -->
     <div class="projects-top-wave" aria-hidden="true">
@@ -737,75 +737,98 @@
         </a>
       </div>
 
-            <!-- Center: 3 Project Cards -->
-      <div class="projects-cards-row" role="list">
-        
-        <!-- Card 1: The Storm Incident (Dramatic Coastal Storm & Lighthouse) -->
-        <article class="project-showcase-card card-theme-storm">
-          <div class="project-card-visual">
-            <img src="assets/images/prithibi.png" alt="Prithibi Portfolio" class="card-bg-photo" />
-            <div class="card-gradient-overlay"></div>
-            <div class="card-top-header">
-              <span class="case-study-badge">CASE STUDY</span>
-              <h3 class="card-headline-title">PRITHIBI<br/>PORTFOLIO</h3>
+      <!-- Center: 4 Project Cards Carousel Track -->
+      <div class="projects-cards-carousel-container" id="projects-carousel-container">
+        <div class="projects-cards-row" id="projects-slider-track" role="list">
+          
+          <!-- Card 1: Prithibi Portfolio -->
+          <article class="project-showcase-card card-theme-storm" data-project-index="0">
+            <div class="project-card-visual">
+              <img src="assets/images/prithibi.png" alt="Prithibi Portfolio" class="card-bg-photo" />
+              <div class="card-gradient-overlay"></div>
+              <div class="card-top-header">
+                <span class="case-study-badge">CASE STUDY</span>
+                <h3 class="card-headline-title">PRITHIBI<br/>PORTFOLIO</h3>
+              </div>
             </div>
-          </div>
-          <div class="project-card-footer-glass">
-            <span class="project-cat-name">Web Design / Branding</span>
-            <a href="https://prithibi-portfolio.vercel.app/" target="_blank" class="project-dark-round-btn" aria-label="View project">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-                <line x1="7" y1="17" x2="17" y2="7"></line>
-                <polyline points="7 7 17 7 17 17"></polyline>
-              </svg>
-            </a>
-          </div>
-        </article>
-
-        <!-- Card 2: Noir & Ember — Premium Cafe & Fine Dining -->
-        <article class="project-showcase-card card-theme-vertex">
-          <div class="project-card-visual">
-            <img src="assets/images/Noir & Ember — Premium Cafe & Fine Dining.png" alt="Noir & Ember — Premium Cafe & Fine Dining" class="card-bg-photo" />
-            <div class="card-gradient-overlay card-overlay-vertex"></div>
-            <div class="card-top-header">
-              <h3 class="card-headline-title vertex-title-main">Noir &amp; Ember</h3>
-              <p class="vertex-sub-label">Premium Cafe &amp; Fine Dining</p>
+            <div class="project-card-footer-glass">
+              <span class="project-cat-name">Web Design / Branding</span>
+              <a href="https://prithibi-portfolio.vercel.app/" target="_blank" class="project-dark-round-btn" aria-label="View Prithibi Portfolio project">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                  <line x1="7" y1="17" x2="17" y2="7"></line>
+                  <polyline points="7 7 17 7 17 17"></polyline>
+                </svg>
+              </a>
             </div>
-          </div>
-          <div class="project-card-footer-glass">
-            <span class="project-cat-name">Branding / Web Design</span>
-            <a href="https://cafe-resturent.vercel.app/" target="_blank" class="project-dark-round-btn" aria-label="View Noir & Ember project">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-                <line x1="7" y1="17" x2="17" y2="7"></line>
-                <polyline points="7 7 17 7 17 17"></polyline>
-              </svg>
-            </a>
-          </div>
-        </article>
+          </article>
 
-        <!-- Card 3: WildNest Travel & Adventure (Scenic Alpine Mountain Pine Forest) -->
-        <article class="project-showcase-card card-theme-wildnest">
-          <div class="project-card-visual">
-            <img src="assets/images/Shivasai WILDLIFE PHOTOGRAPHY.png" alt="Shivasai Wildlife Photography" class="card-bg-photo" />
-            <div class="card-gradient-overlay"></div>
-            <div class="card-top-header">
-              <h3 class="card-headline-title">Shivasai</h3>
-              <p class="wildnest-sub-label">Wildlife Photography</p>
+          <!-- Card 2: Noir & Ember — Premium Cafe & Fine Dining -->
+          <article class="project-showcase-card card-theme-vertex" data-project-index="1">
+            <div class="project-card-visual">
+              <img src="assets/images/Noir & Ember — Premium Cafe & Fine Dining.png" alt="Noir & Ember — Premium Cafe & Fine Dining" class="card-bg-photo" />
+              <div class="card-gradient-overlay card-overlay-vertex"></div>
+              <div class="card-top-header">
+                <h3 class="card-headline-title vertex-title-main">Noir &amp; Ember</h3>
+                <p class="vertex-sub-label">Premium Cafe &amp; Fine Dining</p>
+              </div>
             </div>
-          </div>
-          <div class="project-card-footer-glass">
-            <span class="project-cat-name">Photography / UI UX</span>
-            <a href="https://prithibi17.github.io/photo-web/" target="_blank" class="project-dark-round-btn" aria-label="View project">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-                <line x1="7" y1="17" x2="17" y2="7"></line>
-                <polyline points="7 7 17 7 17 17"></polyline>
-              </svg>
-            </a>
-          </div>
-        </article>
+            <div class="project-card-footer-glass">
+              <span class="project-cat-name">Branding / Web Design</span>
+              <a href="https://cafe-resturent.vercel.app/" target="_blank" class="project-dark-round-btn" aria-label="View Noir & Ember project">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                  <line x1="7" y1="17" x2="17" y2="7"></line>
+                  <polyline points="7 7 17 7 17 17"></polyline>
+                </svg>
+              </a>
+            </div>
+          </article>
 
+          <!-- Card 3: Shivasai Wildlife Photography -->
+          <article class="project-showcase-card card-theme-wildnest" data-project-index="2">
+            <div class="project-card-visual">
+              <img src="assets/images/Shivasai WILDLIFE PHOTOGRAPHY.png" alt="Shivasai Wildlife Photography" class="card-bg-photo" />
+              <div class="card-gradient-overlay"></div>
+              <div class="card-top-header">
+                <h3 class="card-headline-title">Shivasai</h3>
+                <p class="wildnest-sub-label">Wildlife Photography</p>
+              </div>
+            </div>
+            <div class="project-card-footer-glass">
+              <span class="project-cat-name">Photography / UI UX</span>
+              <a href="https://prithibi17.github.io/photo-web/" target="_blank" class="project-dark-round-btn" aria-label="View Shivasai Wildlife Photography project">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                  <line x1="7" y1="17" x2="17" y2="7"></line>
+                  <polyline points="7 7 17 7 17 17"></polyline>
+                </svg>
+              </a>
+            </div>
+          </article>
+
+          <!-- Card 4: Mira Jewellers Premium Gold & Silver Jewellery -->
+          <article class="project-showcase-card card-theme-mira" data-project-index="3">
+            <div class="project-card-visual">
+              <img src="assets/images/Mira Jewellers Premium Gold & Silver Jewellery.png" alt="Mira Jewellers Premium Gold & Silver Jewellery" class="card-bg-photo" />
+              <div class="card-gradient-overlay"></div>
+              <div class="card-top-header">
+                <h3 class="card-headline-title">Mira Jewellers</h3>
+                <p class="wildnest-sub-label">Premium Gold &amp; Silver Jewellery</p>
+              </div>
+            </div>
+            <div class="project-card-footer-glass">
+              <span class="project-cat-name">E-Commerce / Branding</span>
+              <a href="https://mira-jewellers-website.vercel.app/" target="_blank" class="project-dark-round-btn" aria-label="View Mira Jewellers project">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                  <line x1="7" y1="17" x2="17" y2="7"></line>
+                  <polyline points="7 7 17 7 17 17"></polyline>
+                </svg>
+              </a>
+            </div>
+          </article>
+
+        </div>
       </div>
 
-      <!-- Right: Vertical Stacked Slider Arrows -->
+      <!-- Right: Vertical Stacked Slider Arrows with Circular Spin Animation -->
       <div class="projects-vertical-nav">
         <button class="proj-nav-circle-btn" id="proj-prev" aria-label="Previous project">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -816,23 +839,24 @@
         <button class="proj-nav-circle-btn" id="proj-next" aria-label="Next project">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <line x1="5" y1="12" x2="19" y2="12"></line>
-            <polyline points="12 5 19 12 12 19"></polyline>
+            <polyline points="12 19 5 12 12 19"></polyline>
           </svg>
         </button>
       </div>
 
     </div>
 
-    <!-- Centered 3 Pagination Dots along the bottom wave -->
-    <div class="projects-pagination-dots" aria-hidden="true">
-      <span class="proj-dot active"></span>
-      <span class="proj-dot"></span>
-      <span class="proj-dot"></span>
+    <!-- Centered 4 Pagination Dots along the bottom wave -->
+    <div class="projects-pagination-dots" id="projects-dots-container" aria-label="Carousel pagination">
+      <button class="proj-dot active" data-index="0" aria-label="Go to project 1"></button>
+      <button class="proj-dot" data-index="1" aria-label="Go to project 2"></button>
+      <button class="proj-dot" data-index="2" aria-label="Go to project 3"></button>
+      <button class="proj-dot" data-index="3" aria-label="Go to project 4"></button>
     </div>
 
-    </section>
+  </section>
 
-    <!-- ===================== THREE SECTIONS CONTINUOUS LANDSCAPE (3section.png) ===================== -->
+  <!-- ===================== THREE SECTIONS CONTINUOUS LANDSCAPE (3section.png) ===================== -->
   <div class="three-sections-wrapper" id="three-sections-container">
 
     <!-- Top Organic Wave transitioning from Featured Work into 3section.png Sky -->
@@ -1464,7 +1488,7 @@
 
   <!-- Razorpay Checkout SDK -->
   <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
-  <script src="script.js?v=56"></script>
+  <script src="script.js?v=57"></script>
   <!-- Toast Notification Container -->
   <div id="toast-container" class="toast-container"></div>
 

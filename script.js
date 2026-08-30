@@ -1664,3 +1664,134 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 });
+
+
+/* ============================================================
+   FEATURED PROJECTS INFINITE LOOPING CAROUSEL CONTROLLER
+   ============================================================ */
+function initFeaturedProjectsCarousel() {
+  const track = document.getElementById('projects-slider-track');
+  const nextBtn = document.getElementById('proj-next');
+  const prevBtn = document.getElementById('proj-prev');
+  const dots = document.querySelectorAll('.proj-dot');
+  
+  if (!track || !nextBtn || !prevBtn) return;
+
+  const cards = track.querySelectorAll('.project-showcase-card');
+  const totalCards = cards.length;
+  if (totalCards === 0) return;
+
+  let currentIndex = 0;
+  let isAnimating = false;
+
+  function updateCarousel(instant = false) {
+    const cardWidth = cards[0].offsetWidth;
+    const gap = 20; // 20px gap from CSS
+    const step = cardWidth + gap;
+    const offset = -(currentIndex * step);
+
+    track.style.transition = instant ? 'none' : 'transform 0.5s cubic-bezier(0.25, 1, 0.5, 1)';
+    track.style.transform = `translateX(${offset}px)`;
+
+    // Update active dot
+    dots.forEach((dot, idx) => {
+      if (idx === currentIndex) {
+        dot.classList.add('active');
+      } else {
+        dot.classList.remove('active');
+      }
+    });
+  }
+
+  function playCircleButtonAnimation(btn) {
+    btn.classList.remove('clicked');
+    void btn.offsetWidth; // trigger reflow
+    btn.classList.add('clicked');
+  }
+
+  function goNext() {
+    if (isAnimating) return;
+    isAnimating = true;
+    playCircleButtonAnimation(nextBtn);
+
+    // Infinite circular loop: first and last connected
+    currentIndex = (currentIndex + 1) % totalCards;
+    updateCarousel();
+
+    setTimeout(() => {
+      isAnimating = false;
+    }, 450);
+  }
+
+  function goPrev() {
+    if (isAnimating) return;
+    isAnimating = true;
+    playCircleButtonAnimation(prevBtn);
+
+    // Infinite circular loop backwards
+    currentIndex = (currentIndex - 1 + totalCards) % totalCards;
+    updateCarousel();
+
+    setTimeout(() => {
+      isAnimating = false;
+    }, 450);
+  }
+
+  nextBtn.addEventListener('click', (e) => {
+    e.preventDefault();
+    goNext();
+  });
+
+  prevBtn.addEventListener('click', (e) => {
+    e.preventDefault();
+    goPrev();
+  });
+
+  dots.forEach((dot) => {
+    dot.addEventListener('click', () => {
+      const idx = parseInt(dot.getAttribute('data-index'), 10);
+      if (!isNaN(idx) && idx !== currentIndex) {
+        currentIndex = idx;
+        updateCarousel();
+      }
+    });
+  });
+
+  // Handle touch swipe on mobile / tablet
+  let startX = 0;
+  let currentX = 0;
+  let isSwiping = false;
+
+  track.addEventListener('touchstart', (e) => {
+    startX = e.touches[0].clientX;
+    isSwiping = true;
+  }, { passive: true });
+
+  track.addEventListener('touchmove', (e) => {
+    if (!isSwiping) return;
+    currentX = e.touches[0].clientX;
+  }, { passive: true });
+
+  track.addEventListener('touchend', () => {
+    if (!isSwiping) return;
+    isSwiping = false;
+    const diff = startX - currentX;
+    if (Math.abs(diff) > 40) {
+      if (diff > 0) {
+        goNext();
+      } else {
+        goPrev();
+      }
+    }
+  });
+
+  // Re-calculate layout on window resize
+  window.addEventListener('resize', () => {
+    updateCarousel(true);
+  });
+
+  // Initialize
+  updateCarousel(true);
+}
+
+document.addEventListener('DOMContentLoaded', initFeaturedProjectsCarousel);
