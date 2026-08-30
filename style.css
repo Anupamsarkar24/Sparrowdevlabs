@@ -2217,22 +2217,27 @@ body {
 }
 
 /* ============================================================
-   PRE-FOOTER CTA BANNER (Powered by section4.png)
+   PRE-FOOTER CTA BANNER (Full Undulating Ribbon with section4.png)
    ============================================================ */
 .cta-banner {
   position: relative;
+  width: 100%;
+  aspect-ratio: 2164 / 727;
+  min-height: 360px;
+  max-height: 520px;
   background: transparent;
-  padding: 45px 0 55px;
-  color: #ffffff;
-  overflow: visible;
   display: flex;
   align-items: center;
-  min-height: 260px;
+  overflow: visible;
+  padding: 0;
+  color: #ffffff;
 }
 
 .cta-section4-img-wrapper {
   position: absolute;
   inset: 0;
+  width: 100%;
+  height: 100%;
   z-index: 1;
   pointer-events: none;
 }
@@ -2240,8 +2245,7 @@ body {
 .cta-section4-img {
   width: 100%;
   height: 100%;
-  object-fit: cover;
-  object-position: center center;
+  object-fit: fill;
   display: block;
 }
 
@@ -2257,9 +2261,15 @@ body {
 .cta-banner-content {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  gap: 40px;
-  padding-right: 260px;
+  justify-content: flex-start;
+  gap: clamp(30px, 4vw, 70px);
+  padding-left: clamp(10px, 2.5vw, 40px);
+  padding-right: 320px;
+  width: 100%;
+}
+
+.cta-banner-text-side {
+  flex-shrink: 0;
 }
 
 .cta-section-label {
@@ -2272,7 +2282,7 @@ body {
   letter-spacing: 2px;
   color: #a5d8ff;
   text-transform: uppercase;
-  margin-bottom: 12px;
+  margin-bottom: 10px;
 }
 
 .cta-label-line {
@@ -2285,7 +2295,7 @@ body {
 .cta-headline-wrap {
   display: flex;
   align-items: flex-start;
-  gap: 12px;
+  gap: 10px;
 }
 
 .cta-sparkle-icon {
@@ -2296,7 +2306,7 @@ body {
 
 .cta-banner-title {
   font-family: var(--font-primary);
-  font-size: clamp(28px, 3.2vw, 42px);
+  font-size: clamp(26px, 2.8vw, 38px);
   font-weight: 900;
   line-height: 1.06;
   letter-spacing: -1px;
@@ -2319,17 +2329,19 @@ body {
   text-shadow: 0 2px 10px rgba(250, 204, 21, 0.4);
 }
 
-.cta-banner-sub-row {
+.cta-banner-center-side {
   display: flex;
-  align-items: center;
-  gap: 32px;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 14px;
+  flex-shrink: 0;
 }
 
 .cta-banner-subtitle {
   font-family: var(--font-secondary);
-  font-size: 13.5px;
-  line-height: 1.6;
-  color: rgba(255, 255, 255, 0.9);
+  font-size: 13px;
+  line-height: 1.55;
+  color: rgba(255, 255, 255, 0.92);
   margin: 0;
   font-weight: 500;
 }
@@ -2338,7 +2350,7 @@ body {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  padding: 13px 30px;
+  padding: 12px 28px;
   background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
   color: #111827;
   font-family: var(--font-primary);
@@ -2351,7 +2363,6 @@ body {
   box-shadow: 0 6px 20px rgba(245, 158, 11, 0.45);
   white-space: nowrap;
   transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
-  flex-shrink: 0;
 }
 
 .cta-golden-btn:hover {
@@ -2362,21 +2373,22 @@ body {
 }
 
 @media (max-width: 1200px) {
+  .cta-banner {
+    aspect-ratio: auto;
+    min-height: 380px;
+    padding: 50px 0;
+  }
   .cta-banner-content {
-    padding-right: 200px;
+    padding-right: 180px;
   }
 }
 
-@media (max-width: 992px) {
+@media (max-width: 900px) {
   .cta-banner-content {
     flex-direction: column;
     align-items: flex-start;
     padding-right: 0;
-  }
-  .cta-banner-sub-row {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 20px;
+    gap: 24px;
   }
 }
 
