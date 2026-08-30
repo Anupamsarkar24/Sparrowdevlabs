@@ -1667,131 +1667,142 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 /* ============================================================
-   FEATURED PROJECTS INFINITE LOOPING CAROUSEL CONTROLLER
+   FEATURED PROJECTS INFINITE LOOPING 3-CARD CAROUSEL CONTROLLER
    ============================================================ */
 function initFeaturedProjectsCarousel() {
+  const container = document.getElementById('projects-carousel-container');
   const track = document.getElementById('projects-slider-track');
   const nextBtn = document.getElementById('proj-next');
   const prevBtn = document.getElementById('proj-prev');
   const dots = document.querySelectorAll('.proj-dot');
   
-  if (!track || !nextBtn || !prevBtn) return;
+  if (!container || !track || !nextBtn || !prevBtn) return;
 
-  const cards = track.querySelectorAll('.project-showcase-card');
-  const totalCards = cards.length;
-  if (totalCards === 0) return;
-
-  let currentIndex = 0;
   let isAnimating = false;
+  let activeDotIndex = 0;
+  const totalOriginalCards = 4;
 
-  function updateCarousel(instant = false) {
-    const cardWidth = cards[0].offsetWidth;
-    const gap = 20; // 20px gap from CSS
-    const step = cardWidth + gap;
-    const offset = -(currentIndex * step);
+  function setCardWidths() {
+    const containerWidth = container.offsetWidth;
+    let visibleCards = 3;
+    if (window.innerWidth <= 860) {
+      visibleCards = 1;
+    } else if (window.innerWidth <= 1100) {
+      visibleCards = 2;
+    }
 
-    track.style.transition = instant ? 'none' : 'transform 0.5s cubic-bezier(0.25, 1, 0.5, 1)';
-    track.style.transform = `translateX(${offset}px)`;
+    const gap = 20;
+    const cardWidth = (containerWidth - (gap * (visibleCards - 1))) / visibleCards;
+    
+    const allCards = track.querySelectorAll('.project-showcase-card');
+    allCards.forEach(card => {
+      card.style.width = `${cardWidth}px`;
+      card.style.flex = `0 0 ${cardWidth}px`;
+    });
 
-    // Update active dot
-    dots.forEach((dot, idx) => {
-      if (idx === currentIndex) {
-        dot.classList.add('active');
-      } else {
-        dot.classList.remove('active');
-      }
+    return { cardWidth, gap };
+  }
+
+  function updateDots(index) {
+    dots.forEach((dot, i) => {
+      dot.classList.toggle('active', i === index);
     });
   }
 
-  function playCircleButtonAnimation(btn) {
+  function playCircleAnimation(btn) {
     btn.classList.remove('clicked');
-    void btn.offsetWidth; // trigger reflow
+    void btn.offsetWidth;
     btn.classList.add('clicked');
   }
 
-  function goNext() {
+  function slideNext() {
     if (isAnimating) return;
     isAnimating = true;
-    playCircleButtonAnimation(nextBtn);
+    playCircleAnimation(nextBtn);
 
-    // Infinite circular loop: first and last connected
-    currentIndex = (currentIndex + 1) % totalCards;
-    updateCarousel();
+    const { cardWidth, gap } = setCardWidths();
+    const distance = cardWidth + gap;
+
+    track.style.transition = 'transform 0.45s cubic-bezier(0.25, 1, 0.5, 1)';
+    track.style.transform = `translateX(-${distance}px)`;
+
+    activeDotIndex = (activeDotIndex + 1) % totalOriginalCards;
+    updateDots(activeDotIndex);
 
     setTimeout(() => {
+      const firstCard = track.firstElementChild;
+      track.appendChild(firstCard);
+      track.style.transition = 'none';
+      track.style.transform = 'translateX(0)';
       isAnimating = false;
-    }, 450);
+    }, 460);
   }
 
-  function goPrev() {
+  function slidePrev() {
     if (isAnimating) return;
     isAnimating = true;
-    playCircleButtonAnimation(prevBtn);
+    playCircleAnimation(prevBtn);
 
-    // Infinite circular loop backwards
-    currentIndex = (currentIndex - 1 + totalCards) % totalCards;
-    updateCarousel();
+    const { cardWidth, gap } = setCardWidths();
+    const distance = cardWidth + gap;
+
+    const lastCard = track.lastElementChild;
+    track.insertBefore(lastCard, track.firstElementChild);
+    track.style.transition = 'none';
+    track.style.transform = `translateX(-${distance}px)`;
+
+    void track.offsetWidth; // Force layout recalculation
+
+    track.style.transition = 'transform 0.45s cubic-bezier(0.25, 1, 0.5, 1)';
+    track.style.transform = 'translateX(0)';
+
+    activeDotIndex = (activeDotIndex - 1 + totalOriginalCards) % totalOriginalCards;
+    updateDots(activeDotIndex);
 
     setTimeout(() => {
       isAnimating = false;
-    }, 450);
+    }, 460);
   }
 
   nextBtn.addEventListener('click', (e) => {
     e.preventDefault();
-    goNext();
+    slideNext();
   });
 
   prevBtn.addEventListener('click', (e) => {
     e.preventDefault();
-    goPrev();
+    slidePrev();
   });
 
-  dots.forEach((dot) => {
-    dot.addEventListener('click', () => {
-      const idx = parseInt(dot.getAttribute('data-index'), 10);
-      if (!isNaN(idx) && idx !== currentIndex) {
-        currentIndex = idx;
-        updateCarousel();
-      }
-    });
-  });
-
-  // Handle touch swipe on mobile / tablet
+  // Touch Swipe Support
   let startX = 0;
-  let currentX = 0;
-  let isSwiping = false;
+  let endX = 0;
 
   track.addEventListener('touchstart', (e) => {
     startX = e.touches[0].clientX;
-    isSwiping = true;
   }, { passive: true });
 
   track.addEventListener('touchmove', (e) => {
-    if (!isSwiping) return;
-    currentX = e.touches[0].clientX;
+    endX = e.touches[0].clientX;
   }, { passive: true });
 
   track.addEventListener('touchend', () => {
-    if (!isSwiping) return;
-    isSwiping = false;
-    const diff = startX - currentX;
-    if (Math.abs(diff) > 40) {
-      if (diff > 0) {
-        goNext();
-      } else {
-        goPrev();
-      }
+    const diff = startX - endX;
+    if (Math.abs(diff) > 45) {
+      if (diff > 0) slideNext();
+      else slidePrev();
     }
+    startX = 0;
+    endX = 0;
   });
 
-  // Re-calculate layout on window resize
   window.addEventListener('resize', () => {
-    updateCarousel(true);
+    setCardWidths();
   });
 
-  // Initialize
-  updateCarousel(true);
+  // Run on start
+  setCardWidths();
+  updateDots(0);
 }
 
 document.addEventListener('DOMContentLoaded', initFeaturedProjectsCarousel);
