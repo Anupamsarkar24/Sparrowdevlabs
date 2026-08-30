@@ -231,7 +231,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Manrope:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="style.css?v=114" />
+  <link rel="stylesheet" href="style.css?v=115" />
 </head>
 <body class="loading">
 
@@ -1172,7 +1172,7 @@
 
   </div><!-- end .three-sections-wrapper -->
 
-  <!-- ===================== MEMBERSHIP / PRICING ===================== -->
+    <!-- ===================== MEMBERSHIP / PRICING ===================== -->
   <section class="membership" id="membership" aria-label="Membership plans">
     <div class="membership-inner max-w">
 
@@ -1228,7 +1228,14 @@
       <div class="membership-cards">
 
         <!-- BASIC -->
-        <article class="plan-card plan-beginner" id="plan-beginner">
+        <article class="plan-card plan-beginner" id="plan-beginner" 
+          data-plan="BASIC" 
+          data-monthly-display="999" 
+          data-monthly-period="/month" 
+          data-monthly-amount="99900" 
+          data-yearly-display="749" 
+          data-yearly-period="/month" 
+          data-yearly-amount="898800">
           <div class="plan-top">
             <div class="plan-badge-icon plan-badge-blue">
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#0055ff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -1246,7 +1253,7 @@
             <span class="plan-amount" id="price-beginner">999</span>
             <span class="plan-period" id="period-beginner">/month</span>
           </div>
-          <span class="plan-billed">Billed yearly</span>
+          <span class="plan-billed">Billed monthly</span>
 
           <hr class="plan-divider" />
 
@@ -1265,7 +1272,14 @@
         </article>
 
         <!-- PRO (Featured Electric Blue Card with MOST POPULAR Top Badge) -->
-        <article class="plan-card plan-pro plan-featured" id="plan-pro">
+        <article class="plan-card plan-pro plan-featured" id="plan-pro" 
+          data-plan="PRO" 
+          data-monthly-display="2,999" 
+          data-monthly-period="/month" 
+          data-monthly-amount="299900" 
+          data-yearly-display="2,249" 
+          data-yearly-period="/month" 
+          data-yearly-amount="2698800">
           <!-- MOST POPULAR Ribbon Badge -->
           <div class="pro-popular-badge">MOST POPULAR</div>
 
@@ -1286,7 +1300,7 @@
             <span class="plan-amount text-white" id="price-pro">2,999</span>
             <span class="plan-period text-white-70" id="period-pro">/month</span>
           </div>
-          <span class="plan-billed text-white-70">Billed yearly</span>
+          <span class="plan-billed text-white-70">Billed monthly</span>
 
           <hr class="plan-divider plan-divider--white" />
 
@@ -1308,7 +1322,14 @@
         </article>
 
         <!-- LEGEND -->
-        <article class="plan-card plan-legend" id="plan-legend">
+        <article class="plan-card plan-legend" id="plan-legend" 
+          data-plan="LEGEND" 
+          data-monthly-display="6,999" 
+          data-monthly-period="/month" 
+          data-monthly-amount="699900" 
+          data-yearly-display="5,249" 
+          data-yearly-period="/month" 
+          data-yearly-amount="6298800">
           <div class="plan-top">
             <div class="plan-badge-icon plan-badge-orange">
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -1326,7 +1347,7 @@
             <span class="plan-amount text-orange" id="price-legend">6,999</span>
             <span class="plan-period" id="period-legend">/month</span>
           </div>
-          <span class="plan-billed">Billed yearly</span>
+          <span class="plan-billed">Billed monthly</span>
 
           <hr class="plan-divider" />
 
@@ -1443,7 +1464,7 @@
 
   <!-- Razorpay Checkout SDK -->
   <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
-  <script src="script.js?v=53"></script>
+  <script src="script.js?v=54"></script>
   <!-- Toast Notification Container -->
   <div id="toast-container" class="toast-container"></div>
 
