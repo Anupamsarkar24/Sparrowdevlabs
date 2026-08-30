@@ -231,7 +231,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Manrope:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="style.css?v=98" />
+  <link rel="stylesheet" href="style.css?v=99" />
 </head>
 <body class="loading">
 
@@ -1024,7 +1024,7 @@
     </div>
   </section>
 
-  <!-- ===================== TESTIMONIALS (Side-by-Side with Blue Script Accent) ===================== -->
+    <!-- ===================== TESTIMONIALS (Side-by-Side with Blue Script Accent & Slider Buttons) ===================== -->
   <section class="testimonials" id="about" aria-label="Client testimonials">
     <div class="testimonials-inner max-w">
       
@@ -1039,15 +1039,31 @@
           WE <span class="text-script-blue">LOVE</span> TO WORK WITH.
         </h2>
         <a href="#about" class="testimonials-see-all-link">
-          SEE ALL REVIEWS
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-            <line x1="5" y1="12" x2="19" y2="12"></line>
-            <polyline points="12 5 19 12 12 19"></polyline>
-          </svg>
+          <span>SEE ALL REVIEWS</span>
+          <span class="see-all-circle-arrow">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="5" y1="12" x2="19" y2="12"></line>
+              <polyline points="12 5 19 12 12 19"></polyline>
+            </svg>
+          </span>
         </a>
+        <div class="testimonials-slider-buttons">
+          <button class="test-round-nav-btn" id="tc-prev" aria-label="Previous review">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="19" y1="12" x2="5" y2="12"></line>
+              <polyline points="12 19 5 12 12 5"></polyline>
+            </svg>
+          </button>
+          <button class="test-round-nav-btn" id="tc-next" aria-label="Next review">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="5" y1="12" x2="19" y2="12"></line>
+              <polyline points="12 5 19 12 12 19"></polyline>
+            </svg>
+          </button>
+        </div>
       </div>
 
-      <!-- Right 3 Testimonial Cards & Carousel Nav Arrow -->
+      <!-- Right 3 Testimonial Cards -->
       <div class="testimonials-cards-wrapper">
         <div class="testimonials-cards-grid" role="list">
           
@@ -1059,7 +1075,7 @@
               <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=100&q=80" alt="Jessica Miller" class="test-avatar" />
               <div class="test-user-info">
                 <strong class="test-user-name">Jessica Miller</strong>
-                <span class="test-user-role">CEO, GreenPax</span>
+                <span class="test-user-role">CEO, GreenPeak</span>
               </div>
             </div>
           </article>
@@ -1072,7 +1088,7 @@
               <img src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=100&q=80" alt="Michael Brown" class="test-avatar" />
               <div class="test-user-info">
                 <strong class="test-user-name">Michael Brown</strong>
-                <span class="test-user-role">Founder, Brightcode</span>
+                <span class="test-user-role">Founder, BrightCode</span>
               </div>
             </div>
           </article>
@@ -1085,19 +1101,12 @@
               <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=100&q=80" alt="David Wilson" class="test-avatar" />
               <div class="test-user-info">
                 <strong class="test-user-name">David Wilson</strong>
-                <span class="test-user-role">Marketing Head, Nexa</span>
+                <span class="test-user-role">Marketing Head, Hera</span>
               </div>
             </div>
           </article>
 
         </div>
-
-        <!-- Floating Right Navigation Circle Arrow -->
-        <button class="test-floating-next-btn" id="tc-next" aria-label="Next review">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-            <polyline points="9 18 15 12 9 6"></polyline>
-          </svg>
-        </button>
       </div>
 
     </div>
@@ -1144,6 +1153,13 @@
 
     <!-- Blue Ribbon Wrapper -->
     <div class="cta-ribbon-container">
+      <!-- Top Organic Wave from Sky into Blue Ribbon -->
+      <div class="cta-top-wave" aria-hidden="true">
+        <svg viewBox="0 0 1440 90" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M0,55 C320,10 680,85 1060,35 C1240,5 1380,45 1440,65 L1440,90 L0,90 Z" fill="#003db8"/>
+        </svg>
+      </div>
+
       <div class="cta-ambient-dots cta-dots-left" aria-hidden="true"></div>
       <div class="cta-ambient-dots cta-dots-right" aria-hidden="true"></div>
 
@@ -1204,7 +1220,7 @@
     </div>
   </section>
 
-  <!-- ===================== MEMBERSHIP / PRICING ===================== -->
+<!-- ===================== MEMBERSHIP / PRICING ===================== -->
   <section class="membership" id="membership" aria-label="Membership plans">
     <div class="membership-inner max-w">
 
@@ -1475,7 +1491,7 @@
 
   <!-- Razorpay Checkout SDK -->
   <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
-  <script src="script.js?v=37"></script>
+  <script src="script.js?v=38"></script>
   <!-- Toast Notification Container -->
   <div id="toast-container" class="toast-container"></div>
 
