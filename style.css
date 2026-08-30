@@ -1608,8 +1608,8 @@ body {
   gap: 8px;
   position: relative;
   z-index: 3;
-  margin-top: 10px;
-  margin-bottom: -15px;
+  margin-top: 18px;
+  margin-bottom: 24px;
 }
 
 .proj-dot {
@@ -1626,16 +1626,17 @@ body {
   box-shadow: 0 0 8px rgba(255, 255, 255, 0.8);
 }
 
-.work-to-stats-wave {
+/* Seamless wave transition into 3section.png */
+.three-sections-top-wave {
   line-height: 0;
-  margin-bottom: -1px;
+  margin-top: -1px;
   position: relative;
-  z-index: 1;
+  z-index: 3;
 }
 
-.work-to-stats-wave svg {
+.three-sections-top-wave svg {
   width: 100%;
-  height: 90px;
+  height: 80px;
   display: block;
 }
 
