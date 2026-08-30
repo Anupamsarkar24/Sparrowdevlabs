@@ -1662,13 +1662,25 @@ body {
 }
 
 /* ============================================================
-   STATISTICS STRIP (Ice Blue Cloud Atmosphere)
+   THREE SECTIONS WRAPPER (Stats + Process + Testimonials via 3section.png)
+   ============================================================ */
+.three-sections-wrapper {
+  position: relative;
+  background-image: url('assets/images/3section.png');
+  background-position: center top;
+  background-size: cover;
+  background-repeat: no-repeat;
+  overflow: hidden;
+}
+
+/* ============================================================
+   STATISTICS STRIP
    ============================================================ */
 .stats {
   position: relative;
-  background: linear-gradient(180deg, #dbeafe 0%, #eef6ff 50%, #ffffff 100%);
-  padding: 50px 0 0;
-  z-index: 3;
+  background: transparent;
+  padding: 60px 0 20px;
+  z-index: 2;
   overflow: hidden;
 }
 
@@ -1679,7 +1691,7 @@ body {
   gap: 32px;
   max-width: 1320px;
   margin: 0 auto;
-  padding: 0 32px 50px;
+  padding: 0 32px 30px;
   position: relative;
   z-index: 2;
 }
@@ -1753,17 +1765,6 @@ body {
   background: rgba(0, 51, 204, 0.15);
 }
 
-.stats-to-process-wave {
-  line-height: 0;
-  margin-bottom: -1px;
-}
-
-.stats-to-process-wave svg {
-  width: 100%;
-  height: 70px;
-  display: block;
-}
-
 @media (max-width: 1024px) {
   .stats-atmosphere-inner {
     grid-template-columns: 1fr 1fr;
@@ -1782,7 +1783,7 @@ body {
   .stats-atmosphere-inner {
     grid-template-columns: 1fr;
     gap: 24px;
-    padding: 0 20px 40px;
+    padding: 0 20px 30px;
   }
   .stat-item {
     justify-content: flex-start;
@@ -1798,8 +1799,8 @@ body {
    ============================================================ */
 .process {
   position: relative;
-  background: #ffffff;
-  padding: 60px 0 60px;
+  background: transparent;
+  padding: 40px 0 40px;
   color: #111827;
   overflow: hidden;
 }
@@ -1963,34 +1964,44 @@ body {
   max-width: 180px;
 }
 
+@media (max-width: 1100px) {
+  .process-inner {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 36px;
+  }
+  .process-left-col {
+    flex: none;
+    width: 100%;
+  }
+}
+
+@media (max-width: 768px) {
+  .process-steps-track {
+    grid-template-columns: 1fr 1fr;
+    gap: 32px 20px;
+  }
+  .process-connecting-line {
+    display: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .process-steps-track {
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
+}
+
 /* ============================================================
-   TESTIMONIALS SECTION (Anime Sky Landscape Background)
+   TESTIMONIALS SECTION (Seamless over 3section.png)
    ============================================================ */
 .testimonials {
   position: relative;
-  padding: 60px 0 30px;
+  background: transparent;
+  padding: 40px 0 60px;
   color: #111827;
   overflow: hidden;
-}
-
-.testimonials-sky-bg {
-  position: absolute;
-  inset: 0;
-  z-index: 1;
-}
-
-.testimonials-bg-img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center 30%;
-}
-
-.testimonials-sky-overlay {
-  position: absolute;
-  inset: 0;
-  background: rgba(255, 255, 255, 0.2);
-  backdrop-filter: blur(1px);
 }
 
 .testimonials-inner {
@@ -2184,6 +2195,24 @@ body {
   font-family: var(--font-secondary);
   font-size: 11px;
   color: rgba(17, 24, 39, 0.55);
+}
+
+@media (max-width: 1100px) {
+  .testimonials-inner {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 36px;
+  }
+  .testimonials-left {
+    flex: none;
+    width: 100%;
+  }
+}
+
+@media (max-width: 768px) {
+  .testimonials-cards-grid {
+    grid-template-columns: 1fr;
+  }
 }
 
 /* ============================================================
