@@ -1438,7 +1438,7 @@ body {
 }
 
 .project-showcase-card {
-  background: #0d1527;
+  background: #090e1a;
   border-radius: 20px;
   overflow: hidden;
   border: 1px solid rgba(255, 255, 255, 0.12);
@@ -1459,6 +1459,7 @@ body {
   height: 200px;
   position: relative;
   overflow: hidden;
+  background: #050b14;
 }
 
 .card-bg-photo {
@@ -1466,29 +1467,29 @@ body {
   height: 100%;
   object-fit: cover;
   transition: transform 0.5s ease;
+  display: block;
 }
 
 .project-showcase-card:hover .card-bg-photo {
   transform: scale(1.06);
 }
 
-/* Storm Card */
-.storm-visual-bg {
-  position: relative;
-  width: 100%;
-  height: 100%;
-}
-
-.storm-visual-overlay {
+.card-gradient-overlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(180deg, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.6) 100%);
+  background: linear-gradient(180deg, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.65) 100%);
+  pointer-events: none;
 }
 
-.storm-top-content {
+.card-overlay-vertex {
+  background: linear-gradient(180deg, rgba(0, 8, 30, 0.2) 0%, rgba(0, 8, 30, 0.7) 100%);
+}
+
+.card-top-header {
   position: absolute;
   top: 16px;
-  left: 16px;
+  left: 18px;
+  right: 18px;
   z-index: 2;
 }
 
@@ -1500,95 +1501,32 @@ body {
   letter-spacing: 1px;
   background: #f59e0b;
   color: #ffffff;
-  padding: 3px 8px;
+  padding: 3px 9px;
   border-radius: 100px;
   margin-bottom: 8px;
 }
 
-.storm-main-title {
+.card-headline-title {
   font-family: var(--font-primary);
-  font-size: 16px;
+  font-size: 17px;
   font-weight: 900;
   line-height: 1.1;
   color: #ffffff;
   margin: 0;
-  text-shadow: 0 2px 8px rgba(0,0,0,0.6);
+  text-shadow: 0 2px 8px rgba(0,0,0,0.7);
 }
 
-/* Vertex Card */
-.card-visual-vertex {
-  background: radial-gradient(circle at 70% 30%, #004ee6 0%, #041444 60%, #01081f 100%);
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  padding: 24px 20px;
-  position: relative;
-}
-
-.vertex-glow-wave {
-  position: absolute;
-  right: -20px;
-  bottom: -20px;
-  width: 160px;
-  height: 160px;
-  background: radial-gradient(circle, rgba(56, 189, 248, 0.45) 0%, rgba(0, 85, 255, 0.1) 60%, transparent 80%);
-  filter: blur(10px);
-  pointer-events: none;
-}
-
-.vertex-content {
-  position: relative;
-  z-index: 2;
-}
-
-.vertex-title {
-  font-family: var(--font-primary);
-  font-size: 28px;
-  font-weight: 900;
-  color: #ffffff;
-  margin: 0;
+.vertex-title-main {
+  font-size: 26px;
   letter-spacing: -0.5px;
 }
 
-.vertex-sub {
-  font-family: var(--font-secondary);
-  font-size: 12px;
-  color: #94a3b8;
-  margin: 4px 0 0;
-}
-
-/* WildNest Card */
-.card-visual-wildnest {
-  position: relative;
-}
-
-.wildnest-overlay {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(180deg, rgba(0,0,0,0.25) 0%, rgba(0,0,0,0.7) 100%);
-}
-
-.wildnest-content {
-  position: absolute;
-  top: 16px;
-  left: 16px;
-  z-index: 2;
-}
-
-.wildnest-title {
-  font-family: var(--font-primary);
-  font-size: 20px;
-  font-weight: 900;
-  color: #ffffff;
-  margin: 0;
-  text-shadow: 0 2px 8px rgba(0,0,0,0.6);
-}
-
-.wildnest-sub {
+.vertex-sub-label,
+.wildnest-sub-label {
   font-family: var(--font-secondary);
   font-size: 11.5px;
   color: rgba(255, 255, 255, 0.85);
-  margin: 2px 0 0;
+  margin: 3px 0 0;
   text-shadow: 0 1px 4px rgba(0,0,0,0.6);
 }
 
