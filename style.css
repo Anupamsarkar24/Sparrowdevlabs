@@ -2217,20 +2217,32 @@ body {
 }
 
 /* ============================================================
-   PRE-FOOTER CTA BANNER (Powered by section4.png)
+   PRE-FOOTER CTA BANNER (Powered by section4.png with Organic Curves)
    ============================================================ */
 .cta-banner {
   position: relative;
-  background-image: url('assets/images/section4.png');
-  background-position: center center;
-  background-size: cover;
-  background-repeat: no-repeat;
-  padding: 60px 0 60px;
+  background: transparent;
+  padding: 40px 0 50px;
   color: #ffffff;
-  overflow: hidden;
+  overflow: visible;
   display: flex;
   align-items: center;
   min-height: 240px;
+}
+
+.cta-section4-img-wrapper {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.cta-section4-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center center;
+  display: block;
 }
 
 .cta-ambient-dots {
@@ -2242,6 +2254,7 @@ body {
   background-size: 14px 14px;
   pointer-events: none;
   opacity: 0.6;
+  z-index: 2;
 }
 
 .cta-dots-left { left: 0; }
