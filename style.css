@@ -2229,7 +2229,7 @@ body {
   display: flex;
   align-items: center;
   margin-top: -25px;
-  margin-bottom: -35px;
+  margin-bottom: -1px;
 }
 
 .cta-curved-mask-wrapper {

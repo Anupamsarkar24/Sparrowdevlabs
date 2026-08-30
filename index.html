@@ -231,7 +231,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Manrope:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="style.css?v=112" />
+  <link rel="stylesheet" href="style.css?v=113" />
 </head>
 <body class="loading">
 
@@ -1113,7 +1113,7 @@
                       <!-- ===================== PRE-FOOTER CTA BANNER (section4.png Masked Inside Organic Curve) ===================== -->
     <section class="cta-banner" id="cta-banner" aria-label="Call to action banner">
       
-      <!-- SVG Curved Mask Container with section4.png inside -->
+            <!-- SVG Curved Mask Container with section4.png inside & pure white bottom cover -->
       <div class="cta-curved-mask-wrapper" aria-hidden="true">
         <svg class="cta-curved-svg" viewBox="0 0 1440 380" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
           <defs>
@@ -1122,9 +1122,12 @@
               <path d="M0,130 C280,35 620,135 980,45 C1180,5 1340,40 1440,20 L1440,320 C1380,340 1240,290 1100,340 C780,290 420,380 0,330 Z" />
             </clipPath>
           </defs>
+          <!-- Section 4 Image clipped strictly inside the ribbon curve -->
           <g clip-path="url(#ctaRibbonClip)">
             <image href="assets/images/section4.png" x="0" y="0" width="1440" height="380" preserveAspectRatio="none" />
           </g>
+          <!-- Pure White Bottom Wave Cover: hides 3section.png beneath the ribbon and blends into Membership -->
+          <path d="M0,330 C420,380 780,290 1100,340 C1240,290 1380,340 1440,320 L1440,380 L0,380 Z" fill="#ffffff" />
         </svg>
       </div>
 
@@ -1440,7 +1443,7 @@
 
   <!-- Razorpay Checkout SDK -->
   <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
-  <script src="script.js?v=51"></script>
+  <script src="script.js?v=52"></script>
   <!-- Toast Notification Container -->
   <div id="toast-container" class="toast-container"></div>
 
