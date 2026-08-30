@@ -2172,12 +2172,11 @@ body {
    ============================================================ */
 .cta-banner {
   position: relative;
-  min-height: 280px;
   background: #ffffff;
   overflow: hidden;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  padding-top: 40px;
 }
 
 .cta-banner-bg {
@@ -2190,21 +2189,21 @@ body {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: center 35%;
-  opacity: 0.85;
+  object-position: center 30%;
+  opacity: 0.9;
 }
 
 .cta-banner-overlay {
   position: absolute;
   inset: 0;
-  background: rgba(255, 255, 255, 0.1);
+  background: linear-gradient(180deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.15) 100%);
 }
 
 .cta-hot-air-balloon {
   position: absolute;
   right: 4%;
-  top: -20px;
-  z-index: 3;
+  top: 10px;
+  z-index: 5;
   pointer-events: none;
   filter: drop-shadow(0 16px 32px rgba(0, 0, 0, 0.35));
   animation: floatBalloon 7s ease-in-out infinite alternate;
@@ -2215,25 +2214,25 @@ body {
   100% { transform: translateY(-16px) rotate(1.5deg); }
 }
 
-.cta-ribbon-container {
-  position: relative;
-  z-index: 2;
-  background: linear-gradient(180deg, #003db8 0%, #002c9e 50%, #001f7a 100%);
-  padding: 0 0 0;
-  color: #ffffff;
-  overflow: hidden;
-}
-
 .cta-top-wave {
   line-height: 0;
   margin-top: -1px;
-  background: transparent;
+  position: relative;
+  z-index: 2;
 }
 
 .cta-top-wave svg {
   width: 100%;
-  height: 80px;
+  height: 90px;
   display: block;
+}
+
+.cta-ribbon-body {
+  position: relative;
+  z-index: 2;
+  background: linear-gradient(180deg, #003db8 0%, #002c9e 50%, #001f7a 100%);
+  padding: 0 0 10px;
+  color: #ffffff;
 }
 
 .cta-ambient-dots {
@@ -2254,7 +2253,7 @@ body {
   width: 100%;
   max-width: 1360px;
   margin: 0 auto;
-  padding: 10px 32px 30px;
+  padding: 0 32px 30px;
   position: relative;
   z-index: 4;
 }
@@ -2390,19 +2389,16 @@ body {
   animation: floatPlane 4s ease-in-out infinite alternate;
 }
 
-@keyframes floatPlane {
-  0% { transform: translate(0, 0) rotate(0deg); }
-  100% { transform: translate(4px, -6px) rotate(5deg); }
-}
-
 .cta-to-membership-wave {
   line-height: 0;
   margin-bottom: -1px;
+  position: relative;
+  z-index: 2;
 }
 
 .cta-to-membership-wave svg {
   width: 100%;
-  height: 80px;
+  height: 90px;
   display: block;
 }
 
