@@ -1295,26 +1295,27 @@ body {
 }
 
 /* ============================================================
-   FEATURED WORK SECTION — Exact Undulating Royal Blue Ribbon
+   FEATURED WORK SECTION — 100% Seamless Royal Blue Ribbon
    ============================================================ */
-.services-to-work-wave {
-  line-height: 0;
-  margin-bottom: -1px;
-  background: #ffffff;
-}
-
-.services-to-work-wave svg {
-  width: 100%;
-  height: 100px;
-  display: block;
-}
-
 .projects {
   position: relative;
-  background: radial-gradient(circle at 50% 50%, #003db8 0%, #00268a 50%, #001557 100%);
-  padding: 40px 0 0;
+  background: linear-gradient(180deg, #0036ad 0%, #00227d 45%, #001557 100%);
+  padding: 0 0 0;
   color: #ffffff;
   overflow: hidden;
+}
+
+.projects-top-wave {
+  line-height: 0;
+  margin-top: -1px;
+  position: relative;
+  z-index: 3;
+}
+
+.projects-top-wave svg {
+  width: 100%;
+  height: 90px;
+  display: block;
 }
 
 .projects-ambient-dots {
@@ -1327,6 +1328,7 @@ body {
   background-size: 14px 14px;
   pointer-events: none;
   opacity: 0.7;
+  z-index: 1;
 }
 
 .projects-ribbon-inner {
@@ -1336,7 +1338,7 @@ body {
   width: 100%;
   max-width: 1400px;
   margin: 0 auto;
-  padding: 0 32px 30px;
+  padding: 10px 32px 30px;
   position: relative;
   z-index: 2;
 }
