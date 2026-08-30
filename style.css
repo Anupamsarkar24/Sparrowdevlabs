@@ -2217,85 +2217,42 @@ body {
 }
 
 /* ============================================================
-   PRE-FOOTER CTA BANNER (Curved Royal Blue Ribbon with Hot Air Balloon)
+   PRE-FOOTER CTA BANNER (section4.png Masked Strictly Inside Organic Curve)
    ============================================================ */
 .cta-banner {
   position: relative;
+  width: 100%;
+  min-height: 360px;
   background: transparent;
-  padding: 0;
   color: #ffffff;
   overflow: visible;
   display: flex;
-  flex-direction: column;
-  margin-bottom: -30px;
+  align-items: center;
+  margin-top: -25px;
+  margin-bottom: -35px;
 }
 
-.cta-hot-air-balloon {
+.cta-curved-mask-wrapper {
   position: absolute;
-  right: 3%;
-  top: -50px;
-  z-index: 5;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
   pointer-events: none;
-  filter: drop-shadow(0 16px 32px rgba(0, 0, 0, 0.35));
-  animation: floatBalloon 7s ease-in-out infinite alternate;
 }
 
-@keyframes floatBalloon {
-  0% { transform: translateY(0) rotate(0deg); }
-  100% { transform: translateY(-16px) rotate(1.5deg); }
-}
-
-.cta-ribbon-container {
-  position: relative;
-  z-index: 2;
-  background: transparent;
-  padding: 0;
-  color: #ffffff;
-  overflow: visible;
-}
-
-.cta-top-wave {
-  line-height: 0;
-  margin-top: -1px;
-  position: relative;
-  z-index: 3;
+.cta-curved-svg {
   width: 100%;
-}
-
-.cta-top-wave svg {
-  width: 100%;
-  height: 95px;
+  height: 100%;
   display: block;
 }
 
-.cta-ribbon-body {
-  position: relative;
-  background: linear-gradient(180deg, #004ae6 0%, #002eb3 50%, #001f80 100%);
-  margin-top: -1px;
-  padding: 0;
-}
-
-.cta-ambient-dots {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  width: 220px;
-  background-image: radial-gradient(circle, rgba(255, 255, 255, 0.25) 1.5px, transparent 1.5px);
-  background-size: 14px 14px;
-  pointer-events: none;
-  opacity: 0.6;
-  z-index: 2;
-}
-
-.cta-dots-left { left: 0; }
-.cta-dots-right { right: 0; }
-
 .cta-banner-inner {
+  position: relative;
   width: 100%;
   max-width: 1360px;
   margin: 0 auto;
-  padding: 0 32px 10px;
-  position: relative;
+  padding: 0 40px;
   z-index: 4;
 }
 
@@ -2305,6 +2262,7 @@ body {
   justify-content: space-between;
   gap: 36px;
   padding-right: 220px;
+  margin-top: 15px;
 }
 
 .cta-section-label {
@@ -2414,40 +2372,6 @@ body {
   color: #000000;
 }
 
-.cta-plane-trail-wrap {
-  position: absolute;
-  left: 100%;
-  top: 50%;
-  transform: translateY(-50%);
-  margin-left: 12px;
-  display: flex;
-  align-items: center;
-  pointer-events: none;
-}
-
-.cta-flying-plane {
-  position: absolute;
-  right: 0;
-  top: 6px;
-  animation: floatPlane 4s ease-in-out infinite alternate;
-}
-
-@keyframes floatPlane {
-  0% { transform: translate(0, 0) rotate(0deg); }
-  100% { transform: translate(4px, -6px) rotate(5deg); }
-}
-
-.cta-to-membership-wave {
-  line-height: 0;
-  margin-bottom: -1px;
-}
-
-.cta-to-membership-wave svg {
-  width: 100%;
-  height: 90px;
-  display: block;
-}
-
 @media (max-width: 1100px) {
   .cta-banner-content {
     padding-right: 180px;
@@ -2455,14 +2379,13 @@ body {
 }
 
 @media (max-width: 900px) {
+  .cta-banner {
+    min-height: 420px;
+  }
   .cta-banner-content {
     flex-direction: column;
     align-items: flex-start;
     padding-right: 0;
-  }
-  .cta-hot-air-balloon {
-    opacity: 0.3;
-    right: -20px;
   }
 }
 
