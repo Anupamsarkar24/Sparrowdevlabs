@@ -1964,14 +1964,33 @@ body {
 }
 
 /* ============================================================
-   TESTIMONIALS SECTION (Light Theme with Side-by-Side Nav)
+   TESTIMONIALS SECTION (Anime Sky Landscape Background)
    ============================================================ */
 .testimonials {
   position: relative;
-  background: #ffffff;
-  padding: 50px 0 50px;
+  padding: 60px 0 30px;
   color: #111827;
   overflow: hidden;
+}
+
+.testimonials-sky-bg {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+}
+
+.testimonials-bg-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 30%;
+}
+
+.testimonials-sky-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(1px);
 }
 
 .testimonials-inner {
@@ -2034,7 +2053,7 @@ body {
   color: #0055ff;
   text-transform: uppercase;
   text-decoration: none;
-  margin-bottom: 20px;
+  margin-bottom: 18px;
   transition: transform 0.3s ease;
 }
 
@@ -2172,10 +2191,43 @@ body {
    ============================================================ */
 .cta-banner {
   position: relative;
-  background: #ffffff;
   overflow: hidden;
   display: flex;
   flex-direction: column;
+}
+
+.cta-banner-bg {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+}
+
+.cta-banner-landscape-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 35%;
+}
+
+.cta-banner-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.cta-hot-air-balloon {
+  position: absolute;
+  right: 2%;
+  top: -40px;
+  z-index: 5;
+  pointer-events: none;
+  filter: drop-shadow(0 16px 32px rgba(0, 0, 0, 0.35));
+  animation: floatBalloon 7s ease-in-out infinite alternate;
+}
+
+@keyframes floatBalloon {
+  0% { transform: translateY(0) rotate(0deg); }
+  100% { transform: translateY(-16px) rotate(1.5deg); }
 }
 
 .cta-ribbon-container {
@@ -2196,23 +2248,8 @@ body {
 
 .cta-top-wave svg {
   width: 100%;
-  height: 85px;
+  height: 75px;
   display: block;
-}
-
-.cta-hot-air-balloon {
-  position: absolute;
-  right: 1%;
-  top: -20px;
-  z-index: 4;
-  pointer-events: none;
-  filter: drop-shadow(0 16px 32px rgba(0, 0, 0, 0.35));
-  animation: floatBalloon 7s ease-in-out infinite alternate;
-}
-
-@keyframes floatBalloon {
-  0% { transform: translateY(0) rotate(0deg); }
-  100% { transform: translateY(-16px) rotate(1.5deg); }
 }
 
 .cta-ambient-dots {
@@ -2435,6 +2472,10 @@ body {
   color: #111827;
   margin: 0;
   text-transform: uppercase;
+}
+
+.text-blue-plus {
+  color: #0055ff;
 }
 
 .membership-subtitle {
@@ -2807,6 +2848,7 @@ body {
   .cta-banner-content {
     flex-direction: column;
     align-items: flex-start;
+    padding-right: 0;
   }
   .cta-banner-sub-row {
     flex-direction: column;

@@ -231,7 +231,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Manrope:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="style.css?v=100" />
+  <link rel="stylesheet" href="style.css?v=101" />
 </head>
 <body class="loading">
 
@@ -1024,8 +1024,14 @@
     </div>
   </section>
 
-    <!-- ===================== TESTIMONIALS (Side-by-Side with Blue Script Accent & Slider Buttons) ===================== -->
+      <!-- ===================== TESTIMONIALS (Side-by-Side on Anime Sky Landscape) ===================== -->
   <section class="testimonials" id="about" aria-label="Client testimonials">
+    <!-- Anime Sky Landscape Background -->
+    <div class="testimonials-sky-bg" aria-hidden="true">
+      <img src="assets/images/hero.png" alt="Sky Landscape" class="testimonials-bg-img" />
+      <div class="testimonials-sky-overlay"></div>
+    </div>
+
     <div class="testimonials-inner max-w">
       
       <!-- Left Column -->
@@ -1036,7 +1042,8 @@
         </div>
         <h2 class="testimonials-main-title">
           TRUSTED BY BRANDS<br/>
-          WE <span class="text-script-blue">LOVE</span> TO WORK WITH.
+          WE <span class="text-script-blue">LOVE</span> TO<br/>
+          WORK WITH.
         </h2>
         <a href="#about" class="testimonials-see-all-link">
           <span>SEE ALL REVIEWS</span>
@@ -1112,9 +1119,9 @@
     </div>
   </section>
 
-    <!-- ===================== PRE-FOOTER CTA BANNER (Royal Blue Ribbon with Hot Air Balloon) ===================== -->
+  <!-- ===================== PRE-FOOTER CTA BANNER (Royal Blue Ribbon with Hot Air Balloon) ===================== -->
   <section class="cta-banner" id="cta-banner" aria-label="Call to action banner">
-    <!-- Anime Sky & Mountain Landscape Background -->
+    <!-- Anime Sky Background behind Top Wave -->
     <div class="cta-banner-bg" aria-hidden="true">
       <img src="assets/images/hero.png" alt="Anime Landscape" class="cta-banner-landscape-img" />
       <div class="cta-banner-overlay"></div>
@@ -1122,7 +1129,7 @@
 
     <!-- Hot Air Balloon Floating on the Right -->
     <div class="cta-hot-air-balloon" aria-hidden="true">
-      <svg width="180" height="240" viewBox="0 0 180 240" fill="none">
+      <svg width="170" height="230" viewBox="0 0 180 240" fill="none">
         <defs>
           <radialGradient id="balloonGrad" cx="50%" cy="40%" r="50%">
             <stop offset="0%" stop-color="#38bdf8"/>
@@ -1151,15 +1158,15 @@
       </svg>
     </div>
 
-        <!-- Top White Organic Wave Cutout (Creates real visible curve from white testimonials) -->
-    <div class="cta-top-wave" aria-hidden="true">
-      <svg viewBox="0 0 1440 90" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M0,0 L1440,0 L1440,55 C1240,5 1060,35 680,85 C320,10 0,60 0,60 Z" fill="#ffffff"/>
-      </svg>
-    </div>
+    <!-- Blue Ribbon Wrapper -->
+    <div class="cta-ribbon-container">
+      <!-- Top Organic Wave transitioning Sky into Blue Ribbon -->
+      <div class="cta-top-wave" aria-hidden="true">
+        <svg viewBox="0 0 1440 90" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M0,50 C320,5 680,80 1060,25 C1240,0 1380,45 1440,55 L1440,90 L0,90 Z" fill="#003db8"/>
+        </svg>
+      </div>
 
-    <!-- Blue Ribbon Body -->
-    <div class="cta-ribbon-body">
       <div class="cta-ambient-dots cta-dots-left" aria-hidden="true"></div>
       <div class="cta-ambient-dots cta-dots-right" aria-hidden="true"></div>
 
@@ -1210,17 +1217,17 @@
 
         </div>
       </div>
-    </div>
 
-    <!-- Bottom Wave Transition to Membership -->
-    <div class="cta-to-membership-wave" aria-hidden="true">
-      <svg viewBox="0 0 1440 90" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M0,45 C320,0 680,75 1060,25 C1240,0 1380,45 1440,65 L1440,90 L0,90 Z" fill="#ffffff"/>
-      </svg>
+      <!-- Bottom Wave Transition into Membership -->
+      <div class="cta-to-membership-wave" aria-hidden="true">
+        <svg viewBox="0 0 1440 90" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M0,45 C320,0 680,75 1060,25 C1240,0 1380,45 1440,65 L1440,90 L0,90 Z" fill="#ffffff"/>
+        </svg>
+      </div>
     </div>
   </section>
 
-<!-- ===================== MEMBERSHIP / PRICING ===================== -->
+  <!-- ===================== MEMBERSHIP / PRICING ===================== -->
   <section class="membership" id="membership" aria-label="Membership plans">
     <div class="membership-inner max-w">
 
@@ -1231,7 +1238,7 @@
             <svg class="membership-header-plane" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#0055ff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               <path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/>
             </svg>
-            <h2 class="membership-title">CHOOSE YOUR<br/>MEMBERSHIP</h2>
+            <h2 class="membership-title">CHOOSE YOUR<br/>PLAN <span class="text-blue-plus">+</span></h2>
           </div>
           <p class="membership-subtitle">
             Simple, transparent pricing.<br/>
@@ -1275,7 +1282,7 @@
       <!-- Cards Grid -->
       <div class="membership-cards">
 
-        <!-- BEGINNER / BASIC -->
+        <!-- BASIC -->
         <article class="plan-card plan-beginner" id="plan-beginner">
           <div class="plan-top">
             <div class="plan-badge-icon plan-badge-blue">
@@ -1491,7 +1498,7 @@
 
   <!-- Razorpay Checkout SDK -->
   <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
-  <script src="script.js?v=39"></script>
+  <script src="script.js?v=40"></script>
   <!-- Toast Notification Container -->
   <div id="toast-container" class="toast-container"></div>
 
