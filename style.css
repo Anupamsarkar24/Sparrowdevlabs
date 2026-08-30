@@ -2217,58 +2217,94 @@ body {
 }
 
 /* ============================================================
-   PRE-FOOTER CTA BANNER (Full 2164x727 Aspect Ratio for Exact Curves)
+   PRE-FOOTER CTA BANNER (Curved Royal Blue Ribbon with Hot Air Balloon)
    ============================================================ */
 .cta-banner {
   position: relative;
-  width: 100%;
-  aspect-ratio: 2164 / 727;
-  min-height: 280px;
   background: transparent;
+  padding: 0;
   color: #ffffff;
   overflow: visible;
   display: flex;
-  align-items: center;
-  margin-top: -10px;
-  margin-bottom: -20px;
+  flex-direction: column;
+  margin-bottom: -30px;
 }
 
-.cta-section4-img-wrapper {
+.cta-hot-air-balloon {
   position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 1;
+  right: 3%;
+  top: -50px;
+  z-index: 5;
   pointer-events: none;
+  filter: drop-shadow(0 16px 32px rgba(0, 0, 0, 0.35));
+  animation: floatBalloon 7s ease-in-out infinite alternate;
 }
 
-.cta-section4-img {
+@keyframes floatBalloon {
+  0% { transform: translateY(0) rotate(0deg); }
+  100% { transform: translateY(-16px) rotate(1.5deg); }
+}
+
+.cta-ribbon-container {
+  position: relative;
+  z-index: 2;
+  background: transparent;
+  padding: 0;
+  color: #ffffff;
+  overflow: visible;
+}
+
+.cta-top-wave {
+  line-height: 0;
+  margin-top: -1px;
+  position: relative;
+  z-index: 3;
   width: 100%;
-  height: 100%;
-  object-fit: fill;
+}
+
+.cta-top-wave svg {
+  width: 100%;
+  height: 95px;
   display: block;
 }
 
-.cta-banner-inner {
+.cta-ribbon-body {
+  position: relative;
+  background: linear-gradient(180deg, #004ae6 0%, #002eb3 50%, #001f80 100%);
+  margin-top: -1px;
+  padding: 0;
+}
+
+.cta-ambient-dots {
   position: absolute;
-  inset: 0;
+  top: 0;
+  bottom: 0;
+  width: 220px;
+  background-image: radial-gradient(circle, rgba(255, 255, 255, 0.25) 1.5px, transparent 1.5px);
+  background-size: 14px 14px;
+  pointer-events: none;
+  opacity: 0.6;
+  z-index: 2;
+}
+
+.cta-dots-left { left: 0; }
+.cta-dots-right { right: 0; }
+
+.cta-banner-inner {
   width: 100%;
   max-width: 1360px;
   margin: 0 auto;
-  padding: 0 40px;
-  display: flex;
-  align-items: center;
+  padding: 0 32px 10px;
+  position: relative;
   z-index: 4;
 }
 
 .cta-banner-content {
-  width: 100%;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 30px;
-  padding-right: 22%;
-  margin-top: 10px;
+  gap: 36px;
+  padding-right: 220px;
 }
 
 .cta-section-label {
@@ -2281,7 +2317,7 @@ body {
   letter-spacing: 2px;
   color: #a5d8ff;
   text-transform: uppercase;
-  margin-bottom: 10px;
+  margin-bottom: 12px;
 }
 
 .cta-label-line {
@@ -2305,7 +2341,7 @@ body {
 
 .cta-banner-title {
   font-family: var(--font-primary);
-  font-size: clamp(24px, 2.8vw, 38px);
+  font-size: clamp(26px, 3vw, 40px);
   font-weight: 900;
   line-height: 1.06;
   letter-spacing: -1px;
@@ -2328,30 +2364,37 @@ body {
   text-shadow: 0 2px 10px rgba(250, 204, 21, 0.4);
 }
 
-.cta-banner-sub-row {
+.cta-banner-center-side {
   display: flex;
-  align-items: center;
-  gap: 28px;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 16px;
 }
 
 .cta-banner-subtitle {
   font-family: var(--font-secondary);
-  font-size: clamp(11.5px, 1.1vw, 13.5px);
+  font-size: 13px;
   line-height: 1.55;
   color: rgba(255, 255, 255, 0.95);
   margin: 0;
   font-weight: 500;
 }
 
+.cta-btn-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
 .cta-golden-btn {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  padding: 12px 26px;
+  padding: 12px 28px;
   background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
   color: #111827;
   font-family: var(--font-primary);
-  font-size: 11.5px;
+  font-size: 12px;
   font-weight: 900;
   letter-spacing: 0.8px;
   text-transform: uppercase;
@@ -2360,7 +2403,8 @@ body {
   box-shadow: 0 6px 20px rgba(245, 158, 11, 0.45);
   white-space: nowrap;
   transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
-  flex-shrink: 0;
+  position: relative;
+  z-index: 2;
 }
 
 .cta-golden-btn:hover {
@@ -2370,27 +2414,55 @@ body {
   color: #000000;
 }
 
-@media (max-width: 1024px) {
-  .cta-banner {
-    aspect-ratio: auto;
-    min-height: 300px;
-    padding: 60px 0;
-  }
-  .cta-section4-img {
-    object-fit: cover;
-  }
-  .cta-banner-inner {
-    position: relative;
-  }
+.cta-plane-trail-wrap {
+  position: absolute;
+  left: 100%;
+  top: 50%;
+  transform: translateY(-50%);
+  margin-left: 12px;
+  display: flex;
+  align-items: center;
+  pointer-events: none;
+}
+
+.cta-flying-plane {
+  position: absolute;
+  right: 0;
+  top: 6px;
+  animation: floatPlane 4s ease-in-out infinite alternate;
+}
+
+@keyframes floatPlane {
+  0% { transform: translate(0, 0) rotate(0deg); }
+  100% { transform: translate(4px, -6px) rotate(5deg); }
+}
+
+.cta-to-membership-wave {
+  line-height: 0;
+  margin-bottom: -1px;
+}
+
+.cta-to-membership-wave svg {
+  width: 100%;
+  height: 90px;
+  display: block;
+}
+
+@media (max-width: 1100px) {
   .cta-banner-content {
-    padding-right: 0;
-    flex-direction: column;
-    align-items: flex-start;
+    padding-right: 180px;
   }
-  .cta-banner-sub-row {
+}
+
+@media (max-width: 900px) {
+  .cta-banner-content {
     flex-direction: column;
     align-items: flex-start;
-    gap: 16px;
+    padding-right: 0;
+  }
+  .cta-hot-air-balloon {
+    opacity: 0.3;
+    right: -20px;
   }
 }
 
