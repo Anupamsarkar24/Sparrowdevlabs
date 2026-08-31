@@ -2863,33 +2863,23 @@ body {
 }
 
 /* ============================================================
-   FOOTER (Deep Royal Navy Blue #00184d with Top Wave)
+   FOOTER (Deep Royal Navy Blue #001557)
    ============================================================ */
 .footer {
-  background: linear-gradient(180deg, #00184d 0%, #001033 100%);
-  padding: 0 0 40px;
+  background: linear-gradient(180deg, #00123d 0%, #000a26 100%);
+  padding: 60px 0 40px;
   color: #ffffff;
   position: relative;
   overflow: hidden;
-}
-
-.footer-top-wave {
-  line-height: 0;
-  margin-top: -1px;
-  background: #ffffff;
-}
-
-.footer-top-wave svg {
-  width: 100%;
-  height: 85px;
-  display: block;
+  border-top: 1px solid rgba(0, 85, 255, 0.18);
+  box-shadow: inset 0 8px 24px rgba(0, 0, 0, 0.3);
 }
 
 .footer-inner {
   width: 100%;
   max-width: 1360px;
   margin: 0 auto;
-  padding: 24px 32px 10px;
+  padding: 0 32px;
   display: grid;
   grid-template-columns: 2fr 1fr 1fr 1.3fr 1.6fr;
   gap: 36px;
