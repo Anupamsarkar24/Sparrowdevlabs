@@ -231,7 +231,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Manrope:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="style.css?v=119" />
+  <link rel="stylesheet" href="style.css?v=120" />
 </head>
 <body class="loading">
 
@@ -1488,7 +1488,7 @@
 
   <!-- Razorpay Checkout SDK -->
   <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
-  <script src="script.js?v=58"></script>
+  <script src="script.js?v=59"></script>
   <!-- Toast Notification Container -->
   <div id="toast-container" class="toast-container"></div>
 
@@ -1529,6 +1529,21 @@
       </div>
     </div>
   </div>
+
+  <!-- ===================== ANIMATE-UI GLOBAL CURSOR & CURSOR-FOLLOW ===================== -->
+  <div id="animate-cursor-root" class="animate-cursor-root" aria-hidden="true">
+    <!-- Cursor Pointer Arrow -->
+    <div class="animate-cursor-pointer" id="animate-cursor-pointer">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M5.5 3.21V20.8c0 .45.54.67.85.35l4.86-4.86a.5.5 0 0 1 .35-.15h6.87a.5.5 0 0 0 .35-.85L5.85 2.85a.5.5 0 0 0-.35.36z" fill="#0055ff" stroke="#ffffff" stroke-width="1.6" stroke-linejoin="round"/>
+      </svg>
+    </div>
+    <!-- Cursor Follow Badge (side='bottom', sideOffset=15, align='end', alignOffset=5) -->
+    <div class="animate-cursor-follow" id="animate-cursor-follow">
+      <span class="animate-cursor-badge" id="animate-cursor-badge-text">Designer</span>
+    </div>
+  </div>
+
 </body>
 </html>
 

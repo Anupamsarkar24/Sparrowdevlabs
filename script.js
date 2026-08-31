@@ -1806,3 +1806,127 @@ function initFeaturedProjectsCarousel() {
 }
 
 document.addEventListener('DOMContentLoaded', initFeaturedProjectsCarousel);
+
+
+/* ============================================================
+   ANIMATE-UI GLOBAL CURSOR & CURSOR-FOLLOW CONTROLLER
+   ============================================================ */
+function initAnimateUiCursor() {
+  // Only enable on pointer-fine (desktop mouse) devices
+  if (window.matchMedia('(pointer: coarse)').matches || 'ontouchstart' in window) {
+    return;
+  }
+
+  const root = document.getElementById('animate-cursor-root');
+  const pointer = document.getElementById('animate-cursor-pointer');
+  const follow = document.getElementById('animate-cursor-follow');
+  const badgeText = document.getElementById('animate-cursor-badge-text');
+
+  if (!root || !pointer || !follow || !badgeText) return;
+
+  // Options from CursorDemoProps:
+  // side='bottom', sideOffset=15, align='end', alignOffset=5
+  const sideOffset = 15;
+  const alignOffset = 5;
+
+  let mouseX = -100;
+  let mouseY = -100;
+  let followX = -100;
+  let followY = -100;
+  let isHovering = false;
+  let isVisible = false;
+
+  // Track mouse coordinates
+  window.addEventListener('mousemove', (e) => {
+    mouseX = e.clientX;
+    mouseY = e.clientY;
+
+    if (!isVisible) {
+      isVisible = true;
+      root.classList.add('visible');
+      followX = mouseX + alignOffset;
+      followY = mouseY + sideOffset;
+    }
+
+    // Direct instantaneous pointer update for zero latency
+    pointer.style.transform = `translate3d(${mouseX}px, ${mouseY}px, 0)`;
+  }, { passive: true });
+
+  // Physics animation loop for smooth trailing follower badge
+  const lerp = 0.18; // Spring inertia dampening factor
+
+  function animateCursorFollow() {
+    if (isVisible) {
+      const targetFollowX = mouseX + alignOffset;
+      const targetFollowY = mouseY + sideOffset;
+
+      followX += (targetFollowX - followX) * lerp;
+      followY += (targetFollowY - followY) * lerp;
+
+      follow.style.transform = `translate3d(${followX}px, ${followY}px, 0)`;
+    }
+    requestAnimationFrame(animateCursorFollow);
+  }
+  requestAnimationFrame(animateCursorFollow);
+
+  // Click bounce effects
+  window.addEventListener('mousedown', () => {
+    pointer.classList.add('clicking');
+    follow.classList.add('clicking');
+  });
+
+  window.addEventListener('mouseup', () => {
+    pointer.classList.remove('clicking');
+    follow.classList.remove('clicking');
+  });
+
+  // Window enter / leave
+  document.addEventListener('mouseleave', () => {
+    isVisible = false;
+    root.classList.remove('visible');
+  });
+
+  document.addEventListener('mouseenter', () => {
+    isVisible = true;
+    root.classList.add('visible');
+  });
+
+  // Interactive Hover Targets with Context-Aware Designer Badge
+  const interactiveSelectors = 'a, button, input, textarea, select, [role="button"], .project-showcase-card, .plan-card, .testimonial-glass-card, .service-col-card';
+
+  function attachHoverListeners() {
+    const elements = document.querySelectorAll(interactiveSelectors);
+    elements.forEach(el => {
+      el.addEventListener('mouseenter', () => {
+        follow.classList.add('hovering');
+        // Context-aware dynamic labels
+        if (el.closest('.project-showcase-card')) {
+          badgeText.textContent = 'Explore ↗';
+        } else if (el.closest('.plan-card') || el.classList.contains('plan-cta')) {
+          badgeText.textContent = 'Select ↗';
+        } else if (el.classList.contains('cta-golden-btn') || el.classList.contains('nav-cta-btn')) {
+          badgeText.textContent = "Let's Talk ↗";
+        } else if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') {
+          badgeText.textContent = 'Type ✍';
+        } else {
+          badgeText.textContent = 'Designer';
+        }
+      });
+
+      el.addEventListener('mouseleave', () => {
+        follow.classList.remove('hovering');
+        badgeText.textContent = 'Designer';
+      });
+    });
+  }
+
+  attachHoverListeners();
+
+  // Re-observe if elements are dynamically added
+  const observer = new MutationObserver(() => {
+    attachHoverListeners();
+  });
+  observer.observe(document.body, { childList: true, subtree: true });
+}
+
+document.addEventListener('DOMContentLoaded', initAnimateUiCursor);
