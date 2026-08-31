@@ -928,87 +928,6 @@ function initNewsletterForm() {
 }
 
 /* ============================================================
-   8. CUSTOM CURSOR TRAIL
-   ============================================================ */
-function initCursorTrail() {
-  // Only on non-touch devices
-  if ('ontouchstart' in window) return;
-
-  const trailCount = 8;
-  const trails = [];
-
-  for (let i = 0; i < trailCount; i++) {
-    const dot = document.createElement('div');
-    dot.style.cssText = `
-      position: fixed;
-      width: ${3 + i * 0.5}px;
-      height: ${3 + i * 0.5}px;
-      border-radius: 50%;
-      background: rgba(255,255,255,${0.4 - i * 0.04});
-      pointer-events: none;
-      z-index: 99999;
-      top: 0; left: 0;
-      transform: translate(-50%, -50%);
-      transition: opacity 0.3s ease;
-      will-change: transform;
-    `;
-    document.body.appendChild(dot);
-    trails.push({ el: dot, x: 0, y: 0, tx: 0, ty: 0 });
-  }
-
-  let mouseX = -100, mouseY = -100;
-
-  document.addEventListener('mousemove', (e) => {
-    mouseX = e.clientX;
-    mouseY = e.clientY;
-    trails[0].tx = mouseX;
-    trails[0].ty = mouseY;
-  });
-
-  // Hide on mouse leave
-  document.addEventListener('mouseleave', () => {
-    trails.forEach(t => { t.el.style.opacity = '0'; });
-  });
-  document.addEventListener('mouseenter', () => {
-    trails.forEach(t => { t.el.style.opacity = '1'; });
-  });
-
-  const animateTrail = () => {
-    for (let i = 0; i < trailCount; i++) {
-      const trail = trails[i];
-      const lag = 0.12 + i * 0.04;
-      if (i === 0) {
-        trail.x += (mouseX - trail.x) * 0.6;
-        trail.y += (mouseY - trail.y) * 0.6;
-      } else {
-        trail.x += (trails[i - 1].x - trail.x) * lag;
-        trail.y += (trails[i - 1].y - trail.y) * lag;
-      }
-      trail.el.style.transform = `translate(calc(-50% + ${trail.x}px), calc(-50% + ${trail.y}px))`;
-    }
-    requestAnimationFrame(animateTrail);
-  };
-  animateTrail();
-
-  // Cursor grow on interactive elements
-  const interactiveEls = document.querySelectorAll('a, button, .service-card, .project-card, .testimonial-card');
-  interactiveEls.forEach(el => {
-    el.addEventListener('mouseenter', () => {
-      trails[0].el.style.width = '40px';
-      trails[0].el.style.height = '40px';
-      trails[0].el.style.background = 'rgba(255,255,255,0.08)';
-      trails[0].el.style.border = '1px solid rgba(255,255,255,0.3)';
-    });
-    el.addEventListener('mouseleave', () => {
-      trails[0].el.style.width = '3px';
-      trails[0].el.style.height = '3px';
-      trails[0].el.style.background = 'rgba(255,255,255,0.4)';
-      trails[0].el.style.border = 'none';
-    });
-  });
-}
-
-/* ============================================================
    9. PARALLAX
    ============================================================ */
 function initParallax() {
@@ -1809,10 +1728,9 @@ document.addEventListener('DOMContentLoaded', initFeaturedProjectsCarousel);
 
 
 /* ============================================================
-   ANIMATE-UI GLOBAL CURSOR & CURSOR-FOLLOW CONTROLLER
+   ANIMATE-UI GLOBAL CURSOR & CURSOR-FOLLOW (Ultra-Fast 0-Lag Engine)
    ============================================================ */
 function initAnimateUiCursor() {
-  // Only enable on pointer-fine (desktop mouse) devices
   if (window.matchMedia('(pointer: coarse)').matches || 'ontouchstart' in window) {
     return;
   }
@@ -1824,8 +1742,6 @@ function initAnimateUiCursor() {
 
   if (!root || !pointer || !follow || !badgeText) return;
 
-  // Options from CursorDemoProps:
-  // side='bottom', sideOffset=15, align='end', alignOffset=5
   const sideOffset = 15;
   const alignOffset = 5;
 
@@ -1833,10 +1749,9 @@ function initAnimateUiCursor() {
   let mouseY = -100;
   let followX = -100;
   let followY = -100;
-  let isHovering = false;
   let isVisible = false;
 
-  // Track mouse coordinates
+  // 1. Instantaneous Direct Mouse Tracker (Zero latency)
   window.addEventListener('mousemove', (e) => {
     mouseX = e.clientX;
     mouseY = e.clientY;
@@ -1848,39 +1763,38 @@ function initAnimateUiCursor() {
       followY = mouseY + sideOffset;
     }
 
-    // Direct instantaneous pointer update for zero latency
     pointer.style.transform = `translate3d(${mouseX}px, ${mouseY}px, 0)`;
   }, { passive: true });
 
-  // Physics animation loop for smooth trailing follower badge
-  const lerp = 0.18; // Spring inertia dampening factor
+  // 2. Smooth Spring Physics for Trailing Badge (LERP = 0.28 for snappy natural follow)
+  const lerp = 0.28;
 
-  function animateCursorFollow() {
+  function renderFollow() {
     if (isVisible) {
-      const targetFollowX = mouseX + alignOffset;
-      const targetFollowY = mouseY + sideOffset;
+      const targetX = mouseX + alignOffset;
+      const targetY = mouseY + sideOffset;
 
-      followX += (targetFollowX - followX) * lerp;
-      followY += (targetFollowY - followY) * lerp;
+      followX += (targetX - followX) * lerp;
+      followY += (targetY - followY) * lerp;
 
       follow.style.transform = `translate3d(${followX}px, ${followY}px, 0)`;
     }
-    requestAnimationFrame(animateCursorFollow);
+    requestAnimationFrame(renderFollow);
   }
-  requestAnimationFrame(animateCursorFollow);
+  requestAnimationFrame(renderFollow);
 
-  // Click bounce effects
+  // 3. Fast Click State
   window.addEventListener('mousedown', () => {
     pointer.classList.add('clicking');
     follow.classList.add('clicking');
-  });
+  }, { passive: true });
 
   window.addEventListener('mouseup', () => {
     pointer.classList.remove('clicking');
     follow.classList.remove('clicking');
-  });
+  }, { passive: true });
 
-  // Window enter / leave
+  // 4. Window Focus / Boundary
   document.addEventListener('mouseleave', () => {
     isVisible = false;
     root.classList.remove('visible');
@@ -1891,42 +1805,32 @@ function initAnimateUiCursor() {
     root.classList.add('visible');
   });
 
-  // Interactive Hover Targets with Context-Aware Designer Badge
-  const interactiveSelectors = 'a, button, input, textarea, select, [role="button"], .project-showcase-card, .plan-card, .testimonial-glass-card, .service-col-card';
-
-  function attachHoverListeners() {
-    const elements = document.querySelectorAll(interactiveSelectors);
-    elements.forEach(el => {
-      el.addEventListener('mouseenter', () => {
-        follow.classList.add('hovering');
-        // Context-aware dynamic labels
-        if (el.closest('.project-showcase-card')) {
-          badgeText.textContent = 'Explore ↗';
-        } else if (el.closest('.plan-card') || el.classList.contains('plan-cta')) {
-          badgeText.textContent = 'Select ↗';
-        } else if (el.classList.contains('cta-golden-btn') || el.classList.contains('nav-cta-btn')) {
-          badgeText.textContent = "Let's Talk ↗";
-        } else if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') {
-          badgeText.textContent = 'Type ✍';
-        } else {
-          badgeText.textContent = 'Designer';
-        }
-      });
-
-      el.addEventListener('mouseleave', () => {
-        follow.classList.remove('hovering');
+  // 5. Zero-Overhead Event Delegation for Hover State & Contextual Badge
+  document.body.addEventListener('mouseover', (e) => {
+    const target = e.target.closest('a, button, input, textarea, select, [role="button"], .project-showcase-card, .plan-card, .testimonial-glass-card, .service-col-card');
+    if (target) {
+      follow.classList.add('hovering');
+      if (target.closest('.project-showcase-card')) {
+        badgeText.textContent = 'Explore ↗';
+      } else if (target.closest('.plan-card') || target.classList.contains('plan-cta')) {
+        badgeText.textContent = 'Select ↗';
+      } else if (target.classList.contains('cta-golden-btn') || target.classList.contains('nav-cta-btn')) {
+        badgeText.textContent = "Let's Talk ↗";
+      } else if (target.tagName === 'INPUT' || target.tagName === 'TEXTAREA') {
+        badgeText.textContent = 'Type ✍';
+      } else {
         badgeText.textContent = 'Designer';
-      });
-    });
-  }
+      }
+    }
+  }, { passive: true });
 
-  attachHoverListeners();
-
-  // Re-observe if elements are dynamically added
-  const observer = new MutationObserver(() => {
-    attachHoverListeners();
-  });
-  observer.observe(document.body, { childList: true, subtree: true });
+  document.body.addEventListener('mouseout', (e) => {
+    const target = e.target.closest('a, button, input, textarea, select, [role="button"], .project-showcase-card, .plan-card, .testimonial-glass-card, .service-col-card');
+    if (target) {
+      follow.classList.remove('hovering');
+      badgeText.textContent = 'Designer';
+    }
+  }, { passive: true });
 }
 
 document.addEventListener('DOMContentLoaded', initAnimateUiCursor);

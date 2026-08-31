@@ -3461,24 +3461,25 @@ body {
 }
 
 /* ============================================================
-   ANIMATE-UI GLOBAL CURSOR & CURSOR-FOLLOW
+   ANIMATE-UI GLOBAL CURSOR & CURSOR-FOLLOW (Ultra-Fast 0-Lag)
    ============================================================ */
 @media (pointer: fine) {
-  *, *::before, *::after {
+  html, body, a, button, input, textarea, select, [role="button"], 
+  .project-showcase-card, .plan-card, .testimonial-glass-card, .service-col-card,
+  .cta-golden-btn, .nav-cta-btn, .proj-nav-circle-btn, .test-round-nav-btn {
     cursor: none !important;
   }
 }
 
 .animate-cursor-root {
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
+  inset: 0;
+  width: 100%;
+  height: 100%;
   pointer-events: none;
   z-index: 9999999;
   opacity: 0;
-  transition: opacity 0.2s ease;
+  transition: opacity 0.15s ease;
   will-change: opacity;
 }
 
@@ -3486,21 +3487,21 @@ body {
   opacity: 1;
 }
 
-/* Custom Pointer Arrow */
+/* Custom Pointer Arrow: 0ms Latency Hardware Tracked */
 .animate-cursor-pointer {
   position: fixed;
   top: 0;
   left: 0;
   pointer-events: none;
   z-index: 10000000;
-  transform: translate(-2px, -2px);
-  filter: drop-shadow(0 2px 5px rgba(0, 0, 0, 0.3));
-  transition: transform 0.12s cubic-bezier(0.25, 1, 0.5, 1);
+  transform: translate3d(-2px, -2px, 0);
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+  transition: none !important;
   will-change: transform;
 }
 
 .animate-cursor-pointer.clicking {
-  transform: translate(-2px, -2px) scale(0.8);
+  transform: translate3d(-2px, -2px, 0) scale(0.82);
 }
 
 /* Cursor Follow Badge (side='bottom', sideOffset=15, align='end', alignOffset=5) */
@@ -3511,6 +3512,7 @@ body {
   pointer-events: none;
   z-index: 9999998;
   will-change: transform;
+  transition: none !important;
 }
 
 .animate-cursor-badge {
@@ -3529,7 +3531,7 @@ body {
   border: 1px solid rgba(255, 255, 255, 0.35);
   backdrop-filter: blur(8px);
   transform-origin: top left;
-  transition: transform 0.25s cubic-bezier(0.25, 1, 0.5, 1), background 0.25s ease, box-shadow 0.25s ease;
+  transition: transform 0.2s cubic-bezier(0.25, 1, 0.5, 1), background 0.2s ease, box-shadow 0.2s ease;
   white-space: nowrap;
   user-select: none;
 }
@@ -3537,8 +3539,8 @@ body {
 .animate-cursor-follow.hovering .animate-cursor-badge {
   background: #38bdf8;
   color: #001f80;
-  transform: scale(1.1);
-  box-shadow: 0 6px 20px rgba(56, 189, 248, 0.6);
+  transform: scale(1.08);
+  box-shadow: 0 6px 18px rgba(56, 189, 248, 0.6);
   border-color: rgba(255, 255, 255, 0.8);
 }
 
