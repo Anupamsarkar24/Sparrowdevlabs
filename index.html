@@ -231,18 +231,31 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Manrope:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="style.css?v=121" />
+  <link rel="stylesheet" href="style.css?v=122" />
 </head>
 <body class="loading">
 
-  <!-- ===================== PRELOADER ===================== -->
-  <div id="site-preloader" class="site-preloader">
+    <!-- ===================== RADIX / ANIMATE-UI PROGRESS PRELOADER ===================== -->
+  <div id="site-preloader" class="site-preloader" aria-label="Page loading">
     <div class="preloader-content">
-      <div class="preloader-canvas-wrapper">
-        <canvas id="preloaderLogoCanvas" width="680" height="680"></canvas>
+      <!-- Brand Logo & Icon -->
+      <div class="preloader-brand-wrapper">
+        <img src="assets/images/logo.png" alt="SparrowDevLabs Logo" class="preloader-brand-logo" />
+        <h2 class="preloader-brand-title">SPARROW<span class="text-blue-accent">DEVLABS</span></h2>
       </div>
-      <div class="preloader-brand-text">sparrow-dev-labs</div>
+
+      <!-- Radix / Animate-UI Progress Bar Component (w-[300px]) -->
+      <div class="radix-progress-root" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+        <div class="radix-progress-indicator" id="preloader-progress-indicator"></div>
+      </div>
+
+      <!-- Progress Stats (Percent & Status) -->
+      <div class="preloader-progress-stats">
+        <span class="preloader-status-text" id="preloader-status-text">INITIALIZING</span>
+        <span class="preloader-percent-text" id="preloader-percent-text">0%</span>
+      </div>
     </div>
+  </div>
   </div>
 
   <!-- NOISE OVERLAY -->
@@ -1488,7 +1501,7 @@
 
   <!-- Razorpay Checkout SDK -->
   <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
-  <script src="script.js?v=60"></script>
+  <script src="script.js?v=61"></script>
   <!-- Toast Notification Container -->
   <div id="toast-container" class="toast-container"></div>
 

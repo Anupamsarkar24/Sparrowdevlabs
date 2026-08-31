@@ -4,245 +4,67 @@
    ============================================================ */
 
 /* ============================================================
-   SPARROW DEV LABS - AUTHENTIC LOGO REVEAL ENGINE (NO GLARE / 3.0s)
+   RADIX / ANIMATE-UI PROGRESS PRELOADER ENGINE
    ============================================================ */
-function initPreloaderLogoCanvas() {
-  const canvas = document.getElementById('preloaderLogoCanvas');
-  if (!canvas) return;
-  const ctx = canvas.getContext('2d');
-
-  const W = canvas.width;  // 720 or 680
-  const H = canvas.height;
-  const cx = W / 2;
-  const cy = H / 2 - 10;
-
-  const logoImg = new Image();
-  logoImg.src = 'assets/images/logo.png';
-  let logoLoaded = false;
-  logoImg.onload = () => { logoLoaded = true; };
-
-  const imgW = 260;
-  const imgH = 260;
-  const imgX = cx - imgW / 2;
-  const imgY = cy - imgH / 2;
-
-  const contourPoints = [
-    { x: imgX + 25,  y: imgY + 250 },
-    { x: imgX + 80,  y: imgY + 180 },
-    { x: imgX + 135, y: imgY + 120 },
-    { x: imgX + 175, y: imgY + 120 },
-    { x: imgX + 200, y: imgY + 50  },
-    { x: imgX + 240, y: imgY + 70  },
-    { x: imgX + 205, y: imgY + 180 },
-    { x: imgX + 245, y: imgY + 245 },
-    { x: imgX + 25,  y: imgY + 250 }
-  ];
-
-  function getContourPoint(t) {
-    const total = contourPoints.length - 1;
-    const scaledT = Math.max(0, Math.min(1, t)) * total;
-    const i = Math.floor(scaledT);
-    const localT = scaledT - i;
-    const p1 = contourPoints[i];
-    const p2 = contourPoints[Math.min(total, i + 1)];
-    return {
-      x: p1.x + (p2.x - p1.x) * localT,
-      y: p1.y + (p2.y - p1.y) * localT
-    };
-  }
-
-  const dust = [];
-  for (let i = 0; i < 18; i++) {
-    dust.push({
-      x: Math.random() * W,
-      y: Math.random() * H,
-      r: Math.random() * 1.2 + 0.4,
-      alpha: Math.random() * 0.12 + 0.04,
-      vx: (Math.random() - 0.5) * 0.2,
-      vy: (Math.random() - 0.5) * 0.2
-    });
-  }
-
-  function easeInOutCubic(t) { return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2; }
-  function easeOutCubic(t) { return 1 - Math.pow(1 - t, 3); }
-
-  const DURATION = 3000;
-  let startTime = null;
-
-  function render(timestamp) {
-    if (!document.getElementById('preloaderLogoCanvas')) return;
-    if (!startTime) startTime = timestamp;
-    const elapsed = (timestamp - startTime) % DURATION;
-    const seconds = elapsed / 1000.0;
-
-    ctx.fillStyle = '#050505';
-    ctx.fillRect(0, 0, W, H);
-
-    ctx.fillStyle = '#ffffff';
-    dust.forEach(p => {
-      p.x += p.vx; p.y += p.vy;
-      if (p.x < 0) p.x = W; if (p.x > W) p.x = 0;
-      if (p.y < 0) p.y = H; if (p.y > H) p.y = 0;
-      ctx.globalAlpha = p.alpha;
-      ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2); ctx.fill();
-    });
-    ctx.globalAlpha = 1.0;
-
-    let drawPct = 0, fillOpacity = 0;
-    let activeParticlePos = getContourPoint(0);
-    let particleAlpha = 0, ringAlpha = 0, ringAngle = 0, breathingGlow = 0;
-
-    if (seconds < 0.3) {
-      const t = seconds / 0.3;
-      particleAlpha = easeOutCubic(t);
-      activeParticlePos = getContourPoint(0);
-    }
-    else if (seconds < 1.3) {
-      const t = (seconds - 0.3) / 1.0;
-      const easedT = easeInOutCubic(t);
-      drawPct = easedT;
-      fillOpacity = Math.max(0, (t - 0.2) / 0.8);
-      particleAlpha = 1.0;
-      activeParticlePos = getContourPoint(drawPct);
-    }
-    else if (seconds < 1.7) {
-      const t = (seconds - 1.3) / 0.4;
-      drawPct = 1.0; fillOpacity = 1.0; particleAlpha = 1.0;
-      const passAngle = (t * Math.PI * 0.4) - Math.PI / 4;
-      activeParticlePos = { x: cx + Math.cos(passAngle) * 170, y: cy + Math.sin(passAngle) * 150 };
-    }
-    else if (seconds < 2.1) {
-      const t = (seconds - 1.7) / 0.4;
-      drawPct = 1.0; fillOpacity = 1.0; particleAlpha = 1.0;
-      ringAlpha = Math.min(t * 1.6, 0.8);
-      ringAngle = (Math.PI * 0.15) + (easeInOutCubic(t) * Math.PI * 1.65);
-      activeParticlePos = { x: cx + Math.cos(ringAngle) * 175, y: cy + Math.sin(ringAngle) * 155 };
-    }
-    else if (seconds < 2.5) {
-      const t = (seconds - 2.1) / 0.4;
-      drawPct = 1.0; fillOpacity = 1.0; particleAlpha = 1.0;
-      ringAlpha = 0.8 * (1.0 - t * 0.5);
-      breathingGlow = Math.sin(t * Math.PI) * 0.25;
-      ringAngle = (Math.PI * 1.8) + (t * Math.PI * 0.4);
-      activeParticlePos = { x: cx + Math.cos(ringAngle) * 175, y: cy + Math.sin(ringAngle) * 155 };
-    }
-    else if (seconds < 2.8) {
-      const t = (seconds - 2.5) / 0.3;
-      const unDraw = 1.0 - easeInOutCubic(t);
-      drawPct = unDraw; fillOpacity = unDraw;
-      particleAlpha = Math.max(0.3, 1.0 - t * 0.4);
-      ringAlpha = (1.0 - t) * 0.3;
-      activeParticlePos = getContourPoint(unDraw);
-    }
-    else {
-      const t = (seconds - 2.8) / 0.2;
-      particleAlpha = 1.0 - t;
-      activeParticlePos = getContourPoint(0);
-    }
-
-    if (logoLoaded && fillOpacity > 0.01) {
-      ctx.save();
-      ctx.globalAlpha = fillOpacity;
-      ctx.shadowColor = 'rgba(56, 189, 248, ' + (0.2 + breathingGlow * 0.2) + ')';
-      ctx.shadowBlur = 15 + breathingGlow * 8;
-
-      if (drawPct < 0.99) {
-        const clipRadius = drawPct * (imgW * 1.4);
-        ctx.beginPath();
-        ctx.arc(contourPoints[0].x, contourPoints[0].y, clipRadius, 0, Math.PI * 2);
-        ctx.clip();
-      }
-
-      ctx.drawImage(logoImg, imgX, imgY, imgW, imgH);
-      ctx.restore();
-    }
-
-    if (ringAlpha > 0.01) {
-      ctx.save();
-      ctx.globalAlpha = ringAlpha;
-      ctx.beginPath(); ctx.ellipse(cx, cy, 175, 155, -0.08, 0, Math.PI * 2);
-      ctx.strokeStyle = 'rgba(56, 189, 248, ' + (ringAlpha * 0.5) + ')';
-      ctx.lineWidth = 1.5; ctx.shadowColor = '#38bdf8'; ctx.shadowBlur = 12; ctx.stroke();
-      ctx.restore();
-    }
-
-    if (particleAlpha > 0.01) {
-      drawEnergyOrb(ctx, activeParticlePos.x, activeParticlePos.y, particleAlpha);
-    }
-
-    requestAnimationFrame(render);
-  }
-
-  function drawEnergyOrb(context, x, y, alpha) {
-    context.save(); context.globalAlpha = alpha;
-    const glowGrad = context.createRadialGradient(x, y, 0, x, y, 24);
-    glowGrad.addColorStop(0, '#38bdf8'); glowGrad.addColorStop(0.4, 'rgba(56, 189, 248, 0.35)'); glowGrad.addColorStop(1, 'rgba(56, 189, 248, 0)');
-    context.fillStyle = glowGrad; context.beginPath(); context.arc(x, y, 24, 0, Math.PI * 2); context.fill();
-
-    const coreGrad = context.createRadialGradient(x, y, 0, x, y, 6);
-    coreGrad.addColorStop(0, '#FFFFFF'); coreGrad.addColorStop(0.6, '#93c5fd'); coreGrad.addColorStop(1, '#38bdf8');
-    context.fillStyle = coreGrad; context.beginPath(); context.arc(x, y, 6, 0, Math.PI * 2); context.fill();
-    context.restore();
-  }
-
-  requestAnimationFrame(render);
-}
-
-// Start Logo Preloader Canvas Immediately
-if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', initPreloaderLogoCanvas);
-} else {
-  initPreloaderLogoCanvas();
-}
-
-const removePreloader = () => {
+function initRadixProgressPreloader() {
   const preloader = document.getElementById('site-preloader');
-  if (preloader && !preloader.classList.contains('fade-out')) {
-    preloader.classList.add('fade-out');
-    setTimeout(() => {
-      preloader.style.display = 'none';
-      document.body.classList.remove('loading');
-    }, 600);
+  const indicator = document.getElementById('preloader-progress-indicator');
+  const percentText = document.getElementById('preloader-percent-text');
+  const statusText = document.getElementById('preloader-status-text');
+
+  if (!preloader || !indicator) return;
+
+  let progress = 0;
+  let isDone = false;
+
+  function updateProgress(value, status = '') {
+    progress = Math.min(100, Math.max(0, value));
+    indicator.style.transform = `translateX(-${100 - progress}%)`;
+    if (percentText) percentText.textContent = `${Math.round(progress)}%`;
+    if (statusText && status) statusText.textContent = status;
+
+    if (progress >= 100 && !isDone) {
+      isDone = true;
+      if (statusText) statusText.textContent = 'READY';
+      setTimeout(() => {
+        preloader.classList.add('fade-out');
+        document.body.classList.remove('loading');
+        setTimeout(() => {
+          preloader.style.display = 'none';
+        }, 650);
+      }, 350);
+    }
   }
-};
 
-const checkAllMediaLoaded = () => {
-  const images = Array.from(document.images);
-  const videos = Array.from(document.getElementsByTagName('video'));
-  
-  const promises = [];
-  
-  images.forEach(img => {
-    if (!img.complete) {
-      promises.push(new Promise((resolve) => {
-        img.addEventListener('load', resolve, { once: true });
-        img.addEventListener('error', resolve, { once: true });
-      }));
-    }
-  });
+  // Smooth progressive stepped intervals (0 -> 25 -> 50 -> 75 -> 100)
+  updateProgress(15, 'INITIALIZING');
 
-  videos.forEach(video => {
-    if (video.readyState < 3) { // 3 = HAVE_FUTURE_DATA
-      promises.push(new Promise((resolve) => {
-        video.addEventListener('canplay', resolve, { once: true });
-        video.addEventListener('error', resolve, { once: true });
-      }));
-    }
-  });
+  const stepTimer1 = setTimeout(() => { if (!isDone) updateProgress(35, 'LOADING ASSETS'); }, 200);
+  const stepTimer2 = setTimeout(() => { if (!isDone) updateProgress(65, 'BUILDING UI'); }, 500);
+  const stepTimer3 = setTimeout(() => { if (!isDone) updateProgress(85, 'OPTIMIZING'); }, 900);
 
-  Promise.all(promises).then(removePreloader);
-  
-  // Fallback failsafe
-  setTimeout(removePreloader, 8000);
-};
+  // Asset load listener
+  function onReady() {
+    clearTimeout(stepTimer1);
+    clearTimeout(stepTimer2);
+    clearTimeout(stepTimer3);
+    updateProgress(100, 'COMPLETED');
+  }
 
-if (document.readyState === 'complete') {
-  checkAllMediaLoaded();
-} else {
-  window.addEventListener('load', checkAllMediaLoaded);
+  if (document.readyState === 'complete') {
+    setTimeout(onReady, 600);
+  } else {
+    window.addEventListener('load', () => {
+      setTimeout(onReady, 400);
+    });
+  }
+
+  // Safety failsafe
+  setTimeout(onReady, 3500);
 }
 
-'use strict';
+// Start immediately
+initRadixProgressPreloader();
 
 /* ---- INIT ---- */
 document.addEventListener('DOMContentLoaded', () => {
