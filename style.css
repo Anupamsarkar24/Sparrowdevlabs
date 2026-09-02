@@ -932,7 +932,7 @@ body {
   .hero-bottom-left { bottom: 90px; left: 24px; }
   .hero-bottom-right { bottom: 90px; right: 24px; }
   .hero-brands-block { right: 5%; bottom: 24%; }
-  .hero-cta-wrapper { bottom: 145px; }
+  .hero-cta-wrapper { bottom: 175px; }
 }
 
 @media (max-width: 768px) {
@@ -1000,7 +1000,7 @@ body {
    ============================================================ */
 .hero-cta-wrapper {
   position: absolute;
-  bottom: 145px;
+  bottom: 190px;
   left: 50%;
   transform: translateX(-50%);
   z-index: 25;
